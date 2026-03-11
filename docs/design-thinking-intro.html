@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to Design Thinking - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="logo">
+        <h2>Frontend Course</h2>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html" class="active">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>🎨 Introduction to Design Thinking</h1>
+
+        <p>
+          Design Thinking is a human-centered approach to innovation and problem-solving. For frontend
+          developers, it's the bridge between coding skills and creating products that users actually love.
+          This mindset transforms you from someone who builds interfaces to someone who solves real user problems.
+        </p>
+
+        <h2>What is Design Thinking?</h2>
+
+        <p>
+          Design Thinking is a methodology that provides a solution-based approach to solving problems.
+          It's extremely useful when tackling complex problems that are ill-defined or unknown, by understanding
+          the human needs involved, by re-framing the problem in human-centric ways, by creating many ideas
+          in brainstorming sessions, and by adopting a hands-on approach in prototyping and testing.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 Key Principle</div>
+          <p>Design Thinking puts <strong>users at the center</strong> of everything. It's not about what we think
+          is cool or what technology can do—it's about what users actually need and how they'll use our product.</p>
+        </div>
+
+        <h2>The Five Stages of Design Thinking</h2>
+
+        <p>
+          The Design Thinking process consists of five key stages that help teams create user-centered solutions:
+        </p>
+
+        <h3>1. Empathize 🤝</h3>
+
+        <p>
+          <strong>Understand your users.</strong> This stage involves researching users' needs, problems, and motivations.
+          You conduct interviews, observe behaviors, and immerse yourself in the user's environment.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Example: Empathy Questions</div>
+          <div class="demo-section">
+            <ul>
+              <li>"What frustrates you most about [current solution]?"</li>
+              <li>"Walk me through how you currently solve this problem."</li>
+              <li>"What would make your life easier?"</li>
+              <li>"Tell me about a time when [process] didn't work well."</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>2. Define 🎯</h3>
+
+        <p>
+          <strong>Frame the problem.</strong> After gathering insights, you synthesize them to define the core
+          problem. This stage creates a clear problem statement that guides the rest of the process.
+        </p>
+
+        <div class="demo-section">
+          <div class="demo-title">Problem Statement Template</div>
+          <p style="background: var(--bg-secondary); padding: 1rem; border-left: 4px solid var(--primary-color);">
+            <strong>[User]</strong> needs a way to <strong>[need]</strong> because <strong>[insight]</strong>.
+          </p>
+          <p style="margin-top: 1rem;"><strong>Example:</strong><br>
+          "Busy parents need a way to quickly find healthy meal recipes because they have limited time
+          but want to provide nutritious food for their families."</p>
+        </div>
+
+        <h3>3. Ideate 💡</h3>
+
+        <p>
+          <strong>Generate solutions.</strong> This is the brainstorming stage where quantity trumps quality.
+          The goal is to generate as many ideas as possible without judgment.
+        </p>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Tip: Ideation Rules</div>
+          <ul>
+            <li>✅ Go for quantity over quality</li>
+            <li>✅ Defer judgment—no idea is bad</li>
+            <li>✅ Build on others' ideas</li>
+            <li>✅ Stay focused on the problem</li>
+            <li>✅ Encourage wild ideas</li>
+            <li>✅ Think visually with sketches</li>
+          </ul>
+        </div>
+
+        <h3>4. Prototype 🛠️</h3>
+
+        <p>
+          <strong>Build to learn.</strong> Create quick, inexpensive prototypes to explore potential solutions.
+          Prototypes can range from paper sketches to interactive mockups.
+        </p>
+
+        <div class="demo-section">
+          <div class="demo-title">Prototype Fidelity Levels</div>
+          <table style="width: 100%; margin-top: 1rem;">
+            <thead>
+              <tr>
+                <th>Level</th>
+                <th>Description</th>
+                <th>When to Use</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Low-Fidelity</strong></td>
+                <td>Paper sketches, wireframes</td>
+                <td>Early exploration, quick iteration</td>
+              </tr>
+              <tr>
+                <td><strong>Mid-Fidelity</strong></td>
+                <td>Digital wireframes, clickable mockups</td>
+                <td>Testing flows and interactions</td>
+              </tr>
+              <tr>
+                <td><strong>High-Fidelity</strong></td>
+                <td>Polished designs, coded prototypes</td>
+                <td>Final validation before development</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>5. Test 🧪</h3>
+
+        <p>
+          <strong>Learn and iterate.</strong> Test your prototypes with real users, gather feedback, and refine
+          your solution. This stage often reveals new insights that send you back to previous stages.
+        </p>
+
+        <div class="info-box important">
+          <div class="info-box-title">❗ Important</div>
+          <p>Design Thinking is <strong>not linear</strong>. You'll often loop back to earlier stages based on
+          what you learn. This iterative process is what makes solutions truly user-centered.</p>
+        </div>
+
+        <h2>Why Frontend Developers Need Design Thinking</h2>
+
+        <p>
+          As a frontend developer, understanding Design Thinking helps you:
+        </p>
+
+        <div class="demo-section">
+          <ul>
+            <li><strong>🎯 Build the Right Thing</strong> - Understand user needs before writing code</li>
+            <li><strong>💬 Collaborate Better</strong> - Speak the same language as designers and product managers</li>
+            <li><strong>🚀 Work Faster</strong> - Prototype and validate ideas before full implementation</li>
+            <li><strong>🎨 Make Better Decisions</strong> - Justify design choices with user research</li>
+            <li><strong>📈 Create Impact</strong> - Build products that solve real problems</li>
+            <li><strong>🔄 Embrace Change</strong> - See iterations as improvements, not failures</li>
+          </ul>
+        </div>
+
+        <h2>Design Thinking vs. Traditional Development</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Traditional Approach</th>
+              <th>Design Thinking Approach</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Start with requirements document</td>
+              <td>Start with user research</td>
+            </tr>
+            <tr>
+              <td>Build what's requested</td>
+              <td>Build what users need</td>
+            </tr>
+            <tr>
+              <td>Test after development</td>
+              <td>Test prototypes before coding</td>
+            </tr>
+            <tr>
+              <td>Change is costly</td>
+              <td>Iteration is expected</td>
+            </tr>
+            <tr>
+              <td>Success = delivered on time</td>
+              <td>Success = solved user problems</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Design Thinking in Frontend Workflow</h2>
+
+        <p>
+          Here's how Design Thinking integrates into a typical frontend development workflow:
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Design Thinking Development Flow</div>
+          <pre><code>1. Research Phase
+   ├─ User interviews
+   ├─ Competitive analysis
+   └─ Define user personas
+
+2. Define Phase
+   ├─ Problem statement
+   ├─ User stories
+   └─ Success metrics
+
+3. Ideate Phase
+   ├─ Brainstorming sessions
+   ├─ Sketching solutions
+   └─ Prioritizing features
+
+4. Prototype Phase
+   ├─ Low-fi wireframes
+   ├─ Interactive prototypes
+   └─ Design review
+
+5. Test Phase
+   ├─ Usability testing
+   ├─ Gather feedback
+   └─ Iterate design
+
+6. Development Phase
+   ├─ Implement validated design
+   ├─ Component development
+   └─ Quality assurance
+
+7. Launch & Learn
+   ├─ Deploy to users
+   ├─ Monitor analytics
+   └─ Plan next iteration</code></pre>
+        </div>
+
+        <h2>Practical Example: Designing a Login Form</h2>
+
+        <p>
+          Let's see how Design Thinking applies to something as simple as a login form:
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 Scenario</div>
+          <p>Users are complaining that logging into your app is frustrating.</p>
+        </div>
+
+        <h3>Without Design Thinking:</h3>
+        <div class="demo-section">
+          <p>"Let's add a 'Remember Me' checkbox and make the button bigger."</p>
+          <p style="color: var(--text-secondary); font-style: italic;">
+            → Guessing at solutions without understanding the real problem
+          </p>
+        </div>
+
+        <h3>With Design Thinking:</h3>
+
+        <div class="code-example">
+          <div class="example-label">Design Thinking Process</div>
+          <pre><code><strong>1. Empathize:</strong>
+   - Interview users about login issues
+   - Observe users attempting to log in
+   - Discovery: Users forget passwords, struggle with mobile keyboards
+
+<strong>2. Define:</strong>
+   - Problem: "Users need a faster way to access their account
+     on mobile devices because typing passwords on small screens
+     is error-prone and frustrating."
+
+<strong>3. Ideate:</strong>
+   - Biometric login (fingerprint/face ID)
+   - Magic link via email
+   - SMS verification code
+   - Social login (Google, Apple)
+   - Password manager integration
+
+<strong>4. Prototype:</strong>
+   - Create mockups for top 3 solutions
+   - Build clickable prototype
+   - Test with 5 users
+
+<strong>5. Test & Learn:</strong>
+   - Biometric login was fastest (2 seconds)
+   - Users loved not typing passwords
+   - Implement biometric + fallback to email</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Result</div>
+          <p>Instead of guessing, you built exactly what users needed. Login time dropped from 30 seconds
+          to 2 seconds, and user satisfaction increased significantly.</p>
+        </div>
+
+        <h2>Tools for Design Thinking</h2>
+
+        <p>
+          As a frontend developer practicing Design Thinking, you'll use various tools:
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Stage</th>
+              <th>Tools</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Empathize</strong></td>
+              <td>User interviews, Surveys, Analytics</td>
+              <td>Understand user needs</td>
+            </tr>
+            <tr>
+              <td><strong>Define</strong></td>
+              <td>Personas, Journey maps, Problem statements</td>
+              <td>Frame the problem</td>
+            </tr>
+            <tr>
+              <td><strong>Ideate</strong></td>
+              <td>Brainstorming, Mind maps, Sketches</td>
+              <td>Generate ideas</td>
+            </tr>
+            <tr>
+              <td><strong>Prototype</strong></td>
+              <td>Figma, Adobe XD, CodePen, HTML/CSS</td>
+              <td>Visualize solutions</td>
+            </tr>
+            <tr>
+              <td><strong>Test</strong></td>
+              <td>UserTesting.com, Hotjar, Live sessions</td>
+              <td>Validate with users</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Common Mistakes to Avoid</h2>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Pitfalls</div>
+          <ul>
+            <li><strong>Skipping user research</strong> - "We know what users want" (you don't)</li>
+            <li><strong>Falling in love with your first idea</strong> - It's rarely the best one</li>
+            <li><strong>Not involving users early</strong> - Waiting until development is expensive</li>
+            <li><strong>Treating it as linear</strong> - Expect to loop back and iterate</li>
+            <li><strong>Perfectionism in prototypes</strong> - Keep them quick and rough</li>
+            <li><strong>Ignoring test results</strong> - Data might contradict your assumptions</li>
+          </ul>
+        </div>
+
+        <h2>Getting Started with Design Thinking</h2>
+
+        <p>
+          Ready to adopt a Design Thinking mindset? Start with these practical steps:
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Your Action Plan</div>
+          <pre><code><strong>This Week:</strong>
+□ Interview 3 users of a product you're building
+□ Ask "why" 5 times to uncover root problems
+□ Sketch 10 different solutions (quantity over quality)
+
+<strong>This Month:</strong>
+□ Create a user persona for your project
+□ Build a low-fidelity prototype before coding
+□ Conduct a usability test with 5 people
+
+<strong>This Quarter:</strong>
+□ Run a full Design Thinking workshop with your team
+□ Document your process and learnings
+□ Share insights with stakeholders</code></pre>
+        </div>
+
+        <h2>Key Takeaways</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Remember</div>
+          <ul>
+            <li>✅ Design Thinking is about <strong>people</strong>, not technology</li>
+            <li>✅ <strong>Empathy</strong> is your superpower as a developer</li>
+            <li>✅ <strong>Iteration</strong> is not failure—it's how you improve</li>
+            <li>✅ <strong>Prototype</strong> before you code to save time</li>
+            <li>✅ <strong>Test</strong> with real users, not just your team</li>
+            <li>✅ Your role is to <strong>solve problems</strong>, not just write code</li>
+          </ul>
+        </div>
+
+        <h2>What's Next?</h2>
+
+        <p>
+          Now that you understand what Design Thinking is and why it matters, the next sections will give you
+          practical skills:
+        </p>
+
+        <ul>
+          <li><strong>User Research & Personas</strong> - Learn how to understand your users deeply</li>
+          <li><strong>Wireframing & Prototyping</strong> - Create quick mockups to test ideas</li>
+          <li><strong>UI/UX Principles</strong> - Design interfaces that feel intuitive</li>
+          <li><strong>Design Systems</strong> - Build consistent, scalable design languages</li>
+          <li><strong>Accessibility</strong> - Create products everyone can use</li>
+        </ul>
+
+        <div class="nav-buttons">
+          <a href="../index.html" class="nav-button">← Back to Home</a>
+          <a href="user-research.html" class="nav-button">User Research & Personas →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

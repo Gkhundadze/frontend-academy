@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Box Model - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .box-demo {
+      max-width: 400px;
+      margin: 20px auto;
+      background: white;
+      border: 4px solid #4a90e2;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .box-layers {
+      background: #ffe4e1;
+      border: 10px solid #ffb6c1;
+      padding: 30px;
+      margin: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>CSS Box Model</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>📦 CSS Box Model</h1>
+
+        <p>
+          Every HTML element is a rectangular box. The <strong>box model</strong> describes
+          how space is calculated around these boxes.
+        </p>
+
+        <h2>Box Model Components</h2>
+
+        <div class="demo-section">
+          <div class="demo-title">The Four Layers</div>
+          <pre><code>
+┌─────────────────────────────────────┐
+│          MARGIN (transparent)        │
+│  ┌───────────────────────────────┐  │
+│  │    BORDER                     │  │
+│  │  ┌─────────────────────────┐  │  │
+│  │  │   PADDING               │  │  │
+│  │  │  ┌───────────────────┐  │  │  │
+│  │  │  │     CONTENT       │  │  │  │
+│  │  │  │   (width/height)  │  │  │  │
+│  │  │  └───────────────────┘  │  │  │
+│  │  └─────────────────────────┘  │  │
+│  └───────────────────────────────┘  │
+└─────────────────────────────────────┘
+          </code></pre>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Content</strong></td>
+              <td>The actual content (text, images, etc.)</td>
+            </tr>
+            <tr>
+              <td><strong>Padding</strong></td>
+              <td>Space between content and border (inside)</td>
+            </tr>
+            <tr>
+              <td><strong>Border</strong></td>
+              <td>Line around the padding</td>
+            </tr>
+            <tr>
+              <td><strong>Margin</strong></td>
+              <td>Space outside the border (separates from other elements)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Visual Example</h2>
+
+        <div class="box-layers">
+          <strong>CONTENT</strong><br>
+          (padding around me)<br>
+          (border around padding)<br>
+          (margin outside border)
+        </div>
+
+        <h2>Calculating Total Size</h2>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.box</span> {
+  <span class="attr">width</span>: <span class="number">200</span>px;
+  <span class="attr">height</span>: <span class="number">100</span>px;
+  <span class="attr">padding</span>: <span class="number">20</span>px;
+  <span class="attr">border</span>: <span class="number">5</span>px <span class="string">solid black</span>;
+  <span class="attr">margin</span>: <span class="number">10</span>px;
+}</code></pre>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📐 Size Calculation</div>
+          <p><strong>Total width</strong> = width + padding-left + padding-right + border-left + border-right</p>
+          <p>= 200px + 20px + 20px + 5px + 5px = <strong>250px</strong></p>
+          <p><strong>Total height</strong> = height + padding-top + padding-bottom + border-top + border-bottom</p>
+          <p>= 100px + 20px + 20px + 5px + 5px = <strong>150px</strong></p>
+          <p><em>Margin adds space outside but doesn't affect the element's size.</em></p>
+        </div>
+
+        <h2>box-sizing Property</h2>
+
+        <p>
+          The default <code>box-sizing: content-box</code> can be confusing because
+          padding and border are added to the width/height.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Default (content-box)</div>
+          <pre><code><span class="tag">.box</span> {
+  <span class="attr">box-sizing</span>: <span class="string">content-box</span>; <span class="comment">/* default */</span>
+  <span class="attr">width</span>: <span class="number">200</span>px;
+  <span class="attr">padding</span>: <span class="number">20</span>px;
+  <span class="attr">border</span>: <span class="number">5</span>px <span class="string">solid black</span>;
+  <span class="comment">/* Actual width = 250px (200 + 20 + 20 + 5 + 5) */</span>
+}</code></pre>
+
+          <div class="example-label">Better (border-box)</div>
+          <pre><code><span class="tag">.box</span> {
+  <span class="attr">box-sizing</span>: <span class="string">border-box</span>; <span class="comment">/* RECOMMENDED */</span>
+  <span class="attr">width</span>: <span class="number">200</span>px;
+  <span class="attr">padding</span>: <span class="number">20</span>px;
+  <span class="attr">border</span>: <span class="number">5</span>px <span class="string">solid black</span>;
+  <span class="comment">/* Actual width = 200px (padding and border included!) */</span>
+}</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Best Practice</div>
+          <p>Always set <code>box-sizing: border-box</code> globally:</p>
+          <pre><code><span class="tag">*</span> {
+  <span class="attr">box-sizing</span>: <span class="string">border-box</span>;
+}</code></pre>
+          <p>This makes sizing much more intuitive!</p>
+        </div>
+
+        <h2>Margin</h2>
+
+        <h3>Margin Shorthand</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* One value: all sides */</span>
+<span class="tag">.box</span> { <span class="attr">margin</span>: <span class="number">20</span>px; }
+
+<span class="comment">/* Two values: top/bottom left/right */</span>
+<span class="tag">.box</span> { <span class="attr">margin</span>: <span class="number">10px 20px</span>; }
+
+<span class="comment">/* Three values: top left/right bottom */</span>
+<span class="tag">.box</span> { <span class="attr">margin</span>: <span class="number">10px 20px 30px</span>; }
+
+<span class="comment">/* Four values: top right bottom left (clockwise) */</span>
+<span class="tag">.box</span> { <span class="attr">margin</span>: <span class="number">10px 20px 30px 40px</span>; }</code></pre>
+        </div>
+
+        <h3>Margin Collapse</h3>
+
+        <p>
+          When two vertical margins meet, they <strong>collapse</strong> into one.
+          The larger margin wins.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.box1</span> {
+  <span class="attr">margin-bottom</span>: <span class="number">30</span>px;
+}
+
+<span class="tag">.box2</span> {
+  <span class="attr">margin-top</span>: <span class="number">20</span>px;
+}
+
+<span class="comment">/* Space between them = 30px (not 50px!) */</span></code></pre>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 Note</div>
+          <p>Margin collapse only happens with <strong>vertical</strong> margins (top/bottom).
+          Horizontal margins (left/right) don't collapse.</p>
+        </div>
+
+        <h3>Centering with Margin</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Center a block element horizontally */</span>
+<span class="tag">.box</span> {
+  <span class="attr">width</span>: <span class="number">300</span>px;
+  <span class="attr">margin</span>: <span class="number">0 auto</span>; <span class="comment">/* top/bottom: 0, left/right: auto */</span>
+}</code></pre>
+        </div>
+
+        <h2>Padding</h2>
+
+        <p>Padding creates space <strong>inside</strong> the element, between content and border.</p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Same shorthand rules as margin */</span>
+<span class="tag">.box</span> {
+  <span class="attr">padding</span>: <span class="number">20</span>px;                  <span class="comment">/* All sides */</span>
+  <span class="attr">padding</span>: <span class="number">10px 20px</span>;             <span class="comment">/* Vertical Horizontal */</span>
+  <span class="attr">padding</span>: <span class="number">10px 20px 30px</span>;        <span class="comment">/* Top H Bottom */</span>
+  <span class="attr">padding</span>: <span class="number">10px 20px 30px 40px</span>;   <span class="comment">/* Clockwise */</span>
+}
+
+<span class="comment">/* Individual sides */</span>
+<span class="tag">.box</span> {
+  <span class="attr">padding-top</span>: <span class="number">10</span>px;
+  <span class="attr">padding-right</span>: <span class="number">20</span>px;
+  <span class="attr">padding-bottom</span>: <span class="number">30</span>px;
+  <span class="attr">padding-left</span>: <span class="number">40</span>px;
+}</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Common Mistake</div>
+          <p>Padding affects the background! If you set a background color,
+          it extends into the padding area (but not into margin).</p>
+        </div>
+
+        <h2>Border</h2>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Shorthand: width style color */</span>
+<span class="tag">.box</span> {
+  <span class="attr">border</span>: <span class="number">2</span>px <span class="string">solid #333</span>;
+}
+
+<span class="comment">/* Individual properties */</span>
+<span class="tag">.box</span> {
+  <span class="attr">border-width</span>: <span class="number">2</span>px;
+  <span class="attr">border-style</span>: <span class="string">solid</span>; <span class="comment">/* solid, dashed, dotted, double */</span>
+  <span class="attr">border-color</span>: <span class="string">#333</span>;
+}
+
+<span class="comment">/* Individual sides */</span>
+<span class="tag">.box</span> {
+  <span class="attr">border-top</span>: <span class="number">1</span>px <span class="string">solid red</span>;
+  <span class="attr">border-right</span>: <span class="number">2</span>px <span class="string">dashed blue</span>;
+  <span class="attr">border-bottom</span>: <span class="number">3</span>px <span class="string">dotted green</span>;
+  <span class="attr">border-left</span>: <span class="number">4</span>px <span class="string">double purple</span>;
+}
+
+<span class="comment">/* Rounded corners */</span>
+<span class="tag">.box</span> {
+  <span class="attr">border-radius</span>: <span class="number">10</span>px;      <span class="comment">/* All corners */</span>
+  <span class="attr">border-radius</span>: <span class="number">10px 20px</span>;  <span class="comment">/* TL/BR TR/BL */</span>
+  <span class="attr">border-radius</span>: <span class="number">50%</span>;       <span class="comment">/* Circle */</span>
+}</code></pre>
+        </div>
+
+        <h2>Practical Examples</h2>
+
+        <h3>Card Component</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.card</span> {
+  <span class="comment">/* Content size */</span>
+  <span class="attr">width</span>: <span class="number">300</span>px;
+
+  <span class="comment">/* Spacing inside */</span>
+  <span class="attr">padding</span>: <span class="number">20px</span>;
+
+  <span class="comment">/* Border */</span>
+  <span class="attr">border</span>: <span class="number">1</span>px <span class="string">solid #ddd</span>;
+  <span class="attr">border-radius</span>: <span class="number">8</span>px;
+
+  <span class="comment">/* Spacing outside */</span>
+  <span class="attr">margin</span>: <span class="number">20px</span>;
+
+  <span class="comment">/* Make sizing intuitive */</span>
+  <span class="attr">box-sizing</span>: <span class="string">border-box</span>;
+}</code></pre>
+        </div>
+
+        <h3>Button with Spacing</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.button</span> {
+  <span class="comment">/* Content won't touch edges */</span>
+  <span class="attr">padding</span>: <span class="number">10px 20px</span>;
+
+  <span class="comment">/* Visual boundary */</span>
+  <span class="attr">border</span>: <span class="number">2</span>px <span class="string">solid #4a90e2</span>;
+  <span class="attr">border-radius</span>: <span class="number">4</span>px;
+
+  <span class="comment">/* Space from other elements */</span>
+  <span class="attr">margin</span>: <span class="number">10px</span>;
+}</code></pre>
+        </div>
+
+        <h2>Dev Tools Inspection</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">🔍 Using Browser DevTools</div>
+          <p>Right-click any element and select "Inspect" to see:</p>
+          <ul>
+            <li>The box model diagram (margin, border, padding, content)</li>
+            <li>Calculated sizes for each layer</li>
+            <li>Which CSS rules are affecting the element</li>
+          </ul>
+          <p>This is the BEST way to understand the box model!</p>
+        </div>
+
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li>The box model has 4 layers: content, padding, border, margin</li>
+            <li>Total size = content + padding + border (not margin)</li>
+            <li><code>box-sizing: border-box</code> makes sizing intuitive</li>
+            <li>Margin collapses vertically, padding doesn't</li>
+            <li>Use margin for space between elements</li>
+            <li>Use padding for space inside elements</li>
+            <li>DevTools shows the box model visually</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="css-basics.html" class="nav-button">← CSS Basics</a>
+          <a href="flexbox.html" class="nav-button">Flexbox →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

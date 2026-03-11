@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flexbox - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Demo styles for Flexbox examples */
+    .flex-demo {
+      background: #f0f0f0;
+      border: 2px dashed #999;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .flex-container {
+      display: flex;
+      background: #e3f2fd;
+      padding: 10px;
+      gap: 10px;
+      min-height: 100px;
+    }
+    .flex-item {
+      background: #4a90e2;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>Flexbox Layout</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+          <li><a href="https://flexboxfroggy.com/" target="_blank">Flexbox Froggy Game</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>📦 Flexbox Layout</h1>
+
+        <p>
+          <strong>Flexbox</strong> (Flexible Box Layout) is a powerful CSS layout system for arranging
+          elements in rows or columns. It makes creating responsive layouts much easier than older methods.
+        </p>
+
+        <div class="info-box tip">
+          <div class="info-box-title">🎮 Learn by Playing</div>
+          <p>
+            Check out <a href="https://flexboxfroggy.com/" target="_blank">Flexbox Froggy</a> -
+            a fun game that teaches Flexbox concepts interactively!
+          </p>
+        </div>
+
+        <h2>The Flexbox Concept</h2>
+
+        <p>
+          Flexbox works with two types of elements:
+        </p>
+
+        <ul>
+          <li><strong>Flex Container</strong>: The parent element with <code>display: flex</code></li>
+          <li><strong>Flex Items</strong>: The direct children of the flex container</li>
+        </ul>
+
+        <div class="demo-section">
+          <div class="demo-title">Basic Structure</div>
+          <pre><code class="language-html">&lt;!-- Flex Container --&gt;
+&lt;div class="container"&gt;
+
+  &lt;!-- Flex Items --&gt;
+  &lt;div class="item"&gt;Item 1&lt;/div&gt;
+  &lt;div class="item"&gt;Item 2&lt;/div&gt;
+  &lt;div class="item"&gt;Item 3&lt;/div&gt;
+
+&lt;/div&gt;</code></pre>
+
+          <pre><code><span class="comment">/* Turn the container into a flex container */</span>
+<span class="tag">.container</span> {
+  <span class="attr">display</span>: flex;
+}</code></pre>
+        </div>
+
+        <h2>Flex Container Properties</h2>
+
+        <p>
+          These properties go on the <strong>flex container</strong> (parent):
+        </p>
+
+        <h3>1. flex-direction</h3>
+
+        <p>
+          Defines the main axis direction (row or column):
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Value</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>row</code> (default)</td>
+              <td>Items arranged horizontally (left to right)</td>
+            </tr>
+            <tr>
+              <td><code>row-reverse</code></td>
+              <td>Items arranged horizontally (right to left)</td>
+            </tr>
+            <tr>
+              <td><code>column</code></td>
+              <td>Items arranged vertically (top to bottom)</td>
+            </tr>
+            <tr>
+              <td><code>column-reverse</code></td>
+              <td>Items arranged vertically (bottom to top)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Horizontal layout (default) */</span>
+<span class="tag">.container</span> {
+  <span class="attr">display</span>: flex;
+  <span class="attr">flex-direction</span>: row;
+}
+
+<span class="comment">/* Vertical layout */</span>
+<span class="tag">.container</span> {
+  <span class="attr">display</span>: flex;
+  <span class="attr">flex-direction</span>: column;
+}</code></pre>
+        </div>
+
+        <div class="flex-demo">
+          <div class="demo-title">Live Example: flex-direction: row</div>
+          <div class="flex-container" style="flex-direction: row;">
+            <div class="flex-item">1</div>
+            <div class="flex-item">2</div>
+            <div class="flex-item">3</div>
+          </div>
+        </div>
+
+        <div class="flex-demo">
+          <div class="demo-title">Live Example: flex-direction: column</div>
+          <div class="flex-container" style="flex-direction: column;">
+            <div class="flex-item">1</div>
+            <div class="flex-item">2</div>
+            <div class="flex-item">3</div>
+          </div>
+        </div>
+
+        <h3>2. justify-content</h3>
+
+        <p>
+          Aligns items along the <strong>main axis</strong> (horizontal if row, vertical if column):
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Value</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>flex-start</code></td>
+              <td>Items at the start</td>
+            </tr>
+            <tr>
+              <td><code>flex-end</code></td>
+              <td>Items at the end</td>
+            </tr>
+            <tr>
+              <td><code>center</code></td>
+              <td>Items centered</td>
+            </tr>
+            <tr>
+              <td><code>space-between</code></td>
+              <td>Space between items, no space at edges</td>
+            </tr>
+            <tr>
+              <td><code>space-around</code></td>
+              <td>Equal space around each item</td>
+            </tr>
+            <tr>
+              <td><code>space-evenly</code></td>
+              <td>Equal space between all items including edges</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="flex-demo">
+          <div class="demo-title">justify-content: center</div>
+          <div class="flex-container" style="justify-content: center;">
+            <div class="flex-item">1</div>
+            <div class="flex-item">2</div>
+            <div class="flex-item">3</div>
+          </div>
+        </div>
+
+        <div class="flex-demo">
+          <div class="demo-title">justify-content: space-between</div>
+          <div class="flex-container" style="justify-content: space-between;">
+            <div class="flex-item">1</div>
+            <div class="flex-item">2</div>
+            <div class="flex-item">3</div>
+          </div>
+        </div>
+
+        <div class="flex-demo">
+          <div class="demo-title">justify-content: space-evenly</div>
+          <div class="flex-container" style="justify-content: space-evenly;">
+            <div class="flex-item">1</div>
+            <div class="flex-item">2</div>
+            <div class="flex-item">3</div>
+          </div>
+        </div>
+
+        <h3>3. align-items</h3>
+
+        <p>
+          Aligns items along the <strong>cross axis</strong> (vertical if row, horizontal if column):
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Value</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>stretch</code> (default)</td>
+              <td>Items stretch to fill container</td>
+            </tr>
+            <tr>
+              <td><code>flex-start</code></td>
+              <td>Items at the start</td>
+            </tr>
+            <tr>
+              <td><code>flex-end</code></td>
+              <td>Items at the end</td>
+            </tr>
+            <tr>
+              <td><code>center</code></td>
+              <td>Items centered</td>
+            </tr>
+            <tr>
+              <td><code>baseline</code></td>
+              <td>Items aligned by text baseline</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="flex-demo">
+          <div class="demo-title">align-items: center</div>
+          <div class="flex-container" style="align-items: center; min-height: 150px;">
+            <div class="flex-item">1</div>
+            <div class="flex-item">2</div>
+            <div class="flex-item">3</div>
+          </div>
+        </div>
+
+        <h3>4. flex-wrap</h3>
+
+        <p>
+          Controls whether items wrap to new lines when they don't fit:
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Items stay on one line (may overflow) */</span>
+<span class="tag">.container</span> {
+  <span class="attr">flex-wrap</span>: nowrap; <span class="comment">/* default */</span>
+}
+
+<span class="comment">/* Items wrap to new lines if needed */</span>
+<span class="tag">.container</span> {
+  <span class="attr">flex-wrap</span>: wrap;
+}</code></pre>
+        </div>
+
+        <div class="flex-demo">
+          <div class="demo-title">flex-wrap: wrap</div>
+          <div class="flex-container" style="flex-wrap: wrap;">
+            <div class="flex-item" style="width: 150px;">1</div>
+            <div class="flex-item" style="width: 150px;">2</div>
+            <div class="flex-item" style="width: 150px;">3</div>
+            <div class="flex-item" style="width: 150px;">4</div>
+            <div class="flex-item" style="width: 150px;">5</div>
+          </div>
+        </div>
+
+        <h3>5. gap</h3>
+
+        <p>
+          Creates space between flex items (modern browsers only):
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.container</span> {
+  <span class="attr">display</span>: flex;
+  <span class="attr">gap</span>: <span class="number">20</span>px; <span class="comment">/* Space between items */</span>
+}
+
+<span class="comment">/* Separate row and column gaps */</span>
+<span class="tag">.container</span> {
+  <span class="attr">row-gap</span>: <span class="number">20</span>px;
+  <span class="attr">column-gap</span>: <span class="number">10</span>px;
+}</code></pre>
+        </div>
+
+        <h2>Flex Item Properties</h2>
+
+        <p>
+          These properties go on the <strong>flex items</strong> (children):
+        </p>
+
+        <h3>1. flex-grow</h3>
+
+        <p>
+          Defines how much an item should grow relative to other items:
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.item-1</span> {
+  <span class="attr">flex-grow</span>: <span class="number">1</span>; <span class="comment">/* Takes 1 part of available space */</span>
+}
+
+<span class="tag">.item-2</span> {
+  <span class="attr">flex-grow</span>: <span class="number">2</span>; <span class="comment">/* Takes 2 parts (twice as much as item-1) */</span>
+}</code></pre>
+        </div>
+
+        <div class="flex-demo">
+          <div class="demo-title">flex-grow example</div>
+          <div class="flex-container">
+            <div class="flex-item" style="flex-grow: 1;">flex-grow: 1</div>
+            <div class="flex-item" style="flex-grow: 2;">flex-grow: 2</div>
+            <div class="flex-item" style="flex-grow: 1;">flex-grow: 1</div>
+          </div>
+        </div>
+
+        <h3>2. flex-shrink</h3>
+
+        <p>
+          Defines how much an item should shrink if there's not enough space:
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.item</span> {
+  <span class="attr">flex-shrink</span>: <span class="number">1</span>; <span class="comment">/* Can shrink (default) */</span>
+}
+
+<span class="tag">.no-shrink</span> {
+  <span class="attr">flex-shrink</span>: <span class="number">0</span>; <span class="comment">/* Won't shrink */</span>
+}</code></pre>
+        </div>
+
+        <h3>3. flex-basis</h3>
+
+        <p>
+          Defines the initial size of an item before growing or shrinking:
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.item</span> {
+  <span class="attr">flex-basis</span>: <span class="number">200</span>px; <span class="comment">/* Start at 200px wide */</span>
+}
+
+<span class="tag">.item</span> {
+  <span class="attr">flex-basis</span>: <span class="number">30</span>%; <span class="comment">/* Start at 30% of container */</span>
+}</code></pre>
+        </div>
+
+        <h3>4. flex (Shorthand)</h3>
+
+        <p>
+          Combines flex-grow, flex-shrink, and flex-basis:
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* flex: [grow] [shrink] [basis] */</span>
+<span class="tag">.item</span> {
+  <span class="attr">flex</span>: <span class="number">1 1 200</span>px;
+}
+
+<span class="comment">/* Common patterns */</span>
+<span class="tag">.item</span> {
+  <span class="attr">flex</span>: <span class="number">1</span>; <span class="comment">/* flex: 1 1 0 - grow and shrink equally */</span>
+}
+
+<span class="tag">.item</span> {
+  <span class="attr">flex</span>: <span class="number">0 0 200</span>px; <span class="comment">/* Fixed width, no grow/shrink */</span>
+}</code></pre>
+        </div>
+
+        <h3>5. align-self</h3>
+
+        <p>
+          Overrides align-items for individual items:
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.special-item</span> {
+  <span class="attr">align-self</span>: flex-end; <span class="comment">/* This item aligns to bottom */</span>
+}</code></pre>
+        </div>
+
+        <h2>Common Flexbox Patterns</h2>
+
+        <h3>Centering Content</h3>
+
+        <p>
+          Perfect centering (horizontally and vertically):
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.centered</span> {
+  <span class="attr">display</span>: flex;
+  <span class="attr">justify-content</span>: center; <span class="comment">/* Horizontal center */</span>
+  <span class="attr">align-items</span>: center;     <span class="comment">/* Vertical center */</span>
+  <span class="attr">min-height</span>: <span class="number">300</span>px;
+}</code></pre>
+        </div>
+
+        <div class="flex-demo">
+          <div class="flex-container" style="justify-content: center; align-items: center; min-height: 200px;">
+            <div class="flex-item">Perfectly Centered!</div>
+          </div>
+        </div>
+
+        <h3>Navigation Bar</h3>
+
+        <div class="code-example">
+          <div class="example-label">HTML</div>
+          <pre><code class="language-html">&lt;nav class="navbar"&gt;
+  &lt;div class="logo"&gt;Logo&lt;/div&gt;
+  &lt;ul class="nav-links"&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;About&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+
+          <div class="example-label">CSS</div>
+          <pre><code><span class="tag">.navbar</span> {
+  <span class="attr">display</span>: flex;
+  <span class="attr">justify-content</span>: space-between; <span class="comment">/* Logo left, links right */</span>
+  <span class="attr">align-items</span>: center;
+  <span class="attr">padding</span>: <span class="number">1</span>rem;
+  <span class="attr">background</span>: <span class="string">#333</span>;
+}
+
+<span class="tag">.nav-links</span> {
+  <span class="attr">display</span>: flex;
+  <span class="attr">gap</span>: <span class="number">2</span>rem;
+  <span class="attr">list-style</span>: none;
+}</code></pre>
+        </div>
+
+        <h3>Card Grid</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.card-container</span> {
+  <span class="attr">display</span>: flex;
+  <span class="attr">flex-wrap</span>: wrap;           <span class="comment">/* Wrap to new lines */</span>
+  <span class="attr">gap</span>: <span class="number">20</span>px;
+}
+
+<span class="tag">.card</span> {
+  <span class="attr">flex</span>: <span class="number">1 1 300</span>px;          <span class="comment">/* Grow, shrink, min 300px */</span>
+  <span class="attr">padding</span>: <span class="number">20</span>px;
+  <span class="attr">background</span>: <span class="string">white</span>;
+  <span class="attr">border-radius</span>: <span class="number">8</span>px;
+}</code></pre>
+        </div>
+
+        <h3>Holy Grail Layout</h3>
+
+        <p>
+          Classic layout with header, footer, main content, and two sidebars:
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">HTML</div>
+          <pre><code class="language-html">&lt;div class="container"&gt;
+  &lt;header&gt;Header&lt;/header&gt;
+  &lt;div class="content"&gt;
+    &lt;aside class="sidebar"&gt;Left Sidebar&lt;/aside&gt;
+    &lt;main&gt;Main Content&lt;/main&gt;
+    &lt;aside class="sidebar"&gt;Right Sidebar&lt;/aside&gt;
+  &lt;/div&gt;
+  &lt;footer&gt;Footer&lt;/footer&gt;
+&lt;/div&gt;</code></pre>
+
+          <div class="example-label">CSS</div>
+          <pre><code><span class="tag">.container</span> {
+  <span class="attr">display</span>: flex;
+  <span class="attr">flex-direction</span>: column;
+  <span class="attr">min-height</span>: <span class="number">100</span>vh;
+}
+
+<span class="tag">.content</span> {
+  <span class="attr">display</span>: flex;
+  <span class="attr">flex</span>: <span class="number">1</span>; <span class="comment">/* Takes remaining space */</span>
+}
+
+<span class="tag">main</span> {
+  <span class="attr">flex</span>: <span class="number">1</span>; <span class="comment">/* Main content grows */</span>
+}
+
+<span class="tag">.sidebar</span> {
+  <span class="attr">flex</span>: <span class="number">0 0 200</span>px; <span class="comment">/* Fixed 200px width */</span>
+}</code></pre>
+        </div>
+
+        <h2>Browser Support</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">✅ Excellent Browser Support</div>
+          <p>Flexbox is supported in all modern browsers (Chrome, Firefox, Safari, Edge).
+          For older browsers (IE 10-11), use vendor prefixes or fallback layouts.</p>
+        </div>
+
+        <h2>Quick Reference</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Applied To</th>
+              <th>Common Values</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>display</code></td>
+              <td>Container</td>
+              <td><code>flex</code></td>
+            </tr>
+            <tr>
+              <td><code>flex-direction</code></td>
+              <td>Container</td>
+              <td><code>row</code>, <code>column</code></td>
+            </tr>
+            <tr>
+              <td><code>justify-content</code></td>
+              <td>Container</td>
+              <td><code>center</code>, <code>space-between</code></td>
+            </tr>
+            <tr>
+              <td><code>align-items</code></td>
+              <td>Container</td>
+              <td><code>center</code>, <code>stretch</code></td>
+            </tr>
+            <tr>
+              <td><code>flex-wrap</code></td>
+              <td>Container</td>
+              <td><code>wrap</code>, <code>nowrap</code></td>
+            </tr>
+            <tr>
+              <td><code>gap</code></td>
+              <td>Container</td>
+              <td><code>20px</code>, <code>1rem</code></td>
+            </tr>
+            <tr>
+              <td><code>flex</code></td>
+              <td>Item</td>
+              <td><code>1</code>, <code>1 1 200px</code></td>
+            </tr>
+            <tr>
+              <td><code>align-self</code></td>
+              <td>Item</td>
+              <td><code>center</code>, <code>flex-end</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li>Flexbox creates flexible, responsive layouts</li>
+            <li>Container properties: flex-direction, justify-content, align-items, flex-wrap, gap</li>
+            <li>Item properties: flex-grow, flex-shrink, flex-basis, flex shorthand</li>
+            <li>Common patterns: centering, navigation bars, card grids</li>
+            <li>Flexbox is fully supported in modern browsers</li>
+          </ul>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">🎮 Practice Time!</div>
+          <p>Don't forget to play <a href="https://flexboxfroggy.com/" target="_blank">Flexbox Froggy</a>
+          to master these concepts through practice!</p>
+        </div>
+
+        <div class="page-navigation">
+          <a href="box-model.html" class="nav-button">← Box Model</a>
+          <a href="css-grid.html" class="nav-button">CSS Grid →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

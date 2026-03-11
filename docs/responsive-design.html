@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Design - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>Responsive Design</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+          <li><a href="../projects/landing-page/index.html">Landing Page Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>📱 Responsive Design</h1>
+
+        <p>
+          <strong>Responsive design</strong> ensures your website looks great and works well on all
+          devices - from mobile phones to tablets to desktop computers.
+        </p>
+
+        <h2>Why Responsive Design?</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📊 The Stats</div>
+          <ul>
+            <li>Over 60% of web traffic comes from mobile devices</li>
+            <li>Google prioritizes mobile-friendly sites in search rankings</li>
+            <li>Users expect websites to work on any device</li>
+            <li>One codebase works everywhere (no separate mobile site)</li>
+          </ul>
+        </div>
+
+        <h2>The Viewport Meta Tag</h2>
+
+        <p>
+          <strong>Always</strong> include this in your <code>&lt;head&gt;</code>:
+        </p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>width=device-width</code></td>
+              <td>Sets viewport width to device screen width</td>
+            </tr>
+            <tr>
+              <td><code>initial-scale=1.0</code></td>
+              <td>Sets initial zoom level (1 = 100%)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="info-box important">
+          <div class="info-box-title">⚠️ Critical</div>
+          <p>Without this meta tag, mobile browsers will render your page at desktop width
+          and then shrink it to fit, making text tiny and unreadable.</p>
+        </div>
+
+        <h2>Mobile-First Approach</h2>
+
+        <p>
+          <strong>Mobile-first</strong> means designing for mobile devices first, then adding
+          complexity for larger screens.
+        </p>
+
+        <div class="demo-section">
+          <div class="demo-title">Design Progression</div>
+          <pre><code>1. Mobile (320px-480px)    ← Start here (smallest)
+   ↓
+2. Tablet (768px-1024px)   ← Add more features
+   ↓
+3. Desktop (1200px+)       ← Full experience</code></pre>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">Mobile-First CSS</div>
+          <pre><code><span class="comment">/* Base styles: Mobile (default) */</span>
+<span class="tag">.container</span> {
+  <span class="attr">padding</span>: <span class="number">10</span>px;
+  <span class="attr">font-size</span>: <span class="number">16</span>px;
+}
+
+<span class="comment">/* Tablet and up */</span>
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">768</span>px) {
+  <span class="tag">.container</span> {
+    <span class="attr">padding</span>: <span class="number">20</span>px;
+    <span class="attr">font-size</span>: <span class="number">18</span>px;
+  }
+}
+
+<span class="comment">/* Desktop and up */</span>
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">1200</span>px) {
+  <span class="tag">.container</span> {
+    <span class="attr">padding</span>: <span class="number">30</span>px;
+    <span class="attr">font-size</span>: <span class="number">20</span>px;
+  }
+}</code></pre>
+        </div>
+
+        <h2>Media Queries</h2>
+
+        <p>
+          Media queries let you apply CSS styles based on device characteristics like screen width.
+        </p>
+
+        <h3>Basic Syntax</h3>
+
+        <div class="code-example">
+          <pre><code><span class="keyword">@media</span> (<span class="attr">condition</span>) {
+  <span class="comment">/* Styles applied when condition is true */</span>
+}</code></pre>
+        </div>
+
+        <h3>Common Breakpoints</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Device</th>
+              <th>Width Range</th>
+              <th>Media Query</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mobile</td>
+              <td>320px - 480px</td>
+              <td><code>@media (max-width: 480px)</code></td>
+            </tr>
+            <tr>
+              <td>Tablet</td>
+              <td>768px - 1024px</td>
+              <td><code>@media (min-width: 768px)</code></td>
+            </tr>
+            <tr>
+              <td>Desktop</td>
+              <td>1200px+</td>
+              <td><code>@media (min-width: 1200px)</code></td>
+            </tr>
+            <tr>
+              <td>Large Desktop</td>
+              <td>1920px+</td>
+              <td><code>@media (min-width: 1920px)</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="code-example">
+          <div class="example-label">Responsive Navigation Example</div>
+          <pre><code><span class="comment">/* Mobile: Stacked navigation */</span>
+<span class="tag">.nav</span> {
+  <span class="attr">display</span>: <span class="string">flex</span>;
+  <span class="attr">flex-direction</span>: <span class="string">column</span>;
+}
+
+<span class="tag">.nav-item</span> {
+  <span class="attr">padding</span>: <span class="number">15</span>px;
+  <span class="attr">border-bottom</span>: <span class="number">1</span>px <span class="string">solid #ddd</span>;
+}
+
+<span class="comment">/* Tablet and up: Horizontal navigation */</span>
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">768</span>px) {
+  <span class="tag">.nav</span> {
+    <span class="attr">flex-direction</span>: <span class="string">row</span>;
+    <span class="attr">justify-content</span>: <span class="string">space-around</span>;
+  }
+
+  <span class="tag">.nav-item</span> {
+    <span class="attr">border-bottom</span>: <span class="string">none</span>;
+  }
+}</code></pre>
+        </div>
+
+        <h3>Media Query Operators</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Minimum width (mobile-first) */</span>
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">768</span>px) {
+  <span class="comment">/* Styles for 768px and wider */</span>
+}
+
+<span class="comment">/* Maximum width */</span>
+<span class="keyword">@media</span> (<span class="attr">max-width</span>: <span class="number">767</span>px) {
+  <span class="comment">/* Styles for 767px and narrower */</span>
+}
+
+<span class="comment">/* Range (between two widths) */</span>
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">768</span>px) <span class="keyword">and</span> (<span class="attr">max-width</span>: <span class="number">1024</span>px) {
+  <span class="comment">/* Styles for tablets only */</span>
+}
+
+<span class="comment">/* Orientation */</span>
+<span class="keyword">@media</span> (<span class="attr">orientation</span>: <span class="string">landscape</span>) {
+  <span class="comment">/* Styles for landscape mode */</span>
+}
+
+<span class="comment">/* Multiple conditions */</span>
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">768</span>px) <span class="keyword">and</span> (<span class="attr">orientation</span>: <span class="string">portrait</span>) {
+  <span class="comment">/* Styles for portrait tablets */</span>
+}</code></pre>
+        </div>
+
+        <h2>Responsive Units</h2>
+
+        <h3>Relative Units</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Unit</th>
+              <th>Relative To</th>
+              <th>Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>%</code></td>
+              <td>Parent element</td>
+              <td>Widths, fluid layouts</td>
+            </tr>
+            <tr>
+              <td><code>em</code></td>
+              <td>Parent font size</td>
+              <td>Padding, margin</td>
+            </tr>
+            <tr>
+              <td><code>rem</code></td>
+              <td>Root font size</td>
+              <td>Font sizes, spacing</td>
+            </tr>
+            <tr>
+              <td><code>vw</code></td>
+              <td>Viewport width</td>
+              <td>Full-width sections</td>
+            </tr>
+            <tr>
+              <td><code>vh</code></td>
+              <td>Viewport height</td>
+              <td>Full-height sections</td>
+            </tr>
+            <tr>
+              <td><code>vmin</code></td>
+              <td>Smaller viewport dimension</td>
+              <td>Responsive elements</td>
+            </tr>
+            <tr>
+              <td><code>vmax</code></td>
+              <td>Larger viewport dimension</td>
+              <td>Responsive elements</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Fluid width */</span>
+<span class="tag">.container</span> {
+  <span class="attr">width</span>: <span class="number">90%</span>;      <span class="comment">/* 90% of parent */</span>
+  <span class="attr">max-width</span>: <span class="number">1200</span>px; <span class="comment">/* But never larger than 1200px */</span>
+}
+
+<span class="comment">/* Responsive font size */</span>
+<span class="tag">html</span> {
+  <span class="attr">font-size</span>: <span class="number">16</span>px; <span class="comment">/* Base size */</span>
+}
+
+<span class="tag">h1</span> {
+  <span class="attr">font-size</span>: <span class="number">2</span>rem;  <span class="comment">/* 32px (2 × 16px) */</span>
+}
+
+<span class="comment">/* Full viewport height */</span>
+<span class="tag">.hero</span> {
+  <span class="attr">height</span>: <span class="number">100</span>vh; <span class="comment">/* Always full screen height */</span>
+}</code></pre>
+        </div>
+
+        <h2>Responsive Images</h2>
+
+        <h3>Fluid Images</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Make images scale with container */</span>
+<span class="tag">img</span> {
+  <span class="attr">max-width</span>: <span class="number">100%</span>;  <span class="comment">/* Never larger than container */</span>
+  <span class="attr">height</span>: <span class="string">auto</span>;     <span class="comment">/* Maintain aspect ratio */</span>
+  <span class="attr">display</span>: <span class="string">block</span>;   <span class="comment">/* Remove inline spacing */</span>
+}</code></pre>
+        </div>
+
+        <h3>Picture Element</h3>
+
+        <div class="code-example">
+          <div class="example-label">Different images for different screens</div>
+          <pre><code class="language-html">&lt;picture&gt;
+  &lt;!-- Large screens: use high-res image --&gt;
+  &lt;source media="(min-width: 1200px)" srcset="hero-large.jpg"&gt;
+
+  &lt;!-- Medium screens: use medium image --&gt;
+  &lt;source media="(min-width: 768px)" srcset="hero-medium.jpg"&gt;
+
+  &lt;!-- Small screens: use small image (default) --&gt;
+  &lt;img src="hero-small.jpg" alt="Hero image"&gt;
+&lt;/picture&gt;</code></pre>
+        </div>
+
+        <h3>Srcset Attribute</h3>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Browser chooses best image based on screen density --&gt;
+&lt;img
+  src="image.jpg"
+  srcset="image-small.jpg 480w,
+          image-medium.jpg 768w,
+          image-large.jpg 1200w"
+  sizes="(max-width: 768px) 100vw,
+         (max-width: 1200px) 50vw,
+         33vw"
+  alt="Responsive image"
+&gt;</code></pre>
+        </div>
+
+        <h2>Responsive Typography</h2>
+
+        <h3>Using clamp()</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Fluid font size that scales with viewport */</span>
+<span class="tag">h1</span> {
+  <span class="attr">font-size</span>: <span class="function">clamp</span>(<span class="number">1.5rem, 5vw, 3rem</span>);
+  <span class="comment">/*            min     ideal   max */</span>
+  <span class="comment">/* Never smaller than 1.5rem */</span>
+  <span class="comment">/* Never larger than 3rem */</span>
+  <span class="comment">/* Grows with viewport between those values */</span>
+}</code></pre>
+        </div>
+
+        <h3>Responsive Font Scales</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Mobile font sizes */</span>
+<span class="tag">body</span>   { <span class="attr">font-size</span>: <span class="number">16</span>px; }
+<span class="tag">h1</span>     { <span class="attr">font-size</span>: <span class="number">24</span>px; }
+<span class="tag">h2</span>     { <span class="attr">font-size</span>: <span class="number">20</span>px; }
+<span class="tag">h3</span>     { <span class="attr">font-size</span>: <span class="number">18</span>px; }
+
+<span class="comment">/* Desktop font sizes */</span>
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">1200</span>px) {
+  <span class="tag">body</span> { <span class="attr">font-size</span>: <span class="number">18</span>px; }
+  <span class="tag">h1</span>   { <span class="attr">font-size</span>: <span class="number">48</span>px; }
+  <span class="tag">h2</span>   { <span class="attr">font-size</span>: <span class="number">36</span>px; }
+  <span class="tag">h3</span>   { <span class="attr">font-size</span>: <span class="number">24</span>px; }
+}</code></pre>
+        </div>
+
+        <h2>Responsive Layout Patterns</h2>
+
+        <h3>1. Column Drop</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Mobile: Stacked columns */</span>
+<span class="tag">.grid</span> {
+  <span class="attr">display</span>: <span class="string">grid</span>;
+  <span class="attr">grid-template-columns</span>: <span class="number">1</span>fr;
+  <span class="attr">gap</span>: <span class="number">20</span>px;
+}
+
+<span class="comment">/* Tablet: Two columns */</span>
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">768</span>px) {
+  <span class="tag">.grid</span> {
+    <span class="attr">grid-template-columns</span>: <span class="number">1</span>fr <span class="number">1</span>fr;
+  }
+}
+
+<span class="comment">/* Desktop: Three columns */</span>
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">1200</span>px) {
+  <span class="tag">.grid</span> {
+    <span class="attr">grid-template-columns</span>: <span class="number">1</span>fr <span class="number">1</span>fr <span class="number">1</span>fr;
+  }
+}</code></pre>
+        </div>
+
+        <h3>2. Flexbox Wrapping</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.flex-container</span> {
+  <span class="attr">display</span>: <span class="string">flex</span>;
+  <span class="attr">flex-wrap</span>: <span class="string">wrap</span>;
+  <span class="attr">gap</span>: <span class="number">20</span>px;
+}
+
+<span class="tag">.flex-item</span> {
+  <span class="attr">flex</span>: <span class="number">1 1 300</span>px; <span class="comment">/* Grow, shrink, min 300px */</span>
+}</code></pre>
+        </div>
+
+        <h3>3. Auto-Fit Grid</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.grid</span> {
+  <span class="attr">display</span>: <span class="string">grid</span>;
+  <span class="attr">grid-template-columns</span>: <span class="function">repeat</span>(<span class="keyword">auto-fit</span>, <span class="function">minmax</span>(<span class="number">250px, 1fr</span>));
+  <span class="attr">gap</span>: <span class="number">20</span>px;
+  <span class="comment">/* Automatically fits as many 250px+ columns as possible */</span>
+}</code></pre>
+        </div>
+
+        <h2>Common Responsive Patterns</h2>
+
+        <h3>Hide/Show Elements</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Show on mobile, hide on desktop */</span>
+<span class="tag">.mobile-only</span> {
+  <span class="attr">display</span>: <span class="string">block</span>;
+}
+
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">768</span>px) {
+  <span class="tag">.mobile-only</span> {
+    <span class="attr">display</span>: <span class="string">none</span>;
+  }
+}
+
+<span class="comment">/* Hide on mobile, show on desktop */</span>
+<span class="tag">.desktop-only</span> {
+  <span class="attr">display</span>: <span class="string">none</span>;
+}
+
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">768</span>px) {
+  <span class="tag">.desktop-only</span> {
+    <span class="attr">display</span>: <span class="string">block</span>;
+  }
+}</code></pre>
+        </div>
+
+        <h3>Responsive Spacing</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.section</span> {
+  <span class="attr">padding</span>: <span class="number">20</span>px; <span class="comment">/* Mobile */</span>
+}
+
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">768</span>px) {
+  <span class="tag">.section</span> {
+    <span class="attr">padding</span>: <span class="number">40</span>px; <span class="comment">/* Tablet */</span>
+  }
+}
+
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">1200</span>px) {
+  <span class="tag">.section</span> {
+    <span class="attr">padding</span>: <span class="number">60</span>px; <span class="comment">/* Desktop */</span>
+  }
+}</code></pre>
+        </div>
+
+        <h2>Testing Responsive Design</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">🔍 Testing Tools</div>
+          <ul>
+            <li><strong>Browser DevTools</strong>: Press F12, click device icon</li>
+            <li><strong>Chrome DevTools</strong>: Toggle device toolbar (Ctrl+Shift+M)</li>
+            <li><strong>Firefox Responsive Mode</strong>: Ctrl+Shift+M</li>
+            <li><strong>Real Devices</strong>: Test on actual phones/tablets</li>
+            <li><strong>Online Tools</strong>: BrowserStack, Responsinator</li>
+          </ul>
+        </div>
+
+        <h2>Best Practices</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Responsive Design Tips</div>
+          <ul>
+            <li>✅ Always include viewport meta tag</li>
+            <li>✅ Design mobile-first, then scale up</li>
+            <li>✅ Use relative units (%, rem, em)</li>
+            <li>✅ Make images flexible with max-width: 100%</li>
+            <li>✅ Test on real devices, not just DevTools</li>
+            <li>✅ Use Flexbox/Grid for layouts</li>
+            <li>✅ Touch targets should be at least 44×44px</li>
+            <li>✅ Keep content readable without zooming</li>
+            <li>❌ Don't use fixed widths in pixels</li>
+            <li>❌ Don't rely on hover states (mobile has no hover)</li>
+          </ul>
+        </div>
+
+        <h2>Complete Responsive Example</h2>
+
+        <div class="code-example">
+          <div class="example-label">HTML</div>
+          <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Responsive Page&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header class="header"&gt;
+    &lt;h1&gt;My Site&lt;/h1&gt;
+    &lt;nav class="nav"&gt;
+      &lt;a href="#"&gt;Home&lt;/a&gt;
+      &lt;a href="#"&gt;About&lt;/a&gt;
+      &lt;a href="#"&gt;Contact&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main class="container"&gt;
+    &lt;div class="grid"&gt;
+      &lt;div class="card"&gt;Card 1&lt;/div&gt;
+      &lt;div class="card"&gt;Card 2&lt;/div&gt;
+      &lt;div class="card"&gt;Card 3&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+          <div class="example-label">CSS</div>
+          <pre><code><span class="comment">/* Mobile-first base styles */</span>
+<span class="tag">*</span> {
+  <span class="attr">box-sizing</span>: <span class="string">border-box</span>;
+}
+
+<span class="tag">body</span> {
+  <span class="attr">margin</span>: <span class="number">0</span>;
+  <span class="attr">font-family</span>: <span class="string">Arial, sans-serif</span>;
+}
+
+<span class="tag">.container</span> {
+  <span class="attr">width</span>: <span class="number">90%</span>;
+  <span class="attr">max-width</span>: <span class="number">1200</span>px;
+  <span class="attr">margin</span>: <span class="number">0</span> <span class="string">auto</span>;
+  <span class="attr">padding</span>: <span class="number">20</span>px;
+}
+
+<span class="comment">/* Mobile: Stacked navigation */</span>
+<span class="tag">.nav</span> {
+  <span class="attr">display</span>: <span class="string">flex</span>;
+  <span class="attr">flex-direction</span>: <span class="string">column</span>;
+  <span class="attr">gap</span>: <span class="number">10</span>px;
+}
+
+<span class="comment">/* Mobile: Single column grid */</span>
+<span class="tag">.grid</span> {
+  <span class="attr">display</span>: <span class="string">grid</span>;
+  <span class="attr">gap</span>: <span class="number">20</span>px;
+}
+
+<span class="tag">.card</span> {
+  <span class="attr">padding</span>: <span class="number">20</span>px;
+  <span class="attr">background</span>: <span class="string">#f0f0f0</span>;
+  <span class="attr">border-radius</span>: <span class="number">8</span>px;
+}
+
+<span class="comment">/* Tablet: 768px and up */</span>
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">768</span>px) {
+  <span class="tag">.nav</span> {
+    <span class="attr">flex-direction</span>: <span class="string">row</span>;
+    <span class="attr">justify-content</span>: <span class="string">space-around</span>;
+  }
+
+  <span class="tag">.grid</span> {
+    <span class="attr">grid-template-columns</span>: <span class="function">repeat</span>(<span class="number">2, 1fr</span>);
+  }
+}
+
+<span class="comment">/* Desktop: 1200px and up */</span>
+<span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">1200</span>px) {
+  <span class="tag">.grid</span> {
+    <span class="attr">grid-template-columns</span>: <span class="function">repeat</span>(<span class="number">3, 1fr</span>);
+  }
+}</code></pre>
+        </div>
+
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li>Why responsive design is essential</li>
+            <li>How to use the viewport meta tag</li>
+            <li>Mobile-first design approach</li>
+            <li>Media queries and breakpoints</li>
+            <li>Responsive units (%, rem, vw, vh)</li>
+            <li>Responsive images techniques</li>
+            <li>Common responsive patterns</li>
+            <li>Testing and best practices</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="css-grid.html" class="nav-button">← CSS Grid</a>
+          <a href="scss-basics.html" class="nav-button">SCSS Basics →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

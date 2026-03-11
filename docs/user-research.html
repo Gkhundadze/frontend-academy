@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Research & Personas - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+    <nav class="sidebar">
+      <div class="logo">
+        <h2>Frontend Course</h2>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-fundamentals.html">CSS Fundamentals</a></li>
+          <li><a href="css-box-model.html">CSS Box Model</a></li>
+          <li><a href="css-flexbox.html">CSS Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="css-animations.html">CSS Animations</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html" class="active">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <button class="mobile-menu-toggle">☰</button>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+        <h1>👥 User Research & Personas</h1>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 The Foundation of Good Design</div>
+          <p>User research is the process of understanding your users' needs, behaviors, and motivations through observation and feedback. It's the foundation that ensures you're building the right product for the right people.</p>
+        </div>
+
+        <h2>Why User Research Matters</h2>
+
+        <p>As a frontend developer, you might think user research is "someone else's job." But understanding your users makes you a better developer:</p>
+
+        <div class="demo-section">
+          <ul>
+            <li><strong>🎯 Build What Users Actually Need</strong> - Stop guessing, start knowing</li>
+            <li><strong>💰 Save Time & Money</strong> - Fix issues before writing code, not after</li>
+            <li><strong>📈 Increase Success Rates</strong> - Products built on research perform better</li>
+            <li><strong>🤝 Better Communication</strong> - Speak the same language as designers and product managers</li>
+            <li><strong>💡 Make Better Decisions</strong> - Data-driven choices instead of assumptions</li>
+          </ul>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Common Mistake</div>
+          <p><strong>Don't skip research because you think you know your users.</strong> Even experienced teams are often surprised by what they learn from actual user research. Your assumptions are not facts.</p>
+        </div>
+
+        <h2>Research Methods Overview</h2>
+
+        <p>Different research methods serve different purposes. Here are the most useful ones for frontend developers:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>When to Use</th>
+              <th>Time Required</th>
+              <th>Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>User Interviews</strong></td>
+              <td>Early in project</td>
+              <td>1-2 hours per user</td>
+              <td>Understanding needs & motivations</td>
+            </tr>
+            <tr>
+              <td><strong>Surveys</strong></td>
+              <td>Need quantitative data</td>
+              <td>1-2 days setup</td>
+              <td>Validating assumptions at scale</td>
+            </tr>
+            <tr>
+              <td><strong>Usability Testing</strong></td>
+              <td>Have working prototype</td>
+              <td>1 hour per user</td>
+              <td>Finding usability issues</td>
+            </tr>
+            <tr>
+              <td><strong>Analytics Review</strong></td>
+              <td>Product already exists</td>
+              <td>2-4 hours</td>
+              <td>Understanding behavior patterns</td>
+            </tr>
+            <tr>
+              <td><strong>A/B Testing</strong></td>
+              <td>Comparing solutions</td>
+              <td>1-2 weeks</td>
+              <td>Data-driven decision making</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Method 1: User Interviews</h2>
+
+        <p>User interviews are one-on-one conversations where you ask users about their experiences, needs, and pain points.</p>
+
+        <h3>How to Conduct User Interviews</h3>
+
+        <div class="demo-section">
+          <div class="demo-title">Interview Process (5 Steps)</div>
+          <pre><code><strong>1. Prepare</strong> (30 min)
+   - Write 8-10 open-ended questions
+   - Schedule 30-60 minute sessions
+   - Get recording consent
+
+<strong>2. Build Rapport</strong> (5 min)
+   - Introduce yourself
+   - Explain the purpose
+   - Make them comfortable
+
+<strong>3. Ask Questions</strong> (40 min)
+   - Start broad, get specific
+   - Ask "why" to dig deeper
+   - Listen more than you talk
+
+<strong>4. Wrap Up</strong> (5 min)
+   - Thank them
+   - Ask if they have questions
+   - Get permission to follow up
+
+<strong>5. Document</strong> (30 min)
+   - Transcribe key quotes
+   - Identify patterns
+   - Note surprises</code></pre>
+        </div>
+
+        <h3>Good Interview Questions</h3>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Question Framework</div>
+          <p>Use open-ended questions that start with "Tell me about..." or "Describe a time when..." These encourage stories, not yes/no answers.</p>
+        </div>
+
+        <div class="demo-section">
+          <div class="demo-title">Example Interview Questions</div>
+          <pre><code><strong>Context Questions:</strong>
+✓ "Tell me about the last time you [relevant task]?"
+✓ "Walk me through how you currently [solve this problem]?"
+✓ "Describe your typical workflow when [scenario]?"
+
+<strong>Problem Questions:</strong>
+✓ "What's the most frustrating part of [process]?"
+✓ "What takes the most time when you [task]?"
+✓ "What would make [activity] easier for you?"
+
+<strong>Follow-Up Questions:</strong>
+✓ "Why is that important to you?"
+✓ "Can you tell me more about that?"
+✓ "What happened next?"
+
+<strong>❌ Avoid Leading Questions:</strong>
+✗ "Don't you think it would be better if...?"
+✗ "Would you use a feature that...?"
+✗ "Do you like our app?"</code></pre>
+        </div>
+
+        <h2>Method 2: Surveys & Questionnaires</h2>
+
+        <p>Surveys allow you to gather feedback from many users quickly. They're great for validating findings from interviews.</p>
+
+        <h3>Survey Best Practices</h3>
+
+        <div class="demo-section">
+          <ul>
+            <li><strong>Keep it Short</strong> - 5-10 questions maximum (5 minutes to complete)</li>
+            <li><strong>Mix Question Types</strong> - Use multiple choice, scales, and 1-2 open-ended</li>
+            <li><strong>Clear Language</strong> - Avoid jargon, use simple words</li>
+            <li><strong>Neutral Wording</strong> - Don't bias responses</li>
+            <li><strong>Test First</strong> - Run it by 2-3 people before sending widely</li>
+          </ul>
+        </div>
+
+        <h3>Example Survey Structure</h3>
+
+        <pre><code class="language-html">Survey: E-commerce Checkout Experience
+
+<strong>Section 1: Background (2 questions)</strong>
+1. How often do you shop online?
+   ○ Daily  ○ Weekly  ○ Monthly  ○ Rarely
+
+2. What device do you primarily use for online shopping?
+   ○ Desktop  ○ Mobile  ○ Tablet
+
+<strong>Section 2: Experience (4 questions)</strong>
+3. How easy is it to find products on our site?
+   1 (Very Difficult) — 2 — 3 — 4 — 5 (Very Easy)
+
+4. How satisfied are you with the checkout process?
+   1 (Very Unsatisfied) — 2 — 3 — 4 — 5 (Very Satisfied)
+
+5. What's the biggest frustration with online checkout?
+   ○ Too many steps
+   ○ Requires account creation
+   ○ Shipping costs unclear
+   ○ Payment options limited
+   ○ Other: ___________
+
+6. What would improve your checkout experience? (Optional)
+   [Open text field]
+
+<strong>Section 3: Demographics (Optional - 2 questions)</strong>
+7. Age range: ○ 18-24  ○ 25-34  ○ 35-44  ○ 45-54  ○ 55+
+8. Location: [Dropdown]</code></pre>
+
+        <div class="info-box important">
+          <div class="info-box-title">❗ Important: Privacy</div>
+          <p>Always explain how you'll use the data and offer anonymity. Comply with GDPR and other privacy regulations. Never sell or share user data.</p>
+        </div>
+
+        <h2>Method 3: Usability Testing</h2>
+
+        <p>Usability testing involves watching users try to complete tasks with your product or prototype.</p>
+
+        <h3>Running a Usability Test</h3>
+
+        <div class="demo-section">
+          <div class="demo-title">Usability Testing Script</div>
+          <pre><code><strong>Introduction:</strong>
+"Thank you for helping us test this. I want to see how easy it is
+to use. There are no wrong answers—any problems you find help us
+improve. Please think aloud as you work."
+
+<strong>Tasks:</strong>
+1. "Imagine you want to [goal]. Show me how you'd do that."
+2. "Now try to [next task]."
+3. "Finally, find [specific item/feature]."
+
+<strong>During Testing:</strong>
+✓ Don't help them (unless they're truly stuck)
+✓ Ask "What are you thinking?" if they go quiet
+✓ Note where they struggle or get confused
+✓ Observe their mouse movements and facial expressions
+
+<strong>After Tasks:</strong>
+"On a scale of 1-5, how easy was that?"
+"What was confusing, if anything?"
+"What did you expect to happen when you clicked [X]?"</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Tip: 5 Users Find 85% of Issues</div>
+          <p>Jakob Nielsen's research shows that testing with just 5 users uncovers about 85% of usability problems. You don't need 50 participants—start with 5.</p>
+        </div>
+
+        <h2>Method 4: Analytics & Data Analysis</h2>
+
+        <p>If your product already exists, analytics show what users actually do (not what they say they do).</p>
+
+        <h3>Key Metrics to Track</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>What It Tells You</th>
+              <th>How to Improve It</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Bounce Rate</strong></td>
+              <td>Users leave without interacting</td>
+              <td>Improve first impression, load speed, clarity</td>
+            </tr>
+            <tr>
+              <td><strong>Time on Page</strong></td>
+              <td>Content engagement level</td>
+              <td>Make content more scannable, add visuals</td>
+            </tr>
+            <tr>
+              <td><strong>Conversion Rate</strong></td>
+              <td>Users completing desired action</td>
+              <td>Simplify flow, reduce friction, clearer CTAs</td>
+            </tr>
+            <tr>
+              <td><strong>Exit Pages</strong></td>
+              <td>Where users give up</td>
+              <td>Fix broken flows, clarify next steps</td>
+            </tr>
+            <tr>
+              <td><strong>Click Heatmaps</strong></td>
+              <td>Where users actually click</td>
+              <td>Move important elements to hot zones</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Analyzing User Flows</h3>
+
+        <pre><code class="language-javascript">// Example: Track checkout abandonment with Google Analytics
+gtag('event', 'begin_checkout', {
+  items: cartItems,
+  value: totalPrice
+});
+
+// Track where users drop off
+gtag('event', 'checkout_progress', {
+  checkout_step: 2, // Shipping info
+  checkout_option: 'guest'
+});
+
+// Track completion
+gtag('event', 'purchase', {
+  transaction_id: orderId,
+  value: totalPrice,
+  items: cartItems
+});
+
+// Analysis shows:
+// - 1000 started checkout
+// - 600 reached shipping (40% drop-off!)
+// - 500 completed purchase (16% drop from shipping)</code></pre>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 Combine Quantitative + Qualitative</div>
+          <p>Analytics tell you <strong>what</strong> is happening. User interviews tell you <strong>why</strong>. Use both for complete understanding.</p>
+        </div>
+
+        <h2>Creating User Personas</h2>
+
+        <p>A persona is a fictional character that represents a key user group. It's based on real research, not assumptions.</p>
+
+        <h3>What Makes a Good Persona</h3>
+
+        <div class="demo-section">
+          <ul>
+            <li><strong>Based on Real Data</strong> - Interview 5-10 users per persona</li>
+            <li><strong>Specific & Detailed</strong> - Name, photo, background, goals</li>
+            <li><strong>Focused on Behavior</strong> - What they do, not just demographics</li>
+            <li><strong>Include Pain Points</strong> - Their frustrations and challenges</li>
+            <li><strong>Action-Oriented</strong> - Goals and motivations drive design</li>
+          </ul>
+        </div>
+
+        <h3>Persona Template</h3>
+
+        <div class="demo-section">
+          <div class="demo-title">Persona Example: Sarah, the Busy Professional</div>
+          <pre><code><strong>Name:</strong> Sarah Chen
+<strong>Age:</strong> 32
+<strong>Role:</strong> Marketing Manager
+<strong>Location:</strong> San Francisco, CA
+
+<strong>Background:</strong>
+Sarah works at a tech startup and manages a team of 5. She's always
+on the go, checking emails between meetings and making quick decisions.
+She values efficiency and hates wasting time.
+
+<strong>Tech Comfort:</strong> High - Uses smartphone for everything, early adopter
+
+<strong>Goals:</strong>
+• Complete tasks quickly during commute or between meetings
+• Stay organized without complex tools
+• Access information on mobile and desktop seamlessly
+
+<strong>Frustrations:</strong>
+• Apps that require too many steps to complete simple tasks
+• Interfaces that work poorly on mobile
+• Having to create accounts for one-time use
+• Unclear pricing or hidden fees
+
+<strong>Quote:</strong>
+"If I can't figure out how to use it in 30 seconds, I'm moving on."
+
+<strong>Behaviors:</strong>
+• Checks phone 50+ times per day
+• Abandons apps that require login for basic features
+• Prefers Apple Pay / Google Pay over typing card info
+• Reads reviews before trying new products
+
+<strong>Design Implications:</strong>
+→ Mobile-first design is critical
+→ Guest checkout option essential
+→ Clear, minimal navigation
+→ One-tap actions where possible
+→ Transparent pricing upfront</code></pre>
+        </div>
+
+        <h3>Creating Your Own Personas</h3>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Step-by-Step Process</div>
+          <ol>
+            <li><strong>Gather Data</strong> - Interview 20-30 users total</li>
+            <li><strong>Look for Patterns</strong> - Group users by similar behaviors and goals</li>
+            <li><strong>Identify 3-5 Groups</strong> - Don't create too many personas</li>
+            <li><strong>Create Detailed Profiles</strong> - Use the template above</li>
+            <li><strong>Validate</strong> - Show personas to stakeholders and real users</li>
+            <li><strong>Share Widely</strong> - Post them where the team sees them daily</li>
+          </ol>
+        </div>
+
+        <h2>Journey Mapping</h2>
+
+        <p>A journey map visualizes the user's experience from start to finish, including emotions, pain points, and opportunities.</p>
+
+        <h3>Simple Journey Map Example</h3>
+
+        <div class="demo-section">
+          <div class="demo-title">User Journey: Ordering Food Delivery</div>
+          <pre><code><strong>Stage 1: Awareness</strong>
+Action: Feeling hungry, opens phone
+Emotion: 😊 Excited
+Touchpoint: Mobile app icon
+Pain Points: Too many food apps, don't know which to use
+
+<strong>Stage 2: Research</strong>
+Action: Browses menus, filters by cuisine
+Emotion: 😐 Neutral
+Touchpoint: Search & filter interface
+Pain Points: Can't see delivery fees upfront, slow load times
+
+<strong>Stage 3: Decision</strong>
+Action: Adds items to cart, reviews order
+Emotion: 😟 Anxious (Is this the best deal?)
+Touchpoint: Cart & checkout screens
+Pain Points: Promo codes confusing, can't estimate total time
+
+<strong>Stage 4: Purchase</strong>
+Action: Enters payment, confirms order
+Emotion: 😤 Frustrated (Why so many steps?)
+Touchpoint: Payment form, confirmation
+Pain Points: Forced to create account, payment form has errors
+
+<strong>Stage 5: Waiting</strong>
+Action: Tracks order status
+Emotion: 😊 Happy (if updates clear) or 😠 Angry (if vague)
+Touchpoint: Tracking screen, notifications
+Pain Points: Inaccurate delivery estimates, poor communication
+
+<strong>Stage 6: Delivery</strong>
+Action: Receives food, rates experience
+Emotion: 😊 Delighted (if smooth) or 😡 Upset (if issues)
+Touchpoint: Delivery interaction, rating prompt
+Pain Points: Food cold/wrong, difficult to contact support
+
+<strong>Opportunities:</strong>
+→ Add "Guest checkout" to reduce friction
+→ Show all costs upfront (delivery, fees, total time)
+→ Improve tracking with real-time updates
+→ Simplify promo code redemption</code></pre>
+        </div>
+
+        <h3>Creating a Journey Map</h3>
+
+        <div class="demo-section">
+          <ol>
+            <li><strong>Pick a Persona</strong> - Use one of your created personas</li>
+            <li><strong>Define the Journey</strong> - Start to finish of one specific task</li>
+            <li><strong>Identify Stages</strong> - Break journey into 4-8 phases</li>
+            <li><strong>Map Actions</strong> - What they do at each stage</li>
+            <li><strong>Add Emotions</strong> - How they feel (use emojis or ratings)</li>
+            <li><strong>Note Touchpoints</strong> - Where they interact with your product</li>
+            <li><strong>Highlight Pain Points</strong> - Where they struggle or get frustrated</li>
+            <li><strong>Find Opportunities</strong> - How you can improve the experience</li>
+          </ol>
+        </div>
+
+        <h2>Practical Exercise: Research Your Project</h2>
+
+        <div class="info-box important">
+          <div class="info-box-title">❗ Try This</div>
+          <p>Pick a project you're working on (or want to build) and conduct mini user research:</p>
+          <ol>
+            <li><strong>Interview 3 People</strong> - Ask about their current solution and frustrations</li>
+            <li><strong>Create 1 Persona</strong> - Based on the most common patterns you found</li>
+            <li><strong>Map 1 Journey</strong> - Document their current experience step-by-step</li>
+            <li><strong>Identify 3 Opportunities</strong> - Where can you improve the experience?</li>
+          </ol>
+        </div>
+
+        <h2>Tools for User Research</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Purpose</th>
+              <th>Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Google Forms</strong></td>
+              <td>Simple surveys</td>
+              <td>Free</td>
+            </tr>
+            <tr>
+              <td><strong>Typeform</strong></td>
+              <td>Beautiful surveys with logic</td>
+              <td>Free tier available</td>
+            </tr>
+            <tr>
+              <td><strong>Hotjar</strong></td>
+              <td>Heatmaps & session recordings</td>
+              <td>Free tier available</td>
+            </tr>
+            <tr>
+              <td><strong>Google Analytics</strong></td>
+              <td>Web analytics</td>
+              <td>Free</td>
+            </tr>
+            <tr>
+              <td><strong>Lookback.io</strong></td>
+              <td>Remote usability testing</td>
+              <td>Paid</td>
+            </tr>
+            <tr>
+              <td><strong>Zoom</strong></td>
+              <td>Remote interviews & testing</td>
+              <td>Free tier available</td>
+            </tr>
+            <tr>
+              <td><strong>Notion / Miro</strong></td>
+              <td>Documenting personas & journeys</td>
+              <td>Free tier available</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Common Mistakes to Avoid</h2>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Research Pitfalls</div>
+          <ul>
+            <li><strong>❌ Only talking to friends/colleagues</strong> → They're not your target users</li>
+            <li><strong>❌ Asking what features they want</strong> → Users aren't designers, observe behavior instead</li>
+            <li><strong>❌ Researching once and never again</strong> → User needs evolve, research continuously</li>
+            <li><strong>❌ Ignoring negative feedback</strong> → Criticism is more valuable than praise</li>
+            <li><strong>❌ Relying only on analytics</strong> → Numbers don't explain "why"</li>
+            <li><strong>❌ Creating too many personas</strong> → 3-5 is enough, more creates confusion</li>
+            <li><strong>❌ Not sharing findings</strong> → Research only helps if the team uses it</li>
+          </ul>
+        </div>
+
+        <h2>Key Takeaways</h2>
+
+        <div class="demo-section">
+          <ul>
+            <li>✅ <strong>Research prevents waste</strong> - Better to learn early than rebuild later</li>
+            <li>✅ <strong>Mix methods</strong> - Interviews for "why", analytics for "what", testing for "how"</li>
+            <li>✅ <strong>5 users find most issues</strong> - You don't need hundreds of participants</li>
+            <li>✅ <strong>Personas guide decisions</strong> - Ask "Would Sarah use this?" during development</li>
+            <li>✅ <strong>Journey maps reveal opportunities</strong> - Visualize the full experience, not just your product</li>
+            <li>✅ <strong>Document and share</strong> - Research only helps if your team sees it</li>
+            <li>✅ <strong>Research is ongoing</strong> - Not a one-time activity, but continuous learning</li>
+          </ul>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 Next Steps</div>
+          <p>Now that you understand user research, you're ready to transform those insights into visual designs. In the next lesson, we'll explore <strong>Wireframing & Prototyping</strong> - turning user needs into tangible solutions.</p>
+        </div>
+
+        <div class="bottom-nav">
+          <a href="design-thinking-intro.html" class="nav-button prev">← Previous: Introduction to Design Thinking</a>
+          <a href="wireframing.html" class="nav-button next">Next: Wireframing & Prototyping →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

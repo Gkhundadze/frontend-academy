@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async JavaScript - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>Async JavaScript</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Fundamentals</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Working with APIs</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+          <li><a href="../projects/quiz-app/index.html">Quiz App Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>⏳ Asynchronous JavaScript</h1>
+
+        <p>
+          JavaScript is single-threaded, meaning it executes one operation at a time. Asynchronous programming allows you to perform long-running operations (like fetching data, reading files, or waiting for timers) without blocking the execution of other code.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 Key Concept</div>
+          <p>Asynchronous code allows JavaScript to handle time-consuming tasks in the background while continuing to run other code. This is essential for building responsive web applications.</p>
+        </div>
+
+        <!-- Synchronous vs Asynchronous -->
+        <h2>🔄 Synchronous vs Asynchronous Code</h2>
+
+        <div class="code-example">
+          <div class="example-label">Synchronous Code (Blocking)</div>
+          <pre><code>// Synchronous - executes line by line
+console.log('First');
+console.log('Second');
+console.log('Third');
+
+// Output (in order):
+// First
+// Second
+// Third
+
+// Blocking example
+function slowOperation() {
+  // This blocks execution for 3 seconds
+  const start = Date.now();
+  while (Date.now() - start < 3000) {}
+  return 'Done';
+}
+
+console.log('Start');
+const result = slowOperation();  // Blocks here!
+console.log(result);
+console.log('End');</code></pre>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">Asynchronous Code (Non-Blocking)</div>
+          <pre><code>// Asynchronous - doesn't wait
+console.log('First');
+
+setTimeout(() => {
+  console.log('Second (after 2 seconds)');
+}, 2000);
+
+console.log('Third');
+
+// Output:
+// First
+// Third
+// Second (after 2 seconds)
+
+// Non-blocking example
+console.log('Start');
+
+setTimeout(() => {
+  console.log('This runs after 1 second');
+}, 1000);
+
+console.log('End (runs immediately)');
+
+// Output:
+// Start
+// End (runs immediately)
+// This runs after 1 second</code></pre>
+        </div>
+
+        <!-- Callbacks -->
+        <h2>📞 Callbacks</h2>
+
+        <p>
+          A callback is a function passed as an argument to another function, to be executed later when an asynchronous operation completes.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Callback Functions</div>
+          <pre><code>// Simple callback example
+function greet(name, callback) {
+  console.log('Hello, ' + name);
+  callback();
+}
+
+greet('John', function() {
+  console.log('Callback executed!');
+});
+
+// Asynchronous callback
+function fetchUserData(userId, callback) {
+  console.log('Fetching user data...');
+
+  setTimeout(() => {
+    const user = {
+      id: userId,
+      name: 'John Doe',
+      email: 'john@example.com'
+    };
+    callback(user);
+  }, 2000);
+}
+
+fetchUserData(1, function(user) {
+  console.log('User data received:', user);
+});
+
+// Callback with error handling
+function fetchData(url, onSuccess, onError) {
+  setTimeout(() => {
+    const success = Math.random() > 0.5;
+
+    if (success) {
+      onSuccess({ data: 'Some data' });
+    } else {
+      onError(new Error('Failed to fetch data'));
+    }
+  }, 1000);
+}
+
+fetchData(
+  '/api/users',
+  (data) => console.log('Success:', data),
+  (error) => console.error('Error:', error)
+);</code></pre>
+        </div>
+
+        <h3>Callback Hell (Pyramid of Doom)</h3>
+
+        <div class="code-example">
+          <div class="example-label">Callback Hell - Nested Callbacks</div>
+          <pre><code>// ❌ Bad: Callback hell (hard to read and maintain)
+fetchUser(userId, (user) => {
+  fetchPosts(user.id, (posts) => {
+    fetchComments(posts[0].id, (comments) => {
+      fetchReplies(comments[0].id, (replies) => {
+        console.log('Finally got replies:', replies);
+      }, (error) => {
+        console.error('Error fetching replies:', error);
+      });
+    }, (error) => {
+      console.error('Error fetching comments:', error);
+    });
+  }, (error) => {
+    console.error('Error fetching posts:', error);
+  });
+}, (error) => {
+  console.error('Error fetching user:', error);
+});
+
+// This is hard to:
+// - Read and understand
+// - Handle errors properly
+// - Maintain and debug</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Callback Hell</div>
+          <p>Deeply nested callbacks become difficult to read and maintain. This is why <strong>Promises</strong> and <strong>async/await</strong> were introduced.</p>
+        </div>
+
+        <!-- Promises -->
+        <h2>🤝 Promises</h2>
+
+        <p>
+          A Promise is an object representing the eventual completion (or failure) of an asynchronous operation. It's a cleaner way to handle async code than callbacks.
+        </p>
+
+        <h3>Promise States</h3>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 Three States of a Promise</div>
+          <ul>
+            <li><strong>Pending</strong> - Initial state, operation is ongoing</li>
+            <li><strong>Fulfilled</strong> - Operation completed successfully</li>
+            <li><strong>Rejected</strong> - Operation failed with an error</li>
+          </ul>
+        </div>
+
+        <h3>Creating Promises</h3>
+
+        <div class="code-example">
+          <div class="example-label">Promise Syntax</div>
+          <pre><code>// Creating a Promise
+const myPromise = new Promise((resolve, reject) => {
+  // Asynchronous operation here
+
+  const success = true;
+
+  if (success) {
+    resolve('Operation successful!');  // Fulfill the promise
+  } else {
+    reject('Operation failed!');       // Reject the promise
+  }
+});
+
+// Basic promise example
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Data fetched successfully!');
+  }, 2000);
+});
+
+// Consuming the promise
+promise.then((result) => {
+  console.log(result);  // "Data fetched successfully!"
+});
+
+// Promise with error
+const failingPromise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject(new Error('Something went wrong!'));
+  }, 1000);
+});
+
+failingPromise.catch((error) => {
+  console.error('Error:', error.message);
+});</code></pre>
+        </div>
+
+        <h3>Using Promises (.then() and .catch())</h3>
+
+        <div class="code-example">
+          <div class="example-label">Promise Methods</div>
+          <pre><code>// .then() - handles successful resolution
+promise.then((result) => {
+  console.log('Success:', result);
+});
+
+// .catch() - handles rejection
+promise.catch((error) => {
+  console.error('Error:', error);
+});
+
+// .finally() - runs regardless of outcome
+promise.finally(() => {
+  console.log('Promise completed (success or failure)');
+});
+
+// Chaining all together
+fetchData()
+  .then((data) => {
+    console.log('Data:', data);
+    return data;
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  })
+  .finally(() => {
+    console.log('Cleanup or loading indicator removal');
+  });
+
+// Practical example
+function fetchUserData(userId) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (userId > 0) {
+        resolve({
+          id: userId,
+          name: 'John Doe',
+          email: 'john@example.com'
+        });
+      } else {
+        reject(new Error('Invalid user ID'));
+      }
+    }, 1000);
+  });
+}
+
+fetchUserData(1)
+  .then((user) => {
+    console.log('User:', user);
+  })
+  .catch((error) => {
+    console.error('Error:', error.message);
+  });</code></pre>
+        </div>
+
+        <h3>Promise Chaining</h3>
+
+        <div class="code-example">
+          <div class="example-label">Chaining Promises</div>
+          <pre><code>// ✅ Good: Promise chaining (much cleaner than callbacks)
+fetchUser(userId)
+  .then((user) => {
+    console.log('User:', user);
+    return fetchPosts(user.id);  // Return next promise
+  })
+  .then((posts) => {
+    console.log('Posts:', posts);
+    return fetchComments(posts[0].id);
+  })
+  .then((comments) => {
+    console.log('Comments:', comments);
+    return fetchReplies(comments[0].id);
+  })
+  .then((replies) => {
+    console.log('Replies:', replies);
+  })
+  .catch((error) => {
+    // Single error handler for entire chain
+    console.error('Error at any step:', error);
+  });
+
+// Transforming data through chain
+fetchUserData(1)
+  .then((user) => {
+    return user.name;  // Extract name
+  })
+  .then((name) => {
+    return name.toUpperCase();  // Transform
+  })
+  .then((upperName) => {
+    console.log('Upper name:', upperName);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+// Multiple operations
+getUserId()
+  .then((id) => fetchUser(id))
+  .then((user) => fetchOrders(user.id))
+  .then((orders) => processOrders(orders))
+  .then((result) => console.log('Final result:', result))
+  .catch((error) => console.error('Error:', error));</code></pre>
+        </div>
+
+        <!-- Async/Await -->
+        <h2>⚡ Async/Await</h2>
+
+        <p>
+          <code>async/await</code> is modern syntax that makes asynchronous code look and behave more like synchronous code. It's built on top of Promises and makes code much more readable.
+        </p>
+
+        <h3>Async Functions</h3>
+
+        <div class="code-example">
+          <div class="example-label">async/await Syntax</div>
+          <pre><code>// async function always returns a Promise
+async function myFunction() {
+  return 'Hello';
+}
+
+// Equivalent to:
+function myFunction() {
+  return Promise.resolve('Hello');
+}
+
+// Using the async function
+myFunction().then((result) => {
+  console.log(result);  // "Hello"
+});
+
+// await keyword (only works inside async functions)
+async function fetchData() {
+  const data = await someAsyncOperation();
+  console.log(data);  // Wait for promise to resolve
+}
+
+// Basic example
+async function getUserData() {
+  const response = await fetchUserData(1);
+  console.log('User:', response);
+  return response;
+}
+
+getUserData();</code></pre>
+        </div>
+
+        <h3>await - Waiting for Promises</h3>
+
+        <div class="code-example">
+          <div class="example-label">Using await</div>
+          <pre><code>// Without async/await (Promise chain)
+function getUserInfo() {
+  fetchUser(1)
+    .then((user) => {
+      console.log('User:', user);
+      return fetchPosts(user.id);
+    })
+    .then((posts) => {
+      console.log('Posts:', posts);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+// ✅ With async/await (much cleaner!)
+async function getUserInfo() {
+  try {
+    const user = await fetchUser(1);
+    console.log('User:', user);
+
+    const posts = await fetchPosts(user.id);
+    console.log('Posts:', posts);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// Multiple sequential operations
+async function processUserData() {
+  const user = await fetchUser(1);
+  const posts = await fetchPosts(user.id);
+  const comments = await fetchComments(posts[0].id);
+  const replies = await fetchReplies(comments[0].id);
+
+  console.log('Got all data:', { user, posts, comments, replies });
+}
+
+// Returning values
+async function getUsername(userId) {
+  const user = await fetchUser(userId);
+  return user.name;  // Automatically wrapped in Promise
+}
+
+const name = await getUsername(1);  // Can use await if in async context
+console.log(name);</code></pre>
+        </div>
+
+        <h3>Error Handling with try/catch</h3>
+
+        <div class="code-example">
+          <div class="example-label">try/catch with async/await</div>
+          <pre><code>// Error handling with try/catch
+async function fetchData() {
+  try {
+    const data = await someAsyncOperation();
+    console.log('Data:', data);
+    return data;
+  } catch (error) {
+    console.error('Error occurred:', error.message);
+    throw error;  // Re-throw if needed
+  }
+}
+
+// Multiple try/catch blocks
+async function processData() {
+  let user;
+  let posts;
+
+  try {
+    user = await fetchUser(1);
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    return;  // Exit early
+  }
+
+  try {
+    posts = await fetchPosts(user.id);
+  } catch (error) {
+    console.error('Failed to fetch posts:', error);
+    posts = [];  // Use default value
+  }
+
+  return { user, posts };
+}
+
+// finally block
+async function fetchWithCleanup() {
+  try {
+    showLoadingSpinner();
+    const data = await fetchData();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    showErrorMessage(error.message);
+  } finally {
+    hideLoadingSpinner();  // Always runs
+  }
+}
+
+// Handling specific errors
+async function smartFetch() {
+  try {
+    const data = await fetchData();
+    return data;
+  } catch (error) {
+    if (error.message.includes('404')) {
+      console.log('Resource not found');
+    } else if (error.message.includes('500')) {
+      console.log('Server error');
+    } else {
+      console.log('Unknown error:', error);
+    }
+    throw error;
+  }
+}</code></pre>
+        </div>
+
+        <!-- Promise Methods -->
+        <h2>🔀 Promise Methods</h2>
+
+        <h3>Promise.all() - Wait for All</h3>
+
+        <div class="code-example">
+          <div class="example-label">Promise.all()</div>
+          <pre><code>// Promise.all() - waits for ALL promises to resolve
+const promise1 = fetchUser(1);
+const promise2 = fetchPosts(1);
+const promise3 = fetchComments(1);
+
+Promise.all([promise1, promise2, promise3])
+  .then(([user, posts, comments]) => {
+    console.log('All resolved:', { user, posts, comments });
+  })
+  .catch((error) => {
+    console.error('At least one failed:', error);
+  });
+
+// With async/await
+async function fetchAllData() {
+  try {
+    const [user, posts, comments] = await Promise.all([
+      fetchUser(1),
+      fetchPosts(1),
+      fetchComments(1)
+    ]);
+
+    console.log('User:', user);
+    console.log('Posts:', posts);
+    console.log('Comments:', comments);
+  } catch (error) {
+    console.error('One or more requests failed:', error);
+  }
+}
+
+// Practical example: Parallel API calls
+async function getDashboardData() {
+  const [user, stats, notifications, messages] = await Promise.all([
+    fetchUser(),
+    fetchStats(),
+    fetchNotifications(),
+    fetchMessages()
+  ]);
+
+  return { user, stats, notifications, messages };
+}
+
+// ⚠️ Important: If ANY promise rejects, Promise.all() rejects immediately</code></pre>
+        </div>
+
+        <h3>Promise.race() - First to Complete</h3>
+
+        <div class="code-example">
+          <div class="example-label">Promise.race()</div>
+          <pre><code>// Promise.race() - resolves/rejects with first completed promise
+const slow = new Promise((resolve) => {
+  setTimeout(() => resolve('Slow'), 3000);
+});
+
+const fast = new Promise((resolve) => {
+  setTimeout(() => resolve('Fast'), 1000);
+});
+
+Promise.race([slow, fast])
+  .then((result) => {
+    console.log(result);  // "Fast" (first to complete)
+  });
+
+// Practical example: Timeout pattern
+function fetchWithTimeout(url, timeout = 5000) {
+  const fetchPromise = fetch(url);
+
+  const timeoutPromise = new Promise((_, reject) => {
+    setTimeout(() => {
+      reject(new Error('Request timeout'));
+    }, timeout);
+  });
+
+  return Promise.race([fetchPromise, timeoutPromise]);
+}
+
+// Usage
+async function getData() {
+  try {
+    const response = await fetchWithTimeout('/api/data', 3000);
+    const data = await response.json();
+    console.log('Data:', data);
+  } catch (error) {
+    console.error('Error or timeout:', error.message);
+  }
+}</code></pre>
+        </div>
+
+        <h3>Promise.allSettled() - Wait for All (No Rejection)</h3>
+
+        <div class="code-example">
+          <div class="example-label">Promise.allSettled()</div>
+          <pre><code>// Promise.allSettled() - waits for all, never rejects
+const promises = [
+  Promise.resolve('Success 1'),
+  Promise.reject('Error 1'),
+  Promise.resolve('Success 2'),
+  Promise.reject('Error 2')
+];
+
+Promise.allSettled(promises)
+  .then((results) => {
+    results.forEach((result) => {
+      if (result.status === 'fulfilled') {
+        console.log('Success:', result.value);
+      } else {
+        console.log('Failed:', result.reason);
+      }
+    });
+  });
+
+// Output structure:
+// [
+//   { status: 'fulfilled', value: 'Success 1' },
+//   { status: 'rejected', reason: 'Error 1' },
+//   { status: 'fulfilled', value: 'Success 2' },
+//   { status: 'rejected', reason: 'Error 2' }
+// ]
+
+// Practical example: Multiple independent API calls
+async function fetchMultipleUsers(userIds) {
+  const promises = userIds.map((id) => fetchUser(id));
+  const results = await Promise.allSettled(promises);
+
+  const successful = results
+    .filter((r) => r.status === 'fulfilled')
+    .map((r) => r.value);
+
+  const failed = results
+    .filter((r) => r.status === 'rejected')
+    .map((r) => r.reason);
+
+  return { successful, failed };
+}</code></pre>
+        </div>
+
+        <h3>Promise.any() - First to Succeed</h3>
+
+        <div class="code-example">
+          <div class="example-label">Promise.any()</div>
+          <pre><code>// Promise.any() - resolves with first successful promise
+const promise1 = Promise.reject('Error 1');
+const promise2 = new Promise((resolve) => setTimeout(() => resolve('Success 2'), 1000));
+const promise3 = new Promise((resolve) => setTimeout(() => resolve('Success 3'), 500));
+
+Promise.any([promise1, promise2, promise3])
+  .then((result) => {
+    console.log(result);  // "Success 3" (first to succeed)
+  })
+  .catch((error) => {
+    console.log('All promises failed:', error);
+  });
+
+// Practical example: Fastest mirror
+async function fetchFromFastestServer(urls) {
+  const promises = urls.map((url) => fetch(url));
+
+  try {
+    const response = await Promise.any(promises);
+    return await response.json();
+  } catch (error) {
+    throw new Error('All servers failed');
+  }
+}
+
+// Usage
+const mirrors = [
+  'https://api1.example.com/data',
+  'https://api2.example.com/data',
+  'https://api3.example.com/data'
+];
+
+const data = await fetchFromFastestServer(mirrors);</code></pre>
+        </div>
+
+        <!-- Practical Examples -->
+        <h2>🎯 Practical Examples</h2>
+
+        <h3>Example 1: Sequential vs Parallel Execution</h3>
+
+        <div class="code-example">
+          <div class="example-label">Performance Comparison</div>
+          <pre><code>// ❌ Sequential (slow - 3 seconds total)
+async function fetchSequential() {
+  const start = Date.now();
+
+  const user = await fetchUser(1);      // 1 second
+  const posts = await fetchPosts(1);    // 1 second
+  const comments = await fetchComments(1); // 1 second
+
+  console.log(`Sequential took: ${Date.now() - start}ms`);
+  // Output: Sequential took: 3000ms
+}
+
+// ✅ Parallel (fast - 1 second total)
+async function fetchParallel() {
+  const start = Date.now();
+
+  // All start at the same time
+  const [user, posts, comments] = await Promise.all([
+    fetchUser(1),      // 1 second
+    fetchPosts(1),     // 1 second
+    fetchComments(1)   // 1 second
+  ]);
+
+  console.log(`Parallel took: ${Date.now() - start}ms`);
+  // Output: Parallel took: 1000ms (much faster!)
+}
+
+// When to use each:
+// - Sequential: When next operation depends on previous result
+// - Parallel: When operations are independent</code></pre>
+        </div>
+
+        <h3>Example 2: Retry Logic</h3>
+
+        <div class="code-example">
+          <div class="example-label">Retry Failed Requests</div>
+          <pre><code>async function fetchWithRetry(url, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      console.log(`Attempt ${i + 1} of ${maxRetries}`);
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.log(`Attempt ${i + 1} failed:`, error.message);
+
+      // If last attempt, throw error
+      if (i === maxRetries - 1) {
+        throw new Error(`Failed after ${maxRetries} attempts`);
+      }
+
+      // Wait before retry (exponential backoff)
+      await new Promise((resolve) => setTimeout(resolve, 1000 * Math.pow(2, i)));
+    }
+  }
+}
+
+// Usage
+try {
+  const data = await fetchWithRetry('/api/data', 3);
+  console.log('Data:', data);
+} catch (error) {
+  console.error('All retries failed:', error.message);
+}</code></pre>
+        </div>
+
+        <h3>Example 3: Data Pipeline</h3>
+
+        <div class="code-example">
+          <div class="example-label">Processing Pipeline</div>
+          <pre><code>// Complete async data pipeline
+async function processUserData(userId) {
+  try {
+    // 1. Fetch user
+    console.log('Fetching user...');
+    const user = await fetchUser(userId);
+
+    // 2. Fetch related data in parallel
+    console.log('Fetching related data...');
+    const [posts, friends, settings] = await Promise.all([
+      fetchPosts(user.id),
+      fetchFriends(user.id),
+      fetchSettings(user.id)
+    ]);
+
+    // 3. Process data
+    console.log('Processing data...');
+    const processedPosts = posts.map((post) => ({
+      ...post,
+      wordCount: post.content.split(' ').length
+    }));
+
+    // 4. Calculate statistics
+    const stats = {
+      totalPosts: posts.length,
+      totalFriends: friends.length,
+      avgPostLength: processedPosts.reduce((sum, p) => sum + p.wordCount, 0) / posts.length
+    };
+
+    // 5. Return complete profile
+    return {
+      user,
+      posts: processedPosts,
+      friends,
+      settings,
+      stats
+    };
+
+  } catch (error) {
+    console.error('Pipeline error:', error);
+    throw error;
+  }
+}
+
+// Usage
+processUserData(1)
+  .then((profile) => {
+    console.log('Complete profile:', profile);
+    displayUserProfile(profile);
+  })
+  .catch((error) => {
+    showErrorMessage(error.message);
+  });</code></pre>
+        </div>
+
+        <h3>Example 4: Loading States</h3>
+
+        <div class="code-example">
+          <div class="example-label">Managing Loading States</div>
+          <pre><code>// Managing UI loading states with async operations
+async function loadUserDashboard(userId) {
+  const loadingElement = document.getElementById('loading');
+  const contentElement = document.getElementById('content');
+  const errorElement = document.getElementById('error');
+
+  try {
+    // Show loading
+    loadingElement.style.display = 'block';
+    contentElement.style.display = 'none';
+    errorElement.style.display = 'none';
+
+    // Fetch data
+    const [user, stats, notifications] = await Promise.all([
+      fetchUser(userId),
+      fetchUserStats(userId),
+      fetchNotifications(userId)
+    ]);
+
+    // Hide loading, show content
+    loadingElement.style.display = 'none';
+    contentElement.style.display = 'block';
+
+    // Render dashboard
+    renderDashboard({ user, stats, notifications });
+
+  } catch (error) {
+    // Hide loading, show error
+    loadingElement.style.display = 'none';
+    errorElement.style.display = 'block';
+    errorElement.textContent = `Error: ${error.message}`;
+
+    console.error('Dashboard load error:', error);
+  }
+}
+
+// Alternative pattern with state object
+async function loadData() {
+  const state = {
+    loading: true,
+    data: null,
+    error: null
+  };
+
+  updateUI(state);
+
+  try {
+    state.data = await fetchData();
+    state.loading = false;
+  } catch (error) {
+    state.error = error;
+    state.loading = false;
+  }
+
+  updateUI(state);
+}</code></pre>
+        </div>
+
+        <!-- Best Practices -->
+        <h2>✅ Best Practices</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Async JavaScript Best Practices</div>
+          <ul>
+            <li>Use <code>async/await</code> instead of promise chains for better readability</li>
+            <li>Always use <code>try/catch</code> blocks with async/await</li>
+            <li>Use <code>Promise.all()</code> for parallel operations to improve performance</li>
+            <li>Handle errors at the appropriate level (don't swallow errors)</li>
+            <li>Use <code>Promise.allSettled()</code> when you need all results regardless of failures</li>
+            <li>Implement timeout patterns for network requests</li>
+            <li>Consider retry logic for failed requests</li>
+            <li>Use <code>finally</code> for cleanup operations (hiding loaders, etc.)</li>
+            <li>Avoid mixing callbacks and promises (pick one pattern)</li>
+            <li>Remember: <code>await</code> only works inside <code>async</code> functions</li>
+          </ul>
+        </div>
+
+        <!-- Common Mistakes -->
+        <h2>⚠️ Common Mistakes</h2>
+
+        <div class="code-example">
+          <div class="example-label">Async Pitfalls to Avoid</div>
+          <pre><code>// ❌ Mistake 1: Forgetting await
+async function fetchData() {
+  const data = fetch('/api/data');  // Missing await!
+  console.log(data);  // This is a Promise, not the data!
+}
+
+// ✅ Correct
+async function fetchData() {
+  const response = await fetch('/api/data');
+  const data = await response.json();
+  console.log(data);  // Now this is the actual data
+}
+
+// ❌ Mistake 2: Not handling errors
+async function getData() {
+  const data = await fetch('/api/data');  // No try/catch!
+  return data;
+}
+
+// ✅ Correct
+async function getData() {
+  try {
+    const response = await fetch('/api/data');
+    return await response.json();
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
+// ❌ Mistake 3: Sequential when could be parallel
+async function loadPage() {
+  const user = await fetchUser();      // Waits
+  const posts = await fetchPosts();    // Then waits
+  const comments = await fetchComments(); // Then waits
+}
+
+// ✅ Correct (if operations are independent)
+async function loadPage() {
+  const [user, posts, comments] = await Promise.all([
+    fetchUser(),
+    fetchPosts(),
+    fetchComments()
+  ]);
+}
+
+// ❌ Mistake 4: Using await in loops inefficiently
+async function processItems(items) {
+  for (const item of items) {
+    await processItem(item);  // Processes one at a time
+  }
+}
+
+// ✅ Correct (if order doesn't matter)
+async function processItems(items) {
+  await Promise.all(items.map((item) => processItem(item)));
+}
+
+// ❌ Mistake 5: Forgetting to return in promise chains
+fetchData()
+  .then((data) => {
+    processData(data);  // Missing return!
+  })
+  .then((result) => {
+    console.log(result);  // undefined!
+  });
+
+// ✅ Correct
+fetchData()
+  .then((data) => {
+    return processData(data);  // Return the promise
+  })
+  .then((result) => {
+    console.log(result);  // Now has the result
+  });</code></pre>
+        </div>
+
+        <!-- Summary -->
+        <div class="info-box note">
+          <div class="info-box-title">📝 Summary</div>
+          <ul>
+            <li><strong>Asynchronous code</strong> allows non-blocking operations</li>
+            <li><strong>Callbacks</strong> are the original async pattern (can lead to callback hell)</li>
+            <li><strong>Promises</strong> provide cleaner async code with .then() and .catch()</li>
+            <li><strong>async/await</strong> makes async code look synchronous and is easier to read</li>
+            <li><strong>try/catch</strong> handles errors in async/await</li>
+            <li><strong>Promise.all()</strong> runs promises in parallel for better performance</li>
+            <li><strong>Promise.race()</strong> returns the first completed promise</li>
+            <li><strong>Promise.allSettled()</strong> waits for all promises without rejecting</li>
+            <li><strong>Error handling</strong> is crucial in async operations</li>
+          </ul>
+        </div>
+
+        <!-- Navigation -->
+        <div class="page-navigation">
+          <a href="canvas-basics.html" class="nav-button">← Canvas & Animation</a>
+          <a href="fetch-api.html" class="nav-button">Working with APIs →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

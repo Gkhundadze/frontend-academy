@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Working with APIs - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>Working with APIs</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Fundamentals</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Working with APIs</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+          <li><a href="../projects/quiz-app/index.html">Quiz App Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>🌐 Working with APIs</h1>
+
+        <p>
+          APIs (Application Programming Interfaces) allow your JavaScript code to communicate with servers and access data from external services. The Fetch API is the modern way to make HTTP requests in JavaScript.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 Key Concept</div>
+          <p>APIs enable your web app to fetch data from servers, send user data, and interact with third-party services like weather APIs, social media platforms, and payment processors.</p>
+        </div>
+
+        <!-- What is an API -->
+        <h2>🔌 What is an API?</h2>
+
+        <p>
+          An API is a set of rules that allows different software applications to communicate with each other. Web APIs use HTTP requests to exchange data, typically in JSON format.
+        </p>
+
+        <h3>REST API Basics</h3>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 REST API Concepts</div>
+          <ul>
+            <li><strong>Endpoint</strong> - A specific URL that represents a resource (e.g., <code>/api/users</code>)</li>
+            <li><strong>HTTP Methods</strong> - Actions to perform (GET, POST, PUT, DELETE)</li>
+            <li><strong>Request</strong> - Data sent to the server</li>
+            <li><strong>Response</strong> - Data returned from the server</li>
+            <li><strong>Status Codes</strong> - Numbers indicating request outcome (200, 404, 500, etc.)</li>
+            <li><strong>Headers</strong> - Metadata about the request/response</li>
+            <li><strong>Body</strong> - The actual data being sent/received</li>
+          </ul>
+        </div>
+
+        <h3>HTTP Methods (CRUD Operations)</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>CRUD</th>
+              <th>Purpose</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>GET</strong></td>
+              <td>Read</td>
+              <td>Retrieve data</td>
+              <td>Get list of users</td>
+            </tr>
+            <tr>
+              <td><strong>POST</strong></td>
+              <td>Create</td>
+              <td>Create new resource</td>
+              <td>Create new user</td>
+            </tr>
+            <tr>
+              <td><strong>PUT</strong></td>
+              <td>Update</td>
+              <td>Update entire resource</td>
+              <td>Update user profile</td>
+            </tr>
+            <tr>
+              <td><strong>PATCH</strong></td>
+              <td>Update</td>
+              <td>Update part of resource</td>
+              <td>Update user email</td>
+            </tr>
+            <tr>
+              <td><strong>DELETE</strong></td>
+              <td>Delete</td>
+              <td>Remove resource</td>
+              <td>Delete user account</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>HTTP Status Codes</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Meaning</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>200</strong></td>
+              <td>OK</td>
+              <td>Request successful</td>
+            </tr>
+            <tr>
+              <td><strong>201</strong></td>
+              <td>Created</td>
+              <td>Resource created successfully</td>
+            </tr>
+            <tr>
+              <td><strong>204</strong></td>
+              <td>No Content</td>
+              <td>Success, but no data to return</td>
+            </tr>
+            <tr>
+              <td><strong>400</strong></td>
+              <td>Bad Request</td>
+              <td>Invalid request data</td>
+            </tr>
+            <tr>
+              <td><strong>401</strong></td>
+              <td>Unauthorized</td>
+              <td>Authentication required</td>
+            </tr>
+            <tr>
+              <td><strong>403</strong></td>
+              <td>Forbidden</td>
+              <td>Not allowed to access</td>
+            </tr>
+            <tr>
+              <td><strong>404</strong></td>
+              <td>Not Found</td>
+              <td>Resource doesn't exist</td>
+            </tr>
+            <tr>
+              <td><strong>500</strong></td>
+              <td>Server Error</td>
+              <td>Server encountered an error</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Fetch API -->
+        <h2>📡 The Fetch API</h2>
+
+        <p>
+          The Fetch API provides a modern interface for making HTTP requests. It returns Promises, making it easy to use with async/await.
+        </p>
+
+        <h3>Basic GET Request</h3>
+
+        <div class="code-example">
+          <div class="example-label">Simple GET Request</div>
+          <pre><code>// Basic fetch request
+fetch('https://api.example.com/users')
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('Users:', data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+// With async/await (cleaner)
+async function getUsers() {
+  try {
+    const response = await fetch('https://api.example.com/users');
+    const data = await response.json();
+    console.log('Users:', data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+getUsers();
+
+// Real example with public API
+async function fetchTodos() {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+    const todo = await response.json();
+    console.log('Todo:', todo);
+    // { userId: 1, id: 1, title: "...", completed: false }
+  } catch (error) {
+    console.error('Error fetching todo:', error);
+  }
+}</code></pre>
+        </div>
+
+        <h3>Checking Response Status</h3>
+
+        <div class="code-example">
+          <div class="example-label">Handling Response Status</div>
+          <pre><code>async function fetchUsers() {
+  try {
+    const response = await fetch('https://api.example.com/users');
+
+    // Check if request was successful
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+
+  } catch (error) {
+    console.error('Fetch error:', error.message);
+    throw error;
+  }
+}
+
+// More detailed status handling
+async function fetchWithStatusCheck(url) {
+  try {
+    const response = await fetch(url);
+
+    console.log('Status:', response.status);
+    console.log('Status Text:', response.statusText);
+    console.log('OK:', response.ok);  // true if 200-299
+
+    if (response.status === 404) {
+      throw new Error('Resource not found');
+    }
+
+    if (response.status === 500) {
+      throw new Error('Server error');
+    }
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+
+    return await response.json();
+
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}</code></pre>
+        </div>
+
+        <!-- POST Requests -->
+        <h2>📤 POST Requests (Creating Data)</h2>
+
+        <div class="code-example">
+          <div class="example-label">POST Request with JSON</div>
+          <pre><code>// POST request - creating new resource
+async function createUser(userData) {
+  try {
+    const response = await fetch('https://api.example.com/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const newUser = await response.json();
+    console.log('Created user:', newUser);
+    return newUser;
+
+  } catch (error) {
+    console.error('Error creating user:', error);
+    throw error;
+  }
+}
+
+// Usage
+const userData = {
+  name: 'John Doe',
+  email: 'john@example.com',
+  age: 30
+};
+
+createUser(userData);
+
+// Real example with JSONPlaceholder
+async function createPost() {
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title: 'My New Post',
+        body: 'This is the post content',
+        userId: 1
+      })
+    });
+
+    const post = await response.json();
+    console.log('Created post:', post);
+    // { title: "My New Post", body: "...", userId: 1, id: 101 }
+
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}</code></pre>
+        </div>
+
+        <!-- PUT and PATCH -->
+        <h2>✏️ PUT and PATCH Requests (Updating Data)</h2>
+
+        <div class="code-example">
+          <div class="example-label">PUT and PATCH Requests</div>
+          <pre><code>// PUT - Replace entire resource
+async function updateUser(userId, userData) {
+  try {
+    const response = await fetch(`https://api.example.com/users/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const updatedUser = await response.json();
+    return updatedUser;
+
+  } catch (error) {
+    console.error('Error updating user:', error);
+    throw error;
+  }
+}
+
+// Usage - PUT replaces entire user
+updateUser(1, {
+  name: 'John Smith',
+  email: 'john.smith@example.com',
+  age: 31
+});
+
+// PATCH - Update partial resource
+async function patchUser(userId, updates) {
+  try {
+    const response = await fetch(`https://api.example.com/users/${userId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updates)
+    });
+
+    const updatedUser = await response.json();
+    return updatedUser;
+
+  } catch (error) {
+    console.error('Error patching user:', error);
+    throw error;
+  }
+}
+
+// Usage - PATCH updates only email
+patchUser(1, {
+  email: 'newemail@example.com'
+});</code></pre>
+        </div>
+
+        <!-- DELETE -->
+        <h2>🗑️ DELETE Requests</h2>
+
+        <div class="code-example">
+          <div class="example-label">DELETE Request</div>
+          <pre><code>// DELETE request - remove resource
+async function deleteUser(userId) {
+  try {
+    const response = await fetch(`https://api.example.com/users/${userId}`, {
+      method: 'DELETE'
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // DELETE often returns 204 No Content (no body)
+    if (response.status === 204) {
+      console.log('User deleted successfully');
+      return null;
+    }
+
+    const result = await response.json();
+    return result;
+
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    throw error;
+  }
+}
+
+// Usage
+deleteUser(1)
+  .then(() => console.log('User removed'))
+  .catch((error) => console.error('Delete failed:', error));
+
+// Real example
+async function deleteTodo(todoId) {
+  try {
+    const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${todoId}`, {
+      method: 'DELETE'
+    });
+
+    if (response.ok) {
+      console.log(`Todo ${todoId} deleted`);
+    }
+
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}</code></pre>
+        </div>
+
+        <!-- Headers -->
+        <h2>📋 Request Headers</h2>
+
+        <div class="code-example">
+          <div class="example-label">Working with Headers</div>
+          <pre><code>// Setting request headers
+async function fetchWithHeaders() {
+  const response = await fetch('https://api.example.com/data', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer your-token-here',
+      'X-Custom-Header': 'custom-value'
+    }
+  });
+
+  return await response.json();
+}
+
+// Common headers
+const headers = {
+  'Content-Type': 'application/json',     // Sending JSON
+  'Accept': 'application/json',           // Expecting JSON
+  'Authorization': 'Bearer TOKEN',        // Authentication
+  'X-API-Key': 'your-api-key'            // API key
+};
+
+// Reading response headers
+async function checkHeaders() {
+  const response = await fetch('https://api.example.com/data');
+
+  console.log('Content-Type:', response.headers.get('content-type'));
+  console.log('Date:', response.headers.get('date'));
+
+  // Iterate all headers
+  response.headers.forEach((value, key) => {
+    console.log(`${key}: ${value}`);
+  });
+}
+
+// Using Headers object
+const myHeaders = new Headers();
+myHeaders.append('Content-Type', 'application/json');
+myHeaders.append('Authorization', 'Bearer token');
+
+fetch('https://api.example.com/data', {
+  headers: myHeaders
+});</code></pre>
+        </div>
+
+        <!-- Error Handling -->
+        <h2>⚠️ Error Handling</h2>
+
+        <div class="code-example">
+          <div class="example-label">Comprehensive Error Handling</div>
+          <pre><code>// Robust error handling
+async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+
+    // Network error check
+    if (!response.ok) {
+      // Handle different status codes
+      if (response.status === 404) {
+        throw new Error('Resource not found');
+      } else if (response.status === 401) {
+        throw new Error('Unauthorized - please log in');
+      } else if (response.status === 403) {
+        throw new Error('Forbidden - access denied');
+      } else if (response.status >= 500) {
+        throw new Error('Server error - please try again later');
+      } else {
+        throw new Error(`Request failed: ${response.status} ${response.statusText}`);
+      }
+    }
+
+    // Parse JSON
+    const data = await response.json();
+    return data;
+
+  } catch (error) {
+    // Network errors (no internet, DNS failure, etc.)
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      console.error('Network error - check your connection');
+      throw new Error('Unable to connect to server');
+    }
+
+    // JSON parsing errors
+    if (error instanceof SyntaxError) {
+      console.error('Invalid JSON response');
+      throw new Error('Server returned invalid data');
+    }
+
+    // Re-throw other errors
+    console.error('Fetch error:', error);
+    throw error;
+  }
+}
+
+// Usage with UI feedback
+async function loadUsers() {
+  const loadingEl = document.getElementById('loading');
+  const errorEl = document.getElementById('error');
+  const usersEl = document.getElementById('users');
+
+  try {
+    loadingEl.style.display = 'block';
+    errorEl.style.display = 'none';
+
+    const users = await fetchData('https://api.example.com/users');
+
+    loadingEl.style.display = 'none';
+    displayUsers(users);
+
+  } catch (error) {
+    loadingEl.style.display = 'none';
+    errorEl.style.display = 'block';
+    errorEl.textContent = error.message;
+  }
+}</code></pre>
+        </div>
+
+        <!-- JSON -->
+        <h2>📄 Working with JSON</h2>
+
+        <div class="code-example">
+          <div class="example-label">JSON Parsing and Stringifying</div>
+          <pre><code>// JavaScript object to JSON string
+const user = {
+  name: 'John Doe',
+  email: 'john@example.com',
+  age: 30
+};
+
+const jsonString = JSON.stringify(user);
+console.log(jsonString);
+// '{"name":"John Doe","email":"john@example.com","age":30}'
+
+// JSON string to JavaScript object
+const jsonData = '{"name":"Jane","age":25}';
+const obj = JSON.parse(jsonData);
+console.log(obj.name);  // "Jane"
+
+// Pretty printing JSON
+const prettyJson = JSON.stringify(user, null, 2);
+console.log(prettyJson);
+// {
+//   "name": "John Doe",
+//   "email": "john@example.com",
+//   "age": 30
+// }
+
+// Parsing response
+async function getUser() {
+  const response = await fetch('https://api.example.com/user/1');
+
+  // response.json() parses JSON automatically
+  const user = await response.json();
+
+  // Equivalent to:
+  const text = await response.text();
+  const user2 = JSON.parse(text);
+}
+
+// Handling different response types
+async function fetchDifferentTypes() {
+  // JSON response
+  const jsonResponse = await fetch('/api/data');
+  const jsonData = await jsonResponse.json();
+
+  // Text response
+  const textResponse = await fetch('/api/text');
+  const text = await textResponse.text();
+
+  // Blob response (images, files)
+  const blobResponse = await fetch('/api/image');
+  const blob = await blobResponse.blob();
+}</code></pre>
+        </div>
+
+        <!-- CORS -->
+        <h2>🔐 CORS (Cross-Origin Resource Sharing)</h2>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ CORS Errors</div>
+          <p>CORS errors occur when making requests to a different domain. The server must allow cross-origin requests. You cannot fix CORS errors from the client side alone.</p>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">Understanding CORS</div>
+          <pre><code>// CORS error example
+// If you're on http://localhost:3000 and try to fetch:
+fetch('https://api.example.com/data')
+  .then((response) => response.json())
+  .catch((error) => {
+    // Error: CORS policy blocked the request
+    console.error('CORS error:', error);
+  });
+
+// CORS is a SECURITY FEATURE
+// - Server must explicitly allow your origin
+// - Cannot be bypassed from client
+// - Server sends CORS headers:
+//   Access-Control-Allow-Origin: *
+//   Access-Control-Allow-Methods: GET, POST, PUT
+//   Access-Control-Allow-Headers: Content-Type
+
+// Mode option in fetch
+fetch('https://api.example.com/data', {
+  mode: 'cors',        // Default, allows cross-origin
+  // mode: 'no-cors',  // Limited features, no access to response
+  // mode: 'same-origin' // Only same-origin requests
+});
+
+// Credentials (cookies, auth)
+fetch('https://api.example.com/data', {
+  credentials: 'include'  // Send cookies with request
+});</code></pre>
+        </div>
+
+        <!-- Practical Examples -->
+        <h2>🎯 Practical Examples</h2>
+
+        <h3>Example 1: Complete CRUD Application</h3>
+
+        <div class="code-example">
+          <div class="example-label">Todo List API Integration</div>
+          <pre><code>const API_URL = 'https://jsonplaceholder.typicode.com/todos';
+
+// Get all todos
+async function getTodos() {
+  try {
+    const response = await fetch(API_URL);
+    if (!response.ok) throw new Error('Failed to fetch todos');
+
+    const todos = await response.json();
+    displayTodos(todos.slice(0, 10));  // Display first 10
+  } catch (error) {
+    console.error('Error:', error);
+    showError('Failed to load todos');
+  }
+}
+
+// Create todo
+async function createTodo(title) {
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: title,
+        completed: false,
+        userId: 1
+      })
+    });
+
+    if (!response.ok) throw new Error('Failed to create todo');
+
+    const newTodo = await response.json();
+    console.log('Created:', newTodo);
+    addTodoToUI(newTodo);
+  } catch (error) {
+    console.error('Error:', error);
+    showError('Failed to create todo');
+  }
+}
+
+// Update todo
+async function updateTodo(id, completed) {
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ completed })
+    });
+
+    if (!response.ok) throw new Error('Failed to update todo');
+
+    const updated = await response.json();
+    updateTodoInUI(updated);
+  } catch (error) {
+    console.error('Error:', error);
+    showError('Failed to update todo');
+  }
+}
+
+// Delete todo
+async function deleteTodo(id) {
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE'
+    });
+
+    if (!response.ok) throw new Error('Failed to delete todo');
+
+    removeTodoFromUI(id);
+  } catch (error) {
+    console.error('Error:', error);
+    showError('Failed to delete todo');
+  }
+}
+
+// Helper functions
+function displayTodos(todos) {
+  const list = document.getElementById('todoList');
+  list.innerHTML = todos.map((todo) => `
+    <li>
+      <input type="checkbox" ${todo.completed ? 'checked' : ''}
+             onchange="updateTodo(${todo.id}, this.checked)">
+      <span>${todo.title}</span>
+      <button onclick="deleteTodo(${todo.id})">Delete</button>
+    </li>
+  `).join('');
+}
+
+function showError(message) {
+  const errorEl = document.getElementById('error');
+  errorEl.textContent = message;
+  errorEl.style.display = 'block';
+}</code></pre>
+        </div>
+
+        <h3>Example 2: Search with Debouncing</h3>
+
+        <div class="code-example">
+          <div class="example-label">Live Search with API</div>
+          <pre><code>// Debounce function
+function debounce(func, delay) {
+  let timeoutId;
+  return function(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+// Search function
+async function searchUsers(query) {
+  if (!query) {
+    document.getElementById('results').innerHTML = '';
+    return;
+  }
+
+  try {
+    const response = await fetch(`https://api.example.com/users?search=${query}`);
+    if (!response.ok) throw new Error('Search failed');
+
+    const users = await response.json();
+    displayResults(users);
+
+  } catch (error) {
+    console.error('Search error:', error);
+    document.getElementById('results').innerHTML = '<p>Search failed</p>';
+  }
+}
+
+// Debounced search (wait 300ms after typing stops)
+const debouncedSearch = debounce(searchUsers, 300);
+
+// Setup event listener
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  debouncedSearch(e.target.value);
+});
+
+function displayResults(users) {
+  const resultsEl = document.getElementById('results');
+  if (users.length === 0) {
+    resultsEl.innerHTML = '<p>No results found</p>';
+    return;
+  }
+
+  resultsEl.innerHTML = users.map((user) => `
+    <div class="user-result">
+      <h3>${user.name}</h3>
+      <p>${user.email}</p>
+    </div>
+  `).join('');
+}</code></pre>
+        </div>
+
+        <h3>Example 3: Pagination</h3>
+
+        <div class="code-example">
+          <div class="example-label">API Pagination</div>
+          <pre><code>class UserPagination {
+  constructor() {
+    this.currentPage = 1;
+    this.pageSize = 10;
+    this.totalPages = 0;
+  }
+
+  async fetchPage(page = 1) {
+    try {
+      const response = await fetch(
+        `https://api.example.com/users?page=${page}&limit=${this.pageSize}`
+      );
+
+      if (!response.ok) throw new Error('Failed to fetch users');
+
+      const data = await response.json();
+
+      this.currentPage = page;
+      this.totalPages = Math.ceil(data.total / this.pageSize);
+
+      this.displayUsers(data.users);
+      this.updatePaginationControls();
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  displayUsers(users) {
+    const container = document.getElementById('userList');
+    container.innerHTML = users.map((user) => `
+      <div class="user-card">
+        <h3>${user.name}</h3>
+        <p>${user.email}</p>
+      </div>
+    `).join('');
+  }
+
+  updatePaginationControls() {
+    const controls = document.getElementById('pagination');
+    controls.innerHTML = `
+      <button ${this.currentPage === 1 ? 'disabled' : ''}
+              onclick="pagination.fetchPage(${this.currentPage - 1})">
+        Previous
+      </button>
+      <span>Page ${this.currentPage} of ${this.totalPages}</span>
+      <button ${this.currentPage === this.totalPages ? 'disabled' : ''}
+              onclick="pagination.fetchPage(${this.currentPage + 1})">
+        Next
+      </button>
+    `;
+  }
+}
+
+const pagination = new UserPagination();
+pagination.fetchPage(1);</code></pre>
+        </div>
+
+        <h3>Example 4: Authentication</h3>
+
+        <div class="code-example">
+          <div class="example-label">API Authentication</div>
+          <pre><code>// Login and store token
+async function login(email, password) {
+  try {
+    const response = await fetch('https://api.example.com/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    if (!response.ok) {
+      throw new Error('Login failed');
+    }
+
+    const data = await response.json();
+
+    // Store token in localStorage
+    localStorage.setItem('authToken', data.token);
+    console.log('Logged in successfully');
+
+    return data;
+
+  } catch (error) {
+    console.error('Login error:', error);
+    throw error;
+  }
+}
+
+// Make authenticated request
+async function getProtectedData() {
+  const token = localStorage.getItem('authToken');
+
+  if (!token) {
+    throw new Error('Not authenticated');
+  }
+
+  try {
+    const response = await fetch('https://api.example.com/protected', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (response.status === 401) {
+      // Token expired or invalid
+      localStorage.removeItem('authToken');
+      throw new Error('Session expired - please log in again');
+    }
+
+    if (!response.ok) {
+      throw new Error('Request failed');
+    }
+
+    return await response.json();
+
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
+// Logout
+function logout() {
+  localStorage.removeItem('authToken');
+  console.log('Logged out');
+  window.location.href = '/login';
+}
+
+// Usage
+login('user@example.com', 'password123')
+  .then(() => getProtectedData())
+  .then((data) => console.log('Protected data:', data))
+  .catch((error) => console.error('Error:', error));</code></pre>
+        </div>
+
+        <!-- Best Practices -->
+        <h2>✅ Best Practices</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 API Best Practices</div>
+          <ul>
+            <li>Always check <code>response.ok</code> before parsing response</li>
+            <li>Use <code>async/await</code> with try/catch for cleaner error handling</li>
+            <li>Set appropriate <code>Content-Type</code> headers for POST/PUT requests</li>
+            <li>Handle different HTTP status codes appropriately</li>
+            <li>Implement loading states for better UX</li>
+            <li>Use debouncing for search inputs to reduce API calls</li>
+            <li>Store API base URLs in constants or environment variables</li>
+            <li>Never expose API keys in client-side code</li>
+            <li>Implement retry logic for failed requests when appropriate</li>
+            <li>Use pagination for large datasets</li>
+            <li>Cache responses when appropriate to reduce API calls</li>
+            <li>Validate and sanitize user input before sending to API</li>
+          </ul>
+        </div>
+
+        <!-- Common Patterns -->
+        <h2>🔧 Common API Patterns</h2>
+
+        <div class="code-example">
+          <div class="example-label">Reusable API Functions</div>
+          <pre><code>// API utility class
+class API {
+  constructor(baseURL) {
+    this.baseURL = baseURL;
+  }
+
+  async request(endpoint, options = {}) {
+    const url = `${this.baseURL}${endpoint}`;
+
+    const config = {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+      }
+    };
+
+    // Add auth token if available
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    try {
+      const response = await fetch(url, config);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      return await response.json();
+
+    } catch (error) {
+      console.error('API Error:', error);
+      throw error;
+    }
+  }
+
+  get(endpoint) {
+    return this.request(endpoint, { method: 'GET' });
+  }
+
+  post(endpoint, data) {
+    return this.request(endpoint, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+  }
+
+  put(endpoint, data) {
+    return this.request(endpoint, {
+      method: 'PUT',
+      body: JSON.stringify(data)
+    });
+  }
+
+  patch(endpoint, data) {
+    return this.request(endpoint, {
+      method: 'PATCH',
+      body: JSON.stringify(data)
+    });
+  }
+
+  delete(endpoint) {
+    return this.request(endpoint, { method: 'DELETE' });
+  }
+}
+
+// Usage
+const api = new API('https://api.example.com');
+
+// Simple calls
+const users = await api.get('/users');
+const newUser = await api.post('/users', { name: 'John' });
+const updated = await api.patch('/users/1', { name: 'Jane' });
+await api.delete('/users/1');</code></pre>
+        </div>
+
+        <!-- Summary -->
+        <div class="info-box note">
+          <div class="info-box-title">📝 Summary</div>
+          <ul>
+            <li><strong>APIs</strong> enable communication between client and server</li>
+            <li><strong>REST APIs</strong> use HTTP methods (GET, POST, PUT, DELETE) for CRUD operations</li>
+            <li><strong>Fetch API</strong> is the modern way to make HTTP requests</li>
+            <li><strong>fetch()</strong> returns a Promise that resolves to a Response object</li>
+            <li><strong>response.json()</strong> parses JSON response body</li>
+            <li><strong>Check response.ok</strong> to verify successful requests</li>
+            <li><strong>HTTP status codes</strong> indicate request outcome (200, 404, 500, etc.)</li>
+            <li><strong>Headers</strong> provide metadata (Content-Type, Authorization, etc.)</li>
+            <li><strong>CORS</strong> must be enabled by the server for cross-origin requests</li>
+            <li><strong>Error handling</strong> is crucial for robust applications</li>
+            <li><strong>Authentication</strong> typically uses tokens in Authorization header</li>
+          </ul>
+        </div>
+
+        <!-- Navigation -->
+        <div class="page-navigation">
+          <a href="async-javascript.html" class="nav-button">← Async JavaScript</a>
+          <a href="../index.html" class="nav-button">Course Home →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

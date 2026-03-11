@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Fundamentals - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>Web Fundamentals</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+          <li><a href="../projects/landing-page/index.html">Landing Page Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>🌐 Web Fundamentals</h1>
+
+        <p>
+          Welcome to web development! Before we start writing code, it's important to understand
+          how the web works and what technologies power modern websites.
+        </p>
+
+        <h2>What is the Web?</h2>
+
+        <p>
+          The <strong>World Wide Web</strong> (WWW) is a system of interconnected documents and resources,
+          linked by hyperlinks and URLs. When you visit a website, your browser requests files from
+          a server and displays them on your screen.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 Note</div>
+          <p>The web is not the same as the internet. The internet is the infrastructure (cables, routers, servers),
+          while the web is the information system that runs on top of it.</p>
+        </div>
+
+        <h2>How Websites Work</h2>
+
+        <h3>The Client-Server Model</h3>
+
+        <p>Web development follows a client-server architecture:</p>
+
+        <ul>
+          <li><strong>Client</strong>: Your web browser (Chrome, Firefox, Safari, etc.) that requests and displays web pages</li>
+          <li><strong>Server</strong>: A computer that stores website files and sends them to clients when requested</li>
+          <li><strong>HTTP/HTTPS</strong>: The protocol (language) browsers and servers use to communicate</li>
+        </ul>
+
+        <div class="demo-section">
+          <div class="demo-title">Example: What happens when you visit a website</div>
+          <ol>
+            <li>You type <code>www.example.com</code> in your browser</li>
+            <li>Your browser sends an HTTP request to the server</li>
+            <li>The server finds the requested files (HTML, CSS, JavaScript)</li>
+            <li>The server sends these files back to your browser</li>
+            <li>Your browser reads and displays the files as a web page</li>
+          </ol>
+        </div>
+
+        <h2>The Three Core Technologies</h2>
+
+        <p>Every website is built with three fundamental technologies:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Technology</th>
+              <th>Purpose</th>
+              <th>Analogy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>HTML</strong><br>(HyperText Markup Language)</td>
+              <td>Structure and content</td>
+              <td>The skeleton and organs of a body</td>
+            </tr>
+            <tr>
+              <td><strong>CSS</strong><br>(Cascading Style Sheets)</td>
+              <td>Visual styling and layout</td>
+              <td>The skin, hair, and clothing</td>
+            </tr>
+            <tr>
+              <td><strong>JavaScript</strong></td>
+              <td>Interactivity and behavior</td>
+              <td>The muscles and nervous system</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>HTML - The Structure</h3>
+
+        <p>
+          HTML defines what content appears on the page: headings, paragraphs, images, links, etc.
+          It uses "tags" to mark up content and give it meaning.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">HTML Example</div>
+          <pre><code class="language-html">&lt;!-- This is a simple HTML structure --&gt;
+&lt;!-- Tags are wrapped in angle brackets &lt;&gt; --&gt;
+
+&lt;h1&gt;Welcome to My Website&lt;/h1&gt;
+&lt;p&gt;This is a paragraph of text.&lt;/p&gt;
+&lt;a href="https://example.com"&gt;Click here to visit Example&lt;/a&gt;</code></pre>
+        </div>
+
+        <h3>CSS - The Style</h3>
+
+        <p>
+          CSS controls how HTML elements look: colors, fonts, spacing, layout, and animations.
+          Without CSS, websites would be plain black text on white backgrounds.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">CSS Example</div>
+          <pre><code><span class="comment">/* This CSS makes headings blue and adds spacing */</span>
+<span class="comment">/* The selector (h1) targets HTML elements */</span>
+
+<span class="tag">h1</span> {
+  <span class="attr">color</span>: <span class="string">blue</span>;
+  <span class="attr">font-size</span>: <span class="number">32</span>px;
+  <span class="attr">margin-bottom</span>: <span class="number">20</span>px;
+}</code></pre>
+        </div>
+
+        <h3>JavaScript - The Behavior</h3>
+
+        <p>
+          JavaScript makes websites interactive. It can respond to user actions (clicks, typing),
+          update content dynamically, and communicate with servers.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">JavaScript Example</div>
+          <pre><code><span class="comment">// This JavaScript shows an alert when a button is clicked</span>
+<span class="comment">// We'll learn this in detail later in the course</span>
+
+<span class="keyword">const</span> button = document.<span class="function">querySelector</span>(<span class="string">'button'</span>);
+button.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+  <span class="function">alert</span>(<span class="string">'Button clicked!'</span>);
+});</code></pre>
+        </div>
+
+        <h2>Web Browsers</h2>
+
+        <p>
+          A <strong>web browser</strong> is a program that retrieves, interprets, and displays web content.
+          Popular browsers include:
+        </p>
+
+        <ul>
+          <li><strong>Google Chrome</strong> - Most popular, built on Chromium</li>
+          <li><strong>Firefox</strong> - Open-source, privacy-focused</li>
+          <li><strong>Safari</strong> - Apple's browser for Mac and iOS</li>
+          <li><strong>Edge</strong> - Microsoft's browser, also Chromium-based</li>
+        </ul>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Tip</div>
+          <p>As a developer, you should test your websites in multiple browsers to ensure they work
+          everywhere. Different browsers can render the same code slightly differently.</p>
+        </div>
+
+        <h2>Developer Tools</h2>
+
+        <p>
+          Every modern browser has built-in <strong>Developer Tools</strong> (DevTools) that let you
+          inspect and debug websites. This is your most important tool as a developer!
+        </p>
+
+        <h3>How to Open DevTools</h3>
+
+        <ul>
+          <li><strong>Windows/Linux</strong>: Press <code>F12</code> or <code>Ctrl + Shift + I</code></li>
+          <li><strong>Mac</strong>: Press <code>Cmd + Option + I</code></li>
+          <li><strong>Right-click</strong> on any element and select "Inspect"</li>
+        </ul>
+
+        <h3>DevTools Panels</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Panel</th>
+              <th>What it does</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Elements</strong></td>
+              <td>View and edit HTML and CSS in real-time</td>
+            </tr>
+            <tr>
+              <td><strong>Console</strong></td>
+              <td>See JavaScript errors and run code</td>
+            </tr>
+            <tr>
+              <td><strong>Network</strong></td>
+              <td>Monitor files being loaded (images, scripts, etc.)</td>
+            </tr>
+            <tr>
+              <td><strong>Sources</strong></td>
+              <td>Debug JavaScript code</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="info-box important">
+          <div class="info-box-title">⚠️ Important</div>
+          <p>Get comfortable with DevTools early! Professional developers use them constantly.
+          They're essential for understanding how websites work and fixing bugs.</p>
+        </div>
+
+        <h2>URLs and Paths</h2>
+
+        <p>
+          A <strong>URL</strong> (Uniform Resource Locator) is a web address that points to a specific
+          resource on the internet.
+        </p>
+
+        <div class="demo-section">
+          <div class="demo-title">URL Structure</div>
+          <pre><code>https://www.example.com:443/products/shoes?color=blue&size=10#reviews
+━━━━━  ━━━━━━━━━━━━━━━  ━━━  ━━━━━━━━━━━━━━━  ━━━━━━━━━━━━━━━━  ━━━━━━━
+  ↓           ↓           ↓          ↓                 ↓             ↓
+protocol    domain       port      path           query         fragment</code></pre>
+
+          <ul style="margin-top: 1rem;">
+            <li><strong>Protocol</strong>: <code>https://</code> - How to access the resource (HTTP or HTTPS)</li>
+            <li><strong>Domain</strong>: <code>www.example.com</code> - The server address</li>
+            <li><strong>Port</strong>: <code>:443</code> - Optional, defaults to 80 (HTTP) or 443 (HTTPS)</li>
+            <li><strong>Path</strong>: <code>/products/shoes</code> - Location of the resource on the server</li>
+            <li><strong>Query</strong>: <code>?color=blue&size=10</code> - Additional parameters</li>
+            <li><strong>Fragment</strong>: <code>#reviews</code> - Anchor to specific page section</li>
+          </ul>
+        </div>
+
+        <h2>File Paths in Web Development</h2>
+
+        <p>
+          When linking to files in your project (images, CSS, other pages), you use file paths.
+          There are two types:
+        </p>
+
+        <h3>Relative Paths</h3>
+
+        <p>Relative to the current file's location:</p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Same folder --&gt;
+&lt;img src="logo.png"&gt;
+
+&lt;!-- Subfolder --&gt;
+&lt;img src="images/logo.png"&gt;
+
+&lt;!-- Parent folder --&gt;
+&lt;img src="../logo.png"&gt;
+
+&lt;!-- Parent's sibling folder --&gt;
+&lt;link rel="stylesheet" href="../css/style.css"&gt;</code></pre>
+        </div>
+
+        <h3>Absolute Paths</h3>
+
+        <p>Full path from the root or complete URL:</p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- From domain root --&gt;
+&lt;img src="/images/logo.png"&gt;
+
+&lt;!-- Complete URL --&gt;
+&lt;img src="https://example.com/images/logo.png"&gt;</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Best Practice</div>
+          <p>Use relative paths for files within your project. Use absolute URLs only for
+          external resources (like images from other websites or CDN links).</p>
+        </div>
+
+        <h2>Next Steps</h2>
+
+        <p>
+          Now that you understand the fundamentals of how the web works, you're ready to start
+          building! In the next lesson, we'll dive into HTML and create your first web page.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li>How the client-server model works</li>
+            <li>The three core web technologies (HTML, CSS, JavaScript)</li>
+            <li>What web browsers do and how to use DevTools</li>
+            <li>How URLs and file paths work</li>
+          </ul>
+        </div>
+
+        <!-- Navigation -->
+        <div class="page-navigation">
+          <a href="../index.html" class="nav-button">← Course Home</a>
+          <a href="html-basics.html" class="nav-button">HTML Basics →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

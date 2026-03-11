@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Basics - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>CSS Basics</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>🎨 CSS Basics</h1>
+
+        <p>
+          CSS (Cascading Style Sheets) controls how HTML elements look on the page.
+          It handles colors, fonts, spacing, layout, and much more.
+        </p>
+
+        <h2>Adding CSS to HTML</h2>
+
+        <h3>1. External CSS (Recommended)</h3>
+
+        <div class="code-example">
+          <div class="example-label">HTML</div>
+          <pre><code class="language-html">&lt;head&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;</code></pre>
+
+          <div class="example-label">style.css</div>
+          <pre><code><span class="tag">h1</span> {
+  <span class="attr">color</span>: <span class="string">blue</span>;
+}</code></pre>
+        </div>
+
+        <h3>2. Internal CSS</h3>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;head&gt;
+  &lt;style&gt;
+    h1 {
+      color: blue;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+        </div>
+
+        <h3>3. Inline CSS (Avoid)</h3>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;h1 style="color: blue;"&gt;Title&lt;/h1&gt;</code></pre>
+        </div>
+
+        <h2>CSS Syntax</h2>
+
+        <div class="demo-section">
+          <pre><code><span class="tag">selector</span> {
+  <span class="attr">property</span>: <span class="string">value</span>;
+  <span class="attr">another-property</span>: <span class="string">value</span>;
+}</code></pre>
+        </div>
+
+        <ul>
+          <li><strong>Selector</strong>: Which elements to style</li>
+          <li><strong>Property</strong>: What aspect to change (color, size, etc.)</li>
+          <li><strong>Value</strong>: The specific styling</li>
+        </ul>
+
+        <h2>CSS Selectors</h2>
+
+        <h3>Element Selector</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Targets all &lt;p&gt; elements */</span>
+<span class="tag">p</span> {
+  <span class="attr">color</span>: <span class="string">green</span>;
+}</code></pre>
+        </div>
+
+        <h3>Class Selector</h3>
+
+        <div class="code-example">
+          <div class="example-label">HTML</div>
+          <pre><code class="language-html">&lt;p class="highlight"&gt;Important text&lt;/p&gt;</code></pre>
+
+          <div class="example-label">CSS</div>
+          <pre><code><span class="comment">/* Targets elements with class="highlight" */</span>
+<span class="tag">.highlight</span> {
+  <span class="attr">background-color</span>: <span class="string">yellow</span>;
+}</code></pre>
+        </div>
+
+        <h3>ID Selector</h3>
+
+        <div class="code-example">
+          <div class="example-label">HTML</div>
+          <pre><code class="language-html">&lt;div id="header"&gt;Header content&lt;/div&gt;</code></pre>
+
+          <div class="example-label">CSS</div>
+          <pre><code><span class="comment">/* Targets element with id="header" */</span>
+<span class="tag">#header</span> {
+  <span class="attr">font-size</span>: <span class="number">24</span>px;
+}</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Class vs ID</div>
+          <p><strong>Classes</strong> can be reused on multiple elements. <strong>IDs</strong> must be unique per page.
+          Use classes for styling, IDs for JavaScript or unique anchors.</p>
+        </div>
+
+        <h3>Combining Selectors</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Multiple selectors (comma-separated) */</span>
+<span class="tag">h1, h2, h3</span> {
+  <span class="attr">color</span>: <span class="string">navy</span>;
+}
+
+<span class="comment">/* Descendant selector (space) */</span>
+<span class="tag">div p</span> {
+  <span class="attr">margin</span>: <span class="number">10</span>px;
+}
+
+<span class="comment">/* Direct child (>) */</span>
+<span class="tag">div > p</span> {
+  <span class="attr">font-weight</span>: <span class="string">bold</span>;
+}
+
+<span class="comment">/* Element with class */</span>
+<span class="tag">p.highlight</span> {
+  <span class="attr">color</span>: <span class="string">red</span>;
+}</code></pre>
+        </div>
+
+        <h2>Colors</h2>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Color names */</span>
+<span class="tag">.box</span> {
+  <span class="attr">color</span>: <span class="string">red</span>;
+  <span class="attr">background-color</span>: <span class="string">lightblue</span>;
+}
+
+<span class="comment">/* Hexadecimal */</span>
+<span class="tag">.box</span> {
+  <span class="attr">color</span>: <span class="string">#ff0000</span>;        <span class="comment">/* Red */</span>
+  <span class="attr">background-color</span>: <span class="string">#00ff00</span>; <span class="comment">/* Green */</span>
+}
+
+<span class="comment">/* RGB */</span>
+<span class="tag">.box</span> {
+  <span class="attr">color</span>: <span class="function">rgb</span>(<span class="number">255, 0, 0</span>); <span class="comment">/* Red */</span>
+}
+
+<span class="comment">/* RGBA (with transparency) */</span>
+<span class="tag">.box</span> {
+  <span class="attr">background-color</span>: <span class="function">rgba</span>(<span class="number">0, 0, 0, 0.5</span>); <span class="comment">/* 50% transparent black */</span>
+}</code></pre>
+        </div>
+
+        <h2>Text Styling</h2>
+
+        <div class="code-example">
+          <pre><code><span class="tag">p</span> {
+  <span class="comment">/* Font */</span>
+  <span class="attr">font-family</span>: <span class="string">Arial, sans-serif</span>;
+  <span class="attr">font-size</span>: <span class="number">16</span>px;
+  <span class="attr">font-weight</span>: <span class="string">bold</span>;      <span class="comment">/* or 400, 700, etc. */</span>
+  <span class="attr">font-style</span>: <span class="string">italic</span>;
+
+  <span class="comment">/* Text */</span>
+  <span class="attr">color</span>: <span class="string">#333</span>;
+  <span class="attr">text-align</span>: <span class="string">center</span>;      <span class="comment">/* left, right, center, justify */</span>
+  <span class="attr">text-decoration</span>: <span class="string">underline</span>; <span class="comment">/* none, underline, line-through */</span>
+  <span class="attr">text-transform</span>: <span class="string">uppercase</span>; <span class="comment">/* uppercase, lowercase, capitalize */</span>
+  <span class="attr">line-height</span>: <span class="number">1.5</span>;         <span class="comment">/* Space between lines */</span>
+  <span class="attr">letter-spacing</span>: <span class="number">2</span>px;
+}</code></pre>
+        </div>
+
+        <h2>Backgrounds</h2>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.box</span> {
+  <span class="comment">/* Solid color */</span>
+  <span class="attr">background-color</span>: <span class="string">#f0f0f0</span>;
+
+  <span class="comment">/* Image */</span>
+  <span class="attr">background-image</span>: <span class="function">url</span>(<span class="string">'image.jpg'</span>);
+  <span class="attr">background-size</span>: <span class="string">cover</span>;        <span class="comment">/* cover, contain, or px/% */</span>
+  <span class="attr">background-position</span>: <span class="string">center</span>;
+  <span class="attr">background-repeat</span>: <span class="string">no-repeat</span>; <span class="comment">/* repeat, no-repeat */</span>
+
+  <span class="comment">/* Gradient */</span>
+  <span class="attr">background</span>: <span class="function">linear-gradient</span>(<span class="number">to right, blue, red</span>);
+}</code></pre>
+        </div>
+
+        <h2>Borders</h2>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.box</span> {
+  <span class="comment">/* Shorthand */</span>
+  <span class="attr">border</span>: <span class="number">2</span>px <span class="string">solid black</span>;
+
+  <span class="comment">/* Individual sides */</span>
+  <span class="attr">border-top</span>: <span class="number">1</span>px <span class="string">dashed red</span>;
+  <span class="attr">border-right</span>: <span class="number">2</span>px <span class="string">solid blue</span>;
+  <span class="attr">border-bottom</span>: <span class="number">3</span>px <span class="string">dotted green</span>;
+  <span class="attr">border-left</span>: <span class="number">4</span>px <span class="string">double purple</span>;
+
+  <span class="comment">/* Rounded corners */</span>
+  <span class="attr">border-radius</span>: <span class="number">10</span>px;
+  <span class="attr">border-radius</span>: <span class="number">50%</span>; <span class="comment">/* Makes circle */</span>
+}</code></pre>
+        </div>
+
+        <h2>Width and Height</h2>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.box</span> {
+  <span class="comment">/* Fixed size */</span>
+  <span class="attr">width</span>: <span class="number">300</span>px;
+  <span class="attr">height</span>: <span class="number">200</span>px;
+
+  <span class="comment">/* Percentage (relative to parent) */</span>
+  <span class="attr">width</span>: <span class="number">50%</span>;
+
+  <span class="comment">/* Constraints */</span>
+  <span class="attr">max-width</span>: <span class="number">1200</span>px;
+  <span class="attr">min-width</span>: <span class="number">300</span>px;
+  <span class="attr">max-height</span>: <span class="number">500</span>px;
+  <span class="attr">min-height</span>: <span class="number">100</span>px;
+}</code></pre>
+        </div>
+
+        <h2>Spacing</h2>
+
+        <h3>Margin (Outside)</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* All sides */</span>
+<span class="tag">.box</span> {
+  <span class="attr">margin</span>: <span class="number">20</span>px;
+}
+
+<span class="comment">/* Individual sides */</span>
+<span class="tag">.box</span> {
+  <span class="attr">margin-top</span>: <span class="number">10</span>px;
+  <span class="attr">margin-right</span>: <span class="number">20</span>px;
+  <span class="attr">margin-bottom</span>: <span class="number">10</span>px;
+  <span class="attr">margin-left</span>: <span class="number">20</span>px;
+}
+
+<span class="comment">/* Shorthand: top right bottom left (clockwise) */</span>
+<span class="tag">.box</span> {
+  <span class="attr">margin</span>: <span class="number">10px 20px 10px 20px</span>;
+}
+
+<span class="comment">/* Center horizontally */</span>
+<span class="tag">.box</span> {
+  <span class="attr">margin</span>: <span class="number">0 auto</span>;
+}</code></pre>
+        </div>
+
+        <h3>Padding (Inside)</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.box</span> {
+  <span class="attr">padding</span>: <span class="number">20</span>px;           <span class="comment">/* All sides */</span>
+  <span class="attr">padding</span>: <span class="number">10px 20px</span>;      <span class="comment">/* top/bottom left/right */</span>
+  <span class="attr">padding</span>: <span class="number">10px 20px 30px</span>; <span class="comment">/* top left/right bottom */</span>
+  <span class="attr">padding</span>: <span class="number">10px 20px 30px 40px</span>; <span class="comment">/* top right bottom left */</span>
+}</code></pre>
+        </div>
+
+        <h2>Display Property</h2>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Block: Takes full width, starts new line */</span>
+<span class="tag">.box</span> {
+  <span class="attr">display</span>: <span class="string">block</span>;
+}
+
+<span class="comment">/* Inline: Flows with text, can't set width/height */</span>
+<span class="tag">.box</span> {
+  <span class="attr">display</span>: <span class="string">inline</span>;
+}
+
+<span class="comment">/* Inline-block: Flows with text, but can set width/height */</span>
+<span class="tag">.box</span> {
+  <span class="attr">display</span>: <span class="string">inline-block</span>;
+}
+
+<span class="comment">/* None: Completely hidden */</span>
+<span class="tag">.box</span> {
+  <span class="attr">display</span>: <span class="string">none</span>;
+}</code></pre>
+        </div>
+
+        <h2>Pseudo-classes</h2>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Hover state */</span>
+<span class="tag">a:hover</span> {
+  <span class="attr">color</span>: <span class="string">red</span>;
+}
+
+<span class="comment">/* Active (being clicked) */</span>
+<span class="tag">button:active</span> {
+  <span class="attr">transform</span>: <span class="function">scale</span>(<span class="number">0.95</span>);
+}
+
+<span class="comment">/* Focus (selected input) */</span>
+<span class="tag">input:focus</span> {
+  <span class="attr">border-color</span>: <span class="string">blue</span>;
+}
+
+<span class="comment">/* First/last child */</span>
+<span class="tag">li:first-child</span> {
+  <span class="attr">font-weight</span>: <span class="string">bold</span>;
+}
+
+<span class="tag">li:last-child</span> {
+  <span class="attr">color</span>: <span class="string">red</span>;
+}
+
+<span class="comment">/* Nth child */</span>
+<span class="tag">tr:nth-child(even)</span> {
+  <span class="attr">background-color</span>: <span class="string">#f0f0f0</span>;
+}</code></pre>
+        </div>
+
+        <h2>CSS Units</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Unit</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>px</code></td>
+              <td>Pixels (fixed size)</td>
+              <td><code>font-size: 16px;</code></td>
+            </tr>
+            <tr>
+              <td><code>%</code></td>
+              <td>Percentage of parent</td>
+              <td><code>width: 50%;</code></td>
+            </tr>
+            <tr>
+              <td><code>em</code></td>
+              <td>Relative to parent font</td>
+              <td><code>padding: 1.5em;</code></td>
+            </tr>
+            <tr>
+              <td><code>rem</code></td>
+              <td>Relative to root font</td>
+              <td><code>margin: 2rem;</code></td>
+            </tr>
+            <tr>
+              <td><code>vh/vw</code></td>
+              <td>Viewport height/width</td>
+              <td><code>height: 100vh;</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>CSS Specificity</h2>
+
+        <p>When multiple rules target the same element, specificity determines which wins:</p>
+
+        <div class="demo-section">
+          <div class="demo-title">Specificity (Low to High)</div>
+          <ol>
+            <li>Element selectors (<code>p</code>)</li>
+            <li>Class selectors (<code>.class</code>)</li>
+            <li>ID selectors (<code>#id</code>)</li>
+            <li>Inline styles (<code>style=""</code>)</li>
+            <li><code>!important</code> (avoid!)</li>
+          </ol>
+        </div>
+
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li>CSS syntax: selector, property, value</li>
+            <li>Types of selectors (element, class, ID)</li>
+            <li>Text styling and colors</li>
+            <li>Borders and backgrounds</li>
+            <li>Box model basics (margin, padding)</li>
+            <li>Display property</li>
+            <li>Pseudo-classes for interactivity</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="html-forms.html" class="nav-button">← HTML Forms</a>
+          <a href="box-model.html" class="nav-button">Box Model →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas & Animation - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>Canvas & Animation</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Fundamentals</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Working with APIs</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+          <li><a href="../projects/snake-game/index.html">Snake Game Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>🎨 Canvas & Animation</h1>
+
+        <p>
+          The HTML5 Canvas API allows you to draw graphics, create animations, and build interactive games directly in the browser using JavaScript. It provides a powerful 2D drawing surface that's essential for creating visual effects, charts, and games.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 Key Concept</div>
+          <p>Canvas is a bitmap-based drawing surface where you use JavaScript to draw shapes, images, and text. Unlike SVG, canvas is raster-based (pixels), making it better for animations and games.</p>
+        </div>
+
+        <!-- Getting Started -->
+        <h2>🚀 Getting Started with Canvas</h2>
+
+        <h3>Setting Up Canvas</h3>
+
+        <div class="code-example">
+          <div class="example-label">HTML Canvas Element</div>
+          <pre><code class="language-html">&lt;!-- HTML --&gt;
+&lt;canvas id="myCanvas" width="800" height="600"&gt;&lt;/canvas&gt;
+
+&lt;!-- Canvas dimensions should be set in HTML or JavaScript, not CSS --&gt;
+&lt;canvas id="myCanvas" width="800" height="600" style="border: 1px solid black;"&gt;
+  Your browser does not support canvas.
+&lt;/canvas&gt;
+
+&lt;script&gt;
+// JavaScript: Get canvas and context
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');  // 2D rendering context
+
+// Set dimensions dynamically
+canvas.width = 800;
+canvas.height = 600;
+
+// Make canvas responsive
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+&lt;/script&gt;</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Canvas vs CSS Sizing</div>
+          <p>Set canvas dimensions using the <code>width</code> and <code>height</code> attributes, not CSS. CSS will stretch the canvas, causing blurry graphics.</p>
+        </div>
+
+        <!-- Drawing Shapes -->
+        <h2>📐 Drawing Basic Shapes</h2>
+
+        <h3>Rectangles</h3>
+
+        <div class="code-example">
+          <div class="example-label">Drawing Rectangles</div>
+          <pre><code>const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+// fillRect(x, y, width, height) - filled rectangle
+ctx.fillStyle = 'red';
+ctx.fillRect(50, 50, 200, 100);
+
+// strokeRect(x, y, width, height) - outlined rectangle
+ctx.strokeStyle = 'blue';
+ctx.lineWidth = 3;
+ctx.strokeRect(300, 50, 200, 100);
+
+// clearRect(x, y, width, height) - clear rectangle area
+ctx.clearRect(75, 75, 50, 50);  // Cuts a hole in the red rectangle
+
+// Multiple rectangles
+ctx.fillStyle = 'green';
+ctx.fillRect(50, 200, 100, 100);
+
+ctx.fillStyle = 'orange';
+ctx.fillRect(200, 200, 100, 100);
+
+ctx.fillStyle = 'purple';
+ctx.fillRect(350, 200, 100, 100);</code></pre>
+        </div>
+
+        <h3>Paths (Lines, Triangles, Custom Shapes)</h3>
+
+        <div class="code-example">
+          <div class="example-label">Drawing with Paths</div>
+          <pre><code>// Drawing a line
+ctx.beginPath();           // Start new path
+ctx.moveTo(50, 50);        // Move to starting point
+ctx.lineTo(200, 100);      // Draw line to this point
+ctx.lineTo(300, 50);       // Draw another line
+ctx.strokeStyle = 'red';
+ctx.lineWidth = 3;
+ctx.stroke();              // Actually draw the path
+
+// Drawing a triangle
+ctx.beginPath();
+ctx.moveTo(100, 200);      // Top point
+ctx.lineTo(50, 300);       // Bottom left
+ctx.lineTo(150, 300);      // Bottom right
+ctx.closePath();           // Close the path back to start
+ctx.fillStyle = 'blue';
+ctx.fill();                // Fill the triangle
+
+// Drawing a custom shape
+ctx.beginPath();
+ctx.moveTo(250, 200);
+ctx.lineTo(300, 250);
+ctx.lineTo(350, 200);
+ctx.lineTo(400, 250);
+ctx.lineTo(350, 300);
+ctx.lineTo(250, 300);
+ctx.closePath();
+ctx.strokeStyle = 'green';
+ctx.lineWidth = 2;
+ctx.stroke();
+
+// Line properties
+ctx.lineCap = 'round';     // 'butt', 'round', 'square'
+ctx.lineJoin = 'round';    // 'miter', 'round', 'bevel'</code></pre>
+        </div>
+
+        <h3>Circles and Arcs</h3>
+
+        <div class="code-example">
+          <div class="example-label">Drawing Circles and Arcs</div>
+          <pre><code>// arc(x, y, radius, startAngle, endAngle, anticlockwise)
+// Angles are in radians (0 to 2π)
+
+// Full circle
+ctx.beginPath();
+ctx.arc(100, 100, 50, 0, Math.PI * 2);  // Full circle
+ctx.fillStyle = 'red';
+ctx.fill();
+
+// Outlined circle
+ctx.beginPath();
+ctx.arc(250, 100, 50, 0, Math.PI * 2);
+ctx.strokeStyle = 'blue';
+ctx.lineWidth = 3;
+ctx.stroke();
+
+// Half circle (arc)
+ctx.beginPath();
+ctx.arc(400, 100, 50, 0, Math.PI);  // 0 to π (half circle)
+ctx.fillStyle = 'green';
+ctx.fill();
+
+// Quarter circle (pie slice)
+ctx.beginPath();
+ctx.moveTo(100, 250);  // Start at center
+ctx.arc(100, 250, 50, 0, Math.PI / 2);  // 0 to π/2 (quarter)
+ctx.closePath();
+ctx.fillStyle = 'orange';
+ctx.fill();
+
+// Pac-Man shape
+ctx.beginPath();
+ctx.arc(250, 250, 50, 0.2 * Math.PI, 1.8 * Math.PI);
+ctx.lineTo(250, 250);  // Line back to center
+ctx.closePath();
+ctx.fillStyle = 'yellow';
+ctx.fill();
+
+// Helper: Degrees to Radians
+function toRadians(degrees) {
+  return degrees * (Math.PI / 180);
+}
+
+ctx.arc(400, 250, 50, toRadians(0), toRadians(90));</code></pre>
+        </div>
+
+        <!-- Colors and Styles -->
+        <h2>🎨 Colors, Gradients, and Patterns</h2>
+
+        <h3>Colors and Transparency</h3>
+
+        <div class="code-example">
+          <div class="example-label">Working with Colors</div>
+          <pre><code>// Solid colors
+ctx.fillStyle = 'red';
+ctx.fillStyle = '#ff0000';
+ctx.fillStyle = 'rgb(255, 0, 0)';
+ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';  // Semi-transparent
+
+// Global transparency
+ctx.globalAlpha = 0.5;  // All drawings 50% transparent
+ctx.fillRect(50, 50, 100, 100);
+ctx.globalAlpha = 1.0;  // Reset to opaque
+
+// Overlapping with transparency
+ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+ctx.fillRect(100, 100, 150, 150);
+
+ctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
+ctx.fillRect(150, 150, 150, 150);</code></pre>
+        </div>
+
+        <h3>Gradients</h3>
+
+        <div class="code-example">
+          <div class="example-label">Linear and Radial Gradients</div>
+          <pre><code>// Linear gradient
+const linearGradient = ctx.createLinearGradient(0, 0, 200, 0);  // x0, y0, x1, y1
+linearGradient.addColorStop(0, 'red');     // Start color
+linearGradient.addColorStop(0.5, 'yellow'); // Middle color
+linearGradient.addColorStop(1, 'blue');    // End color
+
+ctx.fillStyle = linearGradient;
+ctx.fillRect(50, 50, 200, 100);
+
+// Radial gradient (circular)
+const radialGradient = ctx.createRadialGradient(350, 100, 10, 350, 100, 50);
+radialGradient.addColorStop(0, 'white');
+radialGradient.addColorStop(1, 'blue');
+
+ctx.fillStyle = radialGradient;
+ctx.fillRect(300, 50, 100, 100);
+
+// Gradient for circle
+const circleGradient = ctx.createRadialGradient(100, 250, 0, 100, 250, 50);
+circleGradient.addColorStop(0, 'yellow');
+circleGradient.addColorStop(1, 'orange');
+
+ctx.beginPath();
+ctx.arc(100, 250, 50, 0, Math.PI * 2);
+ctx.fillStyle = circleGradient;
+ctx.fill();</code></pre>
+        </div>
+
+        <!-- Text -->
+        <h2>📝 Drawing Text</h2>
+
+        <div class="code-example">
+          <div class="example-label">Text Rendering</div>
+          <pre><code>// fillText(text, x, y, [maxWidth])
+ctx.font = '30px Arial';
+ctx.fillStyle = 'black';
+ctx.fillText('Hello Canvas!', 50, 50);
+
+// strokeText(text, x, y, [maxWidth])
+ctx.font = '40px Arial';
+ctx.strokeStyle = 'blue';
+ctx.lineWidth = 2;
+ctx.strokeText('Outlined Text', 50, 120);
+
+// Font properties
+ctx.font = 'bold 24px Georgia';
+ctx.font = 'italic 20px Times New Roman';
+ctx.font = '18px monospace';
+
+// Text alignment
+ctx.textAlign = 'left';    // 'left', 'center', 'right', 'start', 'end'
+ctx.textAlign = 'center';
+ctx.fillText('Centered', 400, 200);
+
+// Baseline alignment
+ctx.textBaseline = 'top';       // 'top', 'middle', 'bottom', 'alphabetic'
+ctx.textBaseline = 'middle';
+ctx.fillText('Middle aligned', 400, 250);
+
+// Measure text
+const text = 'Measure me';
+const metrics = ctx.measureText(text);
+console.log('Text width:', metrics.width);
+
+// Shadow effect
+ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+ctx.shadowBlur = 10;
+ctx.shadowOffsetX = 5;
+ctx.shadowOffsetY = 5;
+ctx.fillText('Shadow Text', 50, 300);
+
+// Reset shadow
+ctx.shadowColor = 'transparent';</code></pre>
+        </div>
+
+        <!-- Images -->
+        <h2>🖼️ Drawing Images</h2>
+
+        <div class="code-example">
+          <div class="example-label">Working with Images</div>
+          <pre><code>// Load and draw image
+const img = new Image();
+img.src = 'path/to/image.png';
+
+img.onload = function() {
+  // drawImage(image, x, y)
+  ctx.drawImage(img, 50, 50);
+
+  // drawImage(image, x, y, width, height) - scaled
+  ctx.drawImage(img, 200, 50, 100, 100);
+
+  // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) - cropped
+  ctx.drawImage(
+    img,
+    0, 0, 50, 50,      // Source: crop from (0,0) 50x50
+    350, 50, 100, 100  // Destination: draw at (350,50) 100x100
+  );
+};
+
+// Canvas to image
+const dataURL = canvas.toDataURL('image/png');
+const imgElement = document.createElement('img');
+imgElement.src = dataURL;
+document.body.appendChild(imgElement);
+
+// Image from another canvas
+const canvas2 = document.getElementById('canvas2');
+ctx.drawImage(canvas2, 0, 0);</code></pre>
+        </div>
+
+        <!-- Transformations -->
+        <h2>🔄 Transformations</h2>
+
+        <div class="code-example">
+          <div class="example-label">Translate, Rotate, Scale</div>
+          <pre><code>// Save current state
+ctx.save();
+
+// Translate (move origin)
+ctx.translate(100, 100);
+ctx.fillStyle = 'red';
+ctx.fillRect(0, 0, 50, 50);  // Draws at (100, 100)
+
+// Restore previous state
+ctx.restore();
+
+// Rotate (in radians)
+ctx.save();
+ctx.translate(250, 100);  // Move to rotation point
+ctx.rotate(Math.PI / 4);  // Rotate 45 degrees
+ctx.fillStyle = 'blue';
+ctx.fillRect(-25, -25, 50, 50);  // Draw centered at rotation point
+ctx.restore();
+
+// Scale
+ctx.save();
+ctx.translate(400, 100);
+ctx.scale(2, 1);  // Double width, normal height
+ctx.fillStyle = 'green';
+ctx.fillRect(-25, -25, 50, 50);
+ctx.restore();
+
+// Combined transformations
+ctx.save();
+ctx.translate(100, 300);
+ctx.rotate(Math.PI / 6);
+ctx.scale(1.5, 1.5);
+ctx.fillStyle = 'purple';
+ctx.fillRect(0, 0, 50, 50);
+ctx.restore();
+
+// Always use save() and restore() to isolate transformations!</code></pre>
+        </div>
+
+        <!-- Animation Basics -->
+        <h2>🎬 Animation Basics</h2>
+
+        <h3>Animation Loop with requestAnimationFrame</h3>
+
+        <div class="code-example">
+          <div class="example-label">Basic Animation Loop</div>
+          <pre><code>const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+let x = 0;
+let y = 100;
+let speed = 2;
+
+function animate() {
+  // Clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Update position
+  x += speed;
+
+  // Bounce at edges
+  if (x + 50 > canvas.width || x < 0) {
+    speed = -speed;
+  }
+
+  // Draw
+  ctx.fillStyle = 'red';
+  ctx.fillRect(x, y, 50, 50);
+
+  // Continue animation
+  requestAnimationFrame(animate);
+}
+
+// Start animation
+animate();
+
+// Stop animation
+let animationId;
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(x, y, 50, 50);
+  x += speed;
+
+  animationId = requestAnimationFrame(animate);
+}
+
+// Stop
+cancelAnimationFrame(animationId);</code></pre>
+        </div>
+
+        <h3>Moving Circle Animation</h3>
+
+        <div class="code-example">
+          <div class="example-label">Bouncing Circle</div>
+          <pre><code>const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+const ball = {
+  x: 100,
+  y: 100,
+  radius: 20,
+  dx: 3,  // Velocity X
+  dy: 2,  // Velocity Y
+  color: 'blue'
+};
+
+function drawBall() {
+  ctx.beginPath();
+  ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+  ctx.fillStyle = ball.color;
+  ctx.fill();
+  ctx.closePath();
+}
+
+function updateBall() {
+  // Update position
+  ball.x += ball.dx;
+  ball.y += ball.dy;
+
+  // Bounce off walls
+  if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+    ball.dx = -ball.dx;
+  }
+
+  if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+    ball.dy = -ball.dy;
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  drawBall();
+  updateBall();
+
+  requestAnimationFrame(animate);
+}
+
+animate();</code></pre>
+        </div>
+
+        <!-- Game Loop -->
+        <h2>🎮 Game Loop Pattern</h2>
+
+        <div class="code-example">
+          <div class="example-label">Complete Game Loop</div>
+          <pre><code>const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+// Game state
+const gameState = {
+  player: { x: 100, y: 100, width: 30, height: 30, speed: 5 },
+  enemies: [],
+  score: 0,
+  gameOver: false
+};
+
+// Input handling
+const keys = {};
+document.addEventListener('keydown', (e) => keys[e.key] = true);
+document.addEventListener('keyup', (e) => keys[e.key] = false);
+
+// Update game state
+function update() {
+  if (gameState.gameOver) return;
+
+  // Move player
+  if (keys['ArrowLeft']) gameState.player.x -= gameState.player.speed;
+  if (keys['ArrowRight']) gameState.player.x += gameState.player.speed;
+  if (keys['ArrowUp']) gameState.player.y -= gameState.player.speed;
+  if (keys['ArrowDown']) gameState.player.y += gameState.player.speed;
+
+  // Keep player in bounds
+  gameState.player.x = Math.max(0, Math.min(canvas.width - gameState.player.width, gameState.player.x));
+  gameState.player.y = Math.max(0, Math.min(canvas.height - gameState.player.height, gameState.player.y));
+
+  // Update enemies
+  gameState.enemies.forEach((enemy) => {
+    enemy.y += enemy.speed;
+
+    // Remove off-screen enemies
+    if (enemy.y > canvas.height) {
+      const index = gameState.enemies.indexOf(enemy);
+      gameState.enemies.splice(index, 1);
+      gameState.score++;
+    }
+  });
+
+  // Spawn enemies
+  if (Math.random() < 0.02) {
+    gameState.enemies.push({
+      x: Math.random() * (canvas.width - 30),
+      y: -30,
+      width: 30,
+      height: 30,
+      speed: 2
+    });
+  }
+
+  // Collision detection
+  gameState.enemies.forEach((enemy) => {
+    if (checkCollision(gameState.player, enemy)) {
+      gameState.gameOver = true;
+    }
+  });
+}
+
+// Draw everything
+function draw() {
+  // Clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw player
+  ctx.fillStyle = 'blue';
+  ctx.fillRect(
+    gameState.player.x,
+    gameState.player.y,
+    gameState.player.width,
+    gameState.player.height
+  );
+
+  // Draw enemies
+  ctx.fillStyle = 'red';
+  gameState.enemies.forEach((enemy) => {
+    ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+  });
+
+  // Draw score
+  ctx.fillStyle = 'black';
+  ctx.font = '20px Arial';
+  ctx.fillText(`Score: ${gameState.score}`, 10, 30);
+
+  // Draw game over
+  if (gameState.gameOver) {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = 'white';
+    ctx.font = '48px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
+    ctx.font = '24px Arial';
+    ctx.fillText(`Score: ${gameState.score}`, canvas.width / 2, canvas.height / 2 + 40);
+  }
+}
+
+// Collision detection
+function checkCollision(rect1, rect2) {
+  return rect1.x < rect2.x + rect2.width &&
+         rect1.x + rect1.width > rect2.x &&
+         rect1.y < rect2.y + rect2.height &&
+         rect1.y + rect1.height > rect2.y;
+}
+
+// Main game loop
+function gameLoop() {
+  update();
+  draw();
+  requestAnimationFrame(gameLoop);
+}
+
+// Start game
+gameLoop();</code></pre>
+        </div>
+
+        <!-- Particle System -->
+        <h2>✨ Particle System</h2>
+
+        <div class="code-example">
+          <div class="example-label">Simple Particle Effect</div>
+          <pre><code>const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+class Particle {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.size = Math.random() * 5 + 2;
+    this.speedX = Math.random() * 3 - 1.5;
+    this.speedY = Math.random() * 3 - 1.5;
+    this.color = `hsl(${Math.random() * 360}, 50%, 50%)`;
+    this.life = 100;
+  }
+
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.life -= 1;
+    this.size *= 0.98;  // Shrink over time
+  }
+
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = this.life / 100;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+const particles = [];
+
+// Create particles on click
+canvas.addEventListener('click', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  for (let i = 0; i < 30; i++) {
+    particles.push(new Particle(x, y));
+  }
+});
+
+function animate() {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Update and draw particles
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].draw();
+
+    // Remove dead particles
+    if (particles[i].life <= 0) {
+      particles.splice(i, 1);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+animate();</code></pre>
+        </div>
+
+        <!-- Mouse Interaction -->
+        <h2>🖱️ Mouse Interaction</h2>
+
+        <div class="code-example">
+          <div class="example-label">Drawing with Mouse</div>
+          <pre><code>const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+let isDrawing = false;
+let lastX = 0;
+let lastY = 0;
+
+canvas.addEventListener('mousedown', (e) => {
+  isDrawing = true;
+  const rect = canvas.getBoundingClientRect();
+  lastX = e.clientX - rect.left;
+  lastY = e.clientY - rect.top;
+});
+
+canvas.addEventListener('mousemove', (e) => {
+  if (!isDrawing) return;
+
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  ctx.beginPath();
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(x, y);
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = 3;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  lastX = x;
+  lastY = y;
+});
+
+canvas.addEventListener('mouseup', () => {
+  isDrawing = false;
+});
+
+canvas.addEventListener('mouseleave', () => {
+  isDrawing = false;
+});
+
+// Clear button
+document.getElementById('clearBtn').addEventListener('click', () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});</code></pre>
+        </div>
+
+        <!-- Performance Tips -->
+        <h2>⚡ Performance Optimization</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Canvas Performance Tips</div>
+          <ul>
+            <li>Use <code>requestAnimationFrame()</code> instead of <code>setInterval()</code></li>
+            <li>Clear only the necessary parts instead of the entire canvas</li>
+            <li>Batch drawing operations to minimize state changes</li>
+            <li>Use integer coordinates when possible (avoid decimals)</li>
+            <li>Pre-render complex scenes to off-screen canvas</li>
+            <li>Limit particle count and remove off-screen objects</li>
+            <li>Use <code>ctx.save()</code> and <code>ctx.restore()</code> sparingly</li>
+            <li>Avoid unnecessary <code>beginPath()</code> calls</li>
+            <li>Cache repeated calculations</li>
+          </ul>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">Performance Optimizations</div>
+          <pre><code>// ❌ Bad: Drawing everything every frame
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw static background every frame
+  drawBackground();
+  drawStaticElements();
+  drawMovingElements();
+
+  requestAnimationFrame(animate);
+}
+
+// ✅ Good: Off-screen canvas for static elements
+const offscreenCanvas = document.createElement('canvas');
+const offscreenCtx = offscreenCanvas.getContext('2d');
+offscreenCanvas.width = canvas.width;
+offscreenCanvas.height = canvas.height;
+
+// Draw static elements once
+drawBackgroundOnce(offscreenCtx);
+drawStaticElementsOnce(offscreenCtx);
+
+function animate() {
+  // Draw pre-rendered static elements
+  ctx.drawImage(offscreenCanvas, 0, 0);
+
+  // Only draw moving elements
+  drawMovingElements();
+
+  requestAnimationFrame(animate);
+}
+
+// Efficient clearing for small objects
+function clearArea(x, y, width, height) {
+  ctx.clearRect(x - 1, y - 1, width + 2, height + 2);
+}</code></pre>
+        </div>
+
+        <!-- Practical Examples -->
+        <h2>🎯 Practical Examples</h2>
+
+        <h3>Example 1: Clock Animation</h3>
+
+        <div class="code-example">
+          <div class="example-label">Animated Analog Clock</div>
+          <pre><code>const canvas = document.getElementById('clockCanvas');
+const ctx = canvas.getContext('2d');
+const centerX = canvas.width / 2;
+const centerY = canvas.height / 2;
+const radius = 150;
+
+function drawClock() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw clock face
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+  ctx.fillStyle = 'white';
+  ctx.fill();
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = 5;
+  ctx.stroke();
+
+  // Draw numbers
+  ctx.font = '20px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = 'black';
+
+  for (let i = 1; i <= 12; i++) {
+    const angle = (i * 30 - 90) * Math.PI / 180;
+    const x = centerX + Math.cos(angle) * (radius - 30);
+    const y = centerY + Math.sin(angle) * (radius - 30);
+    ctx.fillText(i.toString(), x, y);
+  }
+
+  // Get current time
+  const now = new Date();
+  const hours = now.getHours() % 12;
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+
+  // Draw hour hand
+  const hourAngle = ((hours * 30 + minutes * 0.5) - 90) * Math.PI / 180;
+  drawHand(hourAngle, radius * 0.5, 6, 'black');
+
+  // Draw minute hand
+  const minuteAngle = ((minutes * 6 + seconds * 0.1) - 90) * Math.PI / 180;
+  drawHand(minuteAngle, radius * 0.7, 4, 'black');
+
+  // Draw second hand
+  const secondAngle = ((seconds * 6) - 90) * Math.PI / 180;
+  drawHand(secondAngle, radius * 0.9, 2, 'red');
+
+  // Center dot
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, 8, 0, Math.PI * 2);
+  ctx.fillStyle = 'black';
+  ctx.fill();
+}
+
+function drawHand(angle, length, width, color) {
+  ctx.beginPath();
+  ctx.moveTo(centerX, centerY);
+  ctx.lineTo(
+    centerX + Math.cos(angle) * length,
+    centerY + Math.sin(angle) * length
+  );
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+}
+
+function animate() {
+  drawClock();
+  requestAnimationFrame(animate);
+}
+
+animate();</code></pre>
+        </div>
+
+        <h3>Example 2: Starfield Animation</h3>
+
+        <div class="code-example">
+          <div class="example-label">Moving Starfield</div>
+          <pre><code>const canvas = document.getElementById('starCanvas');
+const ctx = canvas.getContext('2d');
+
+class Star {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.z = Math.random() * canvas.width;
+  }
+
+  update() {
+    this.z -= 5;
+    if (this.z <= 0) {
+      this.z = canvas.width;
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+    }
+  }
+
+  draw() {
+    const sx = (this.x - canvas.width / 2) * (canvas.width / this.z);
+    const sy = (this.y - canvas.height / 2) * (canvas.width / this.z);
+    const x = sx + canvas.width / 2;
+    const y = sy + canvas.height / 2;
+    const size = (1 - this.z / canvas.width) * 3;
+
+    ctx.fillStyle = 'white';
+    ctx.beginPath();
+    ctx.arc(x, y, size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+const stars = Array.from({ length: 200 }, () => new Star());
+
+function animate() {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  stars.forEach((star) => {
+    star.update();
+    star.draw();
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();</code></pre>
+        </div>
+
+        <!-- Best Practices -->
+        <h2>✅ Best Practices</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Canvas Best Practices</div>
+          <ul>
+            <li>Set canvas size with width/height attributes, not CSS</li>
+            <li>Always use <code>save()</code> and <code>restore()</code> for transformations</li>
+            <li>Clear canvas before each frame with <code>clearRect()</code></li>
+            <li>Use <code>requestAnimationFrame()</code> for smooth animations</li>
+            <li>Store <code>getContext()</code> result, don't call it repeatedly</li>
+            <li>Close paths with <code>closePath()</code> for filled shapes</li>
+            <li>Use radians for angles (degrees × π / 180)</li>
+            <li>Optimize by reducing unnecessary redraws</li>
+            <li>Test performance on different devices</li>
+          </ul>
+        </div>
+
+        <!-- Summary -->
+        <div class="info-box note">
+          <div class="info-box-title">📝 Summary</div>
+          <ul>
+            <li><strong>Canvas</strong> provides a powerful 2D drawing API for graphics and games</li>
+            <li><strong>getContext('2d')</strong> returns the drawing context</li>
+            <li><strong>Shapes</strong> can be drawn using rectangles, paths, circles, and arcs</li>
+            <li><strong>Styles</strong> include colors, gradients, patterns, and text</li>
+            <li><strong>Transformations</strong> allow rotation, scaling, and translation</li>
+            <li><strong>requestAnimationFrame()</strong> creates smooth animations</li>
+            <li><strong>Game loops</strong> follow update-draw pattern</li>
+            <li><strong>Collision detection</strong> enables interactivity</li>
+            <li><strong>Performance</strong> matters for smooth animations</li>
+          </ul>
+        </div>
+
+        <!-- Navigation -->
+        <div class="page-navigation">
+          <a href="event-handling.html" class="nav-button">← Event Handling</a>
+          <a href="async-javascript.html" class="nav-button">Async JavaScript →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

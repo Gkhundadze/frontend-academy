@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Grid - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .grid-demo {
+      background: #f0f0f0;
+      border: 2px dashed #999;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .grid-container {
+      display: grid;
+      gap: 10px;
+      background: #e3f2fd;
+      padding: 10px;
+    }
+    .grid-item {
+      background: #4a90e2;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>CSS Grid</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+          <li><a href="https://cssgridgarden.com/" target="_blank">Grid Garden Game</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>🔲 CSS Grid</h1>
+
+        <p>
+          CSS Grid is a powerful 2-dimensional layout system for creating complex,
+          responsive layouts with rows and columns.
+        </p>
+
+        <div class="info-box tip">
+          <div class="info-box-title">🎮 Learn by Playing</div>
+          <p>
+            Check out <a href="https://cssgridgarden.com/" target="_blank">Grid Garden</a> -
+            a fun game that teaches CSS Grid concepts interactively!
+          </p>
+        </div>
+
+        <h2>Grid vs Flexbox</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Flexbox</th>
+              <th>Grid</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dimensions</td>
+              <td>1D (row OR column)</td>
+              <td>2D (rows AND columns)</td>
+            </tr>
+            <tr>
+              <td>Best for</td>
+              <td>Components, navigation</td>
+              <td>Page layouts, galleries</td>
+            </tr>
+            <tr>
+              <td>Item control</td>
+              <td>Content-based sizing</td>
+              <td>Grid-based positioning</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Basic Grid Setup</h2>
+
+        <div class="code-example">
+          <div class="example-label">HTML</div>
+          <pre><code class="language-html">&lt;div class="grid-container"&gt;
+  &lt;div class="item"&gt;1&lt;/div&gt;
+  &lt;div class="item"&gt;2&lt;/div&gt;
+  &lt;div class="item"&gt;3&lt;/div&gt;
+  &lt;div class="item"&gt;4&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+          <div class="example-label">CSS</div>
+          <pre><code><span class="tag">.grid-container</span> {
+  <span class="attr">display</span>: grid;
+  <span class="attr">grid-template-columns</span>: <span class="number">200</span>px <span class="number">200</span>px <span class="number">200</span>px; <span class="comment">/* 3 columns */</span>
+  <span class="attr">grid-template-rows</span>: <span class="number">100</span>px <span class="number">100</span>px;    <span class="comment">/* 2 rows */</span>
+  <span class="attr">gap</span>: <span class="number">10</span>px;                      <span class="comment">/* Space between items */</span>
+}</code></pre>
+        </div>
+
+        <div class="grid-demo">
+          <div class="demo-title">Live Example: 3 Columns × 2 Rows</div>
+          <div class="grid-container" style="grid-template-columns: repeat(3, 1fr); grid-template-rows: 80px 80px;">
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+            <div class="grid-item">5</div>
+            <div class="grid-item">6</div>
+          </div>
+        </div>
+
+        <h2>Defining Columns and Rows</h2>
+
+        <h3>Fixed Sizes</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.grid</span> {
+  <span class="comment">/* 3 columns: 200px, 300px, 200px */</span>
+  <span class="attr">grid-template-columns</span>: <span class="number">200</span>px <span class="number">300</span>px <span class="number">200</span>px;
+
+  <span class="comment">/* 2 rows: 100px each */</span>
+  <span class="attr">grid-template-rows</span>: <span class="number">100</span>px <span class="number">100</span>px;
+}</code></pre>
+        </div>
+
+        <h3>Flexible Sizes (fr unit)</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.grid</span> {
+  <span class="comment">/* 3 equal columns using fraction (fr) */</span>
+  <span class="attr">grid-template-columns</span>: <span class="number">1</span>fr <span class="number">1</span>fr <span class="number">1</span>fr;
+
+  <span class="comment">/* First column 2x wider than others */</span>
+  <span class="attr">grid-template-columns</span>: <span class="number">2</span>fr <span class="number">1</span>fr <span class="number">1</span>fr;
+
+  <span class="comment">/* Mix fixed and flexible */</span>
+  <span class="attr">grid-template-columns</span>: <span class="number">200</span>px <span class="number">1</span>fr <span class="number">200</span>px;
+}</code></pre>
+        </div>
+
+        <h3>repeat() Function</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.grid</span> {
+  <span class="comment">/* Instead of: 1fr 1fr 1fr 1fr */</span>
+  <span class="attr">grid-template-columns</span>: <span class="function">repeat</span>(<span class="number">4, 1fr</span>);
+
+  <span class="comment">/* Pattern repetition */</span>
+  <span class="attr">grid-template-columns</span>: <span class="function">repeat</span>(<span class="number">3, 100px 200px</span>);
+  <span class="comment">/* Results in: 100px 200px 100px 200px 100px 200px */</span>
+}</code></pre>
+        </div>
+
+        <h3>auto-fit and auto-fill</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.grid</span> {
+  <span class="comment">/* Automatically fits as many 200px columns as possible */</span>
+  <span class="attr">grid-template-columns</span>: <span class="function">repeat</span>(<span class="keyword">auto-fit</span>, <span class="function">minmax</span>(<span class="number">200px, 1fr</span>));
+
+  <span class="comment">/* Perfect for responsive card grids! */</span>
+}</code></pre>
+        </div>
+
+        <h2>Gap (Spacing)</h2>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.grid</span> {
+  <span class="comment">/* Same gap for rows and columns */</span>
+  <span class="attr">gap</span>: <span class="number">20</span>px;
+
+  <span class="comment">/* Different row and column gaps */</span>
+  <span class="attr">row-gap</span>: <span class="number">20</span>px;
+  <span class="attr">column-gap</span>: <span class="number">10</span>px;
+
+  <span class="comment">/* Shorthand: row-gap column-gap */</span>
+  <span class="attr">gap</span>: <span class="number">20px 10px</span>;
+}</code></pre>
+        </div>
+
+        <h2>Placing Items</h2>
+
+        <h3>Grid Lines</h3>
+
+        <div class="demo-section">
+          <div class="demo-title">Grid Lines (Numbered)</div>
+          <pre><code>   1      2      3      4
+   │      │      │      │
+1──┼──────┼──────┼──────┼
+   │      │      │      │
+2──┼──────┼──────┼──────┼
+   │      │      │      │
+3──┼──────┼──────┼──────┼
+          </code></pre>
+        </div>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Item spans from line 1 to 3 (2 columns) */</span>
+<span class="tag">.item</span> {
+  <span class="attr">grid-column-start</span>: <span class="number">1</span>;
+  <span class="attr">grid-column-end</span>: <span class="number">3</span>;
+}
+
+<span class="comment">/* Shorthand */</span>
+<span class="tag">.item</span> {
+  <span class="attr">grid-column</span>: <span class="number">1 / 3</span>; <span class="comment">/* start / end */</span>
+}
+
+<span class="comment">/* Span keyword */</span>
+<span class="tag">.item</span> {
+  <span class="attr">grid-column</span>: <span class="keyword">span</span> <span class="number">2</span>; <span class="comment">/* Spans 2 columns */</span>
+  <span class="attr">grid-row</span>: <span class="keyword">span</span> <span class="number">2</span>;    <span class="comment">/* Spans 2 rows */</span>
+}</code></pre>
+        </div>
+
+        <div class="grid-demo">
+          <div class="demo-title">Item Spanning Multiple Columns</div>
+          <div class="grid-container" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="grid-item" style="grid-column: span 2;">Spans 2 columns</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+            <div class="grid-item">5</div>
+            <div class="grid-item">6</div>
+          </div>
+        </div>
+
+        <h2>Template Areas</h2>
+
+        <p>Name areas of your grid for easier layout control:</p>
+
+        <div class="code-example">
+          <div class="example-label">CSS</div>
+          <pre><code><span class="tag">.grid</span> {
+  <span class="attr">display</span>: grid;
+  <span class="attr">grid-template-columns</span>: <span class="number">200</span>px <span class="number">1</span>fr <span class="number">200</span>px;
+  <span class="attr">grid-template-rows</span>: <span class="keyword">auto</span> <span class="number">1</span>fr <span class="keyword">auto</span>;
+  <span class="attr">grid-template-areas</span>:
+    <span class="string">"header  header  header"</span>
+    <span class="string">"sidebar content aside"</span>
+    <span class="string">"footer  footer  footer"</span>;
+}
+
+<span class="tag">.header</span>  { <span class="attr">grid-area</span>: header; }
+<span class="tag">.sidebar</span> { <span class="attr">grid-area</span>: sidebar; }
+<span class="tag">.content</span> { <span class="attr">grid-area</span>: content; }
+<span class="tag">.aside</span>   { <span class="attr">grid-area</span>: aside; }
+<span class="tag">.footer</span>  { <span class="attr">grid-area</span>: footer; }</code></pre>
+        </div>
+
+        <h2>Alignment</h2>
+
+        <h3>Justify (Horizontal)</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.grid</span> {
+  <span class="comment">/* Align items within their grid cell */</span>
+  <span class="attr">justify-items</span>: <span class="string">start</span>;   <span class="comment">/* start, end, center, stretch */</span>
+
+  <span class="comment">/* Align entire grid within container */</span>
+  <span class="attr">justify-content</span>: <span class="string">center</span>; <span class="comment">/* start, end, center, space-between, etc. */</span>
+}
+
+<span class="comment">/* Override for individual item */</span>
+<span class="tag">.item</span> {
+  <span class="attr">justify-self</span>: <span class="string">end</span>;
+}</code></pre>
+        </div>
+
+        <h3>Align (Vertical)</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.grid</span> {
+  <span class="comment">/* Align items within their grid cell */</span>
+  <span class="attr">align-items</span>: <span class="string">center</span>;    <span class="comment">/* start, end, center, stretch */</span>
+
+  <span class="comment">/* Align entire grid within container */</span>
+  <span class="attr">align-content</span>: <span class="string">center</span>;  <span class="comment">/* start, end, center, space-between, etc. */</span>
+}
+
+<span class="comment">/* Override for individual item */</span>
+<span class="tag">.item</span> {
+  <span class="attr">align-self</span>: <span class="string">start</span>;
+}</code></pre>
+        </div>
+
+        <h2>Common Patterns</h2>
+
+        <h3>Responsive Card Grid</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.card-grid</span> {
+  <span class="attr">display</span>: grid;
+  <span class="attr">grid-template-columns</span>: <span class="function">repeat</span>(<span class="keyword">auto-fit</span>, <span class="function">minmax</span>(<span class="number">250px, 1fr</span>));
+  <span class="attr">gap</span>: <span class="number">20</span>px;
+  <span class="comment">/* Automatically adjusts columns based on available space! */</span>
+}</code></pre>
+        </div>
+
+        <h3>Holy Grail Layout</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.page</span> {
+  <span class="attr">display</span>: grid;
+  <span class="attr">grid-template-columns</span>: <span class="number">200</span>px <span class="number">1</span>fr <span class="number">200</span>px;
+  <span class="attr">grid-template-rows</span>: <span class="keyword">auto</span> <span class="number">1</span>fr <span class="keyword">auto</span>;
+  <span class="attr">min-height</span>: <span class="number">100</span>vh;
+  <span class="attr">gap</span>: <span class="number">20</span>px;
+}
+
+<span class="tag">.header</span> {
+  <span class="attr">grid-column</span>: <span class="number">1 / 4</span>; <span class="comment">/* Spans all 3 columns */</span>
+}
+
+<span class="tag">.footer</span> {
+  <span class="attr">grid-column</span>: <span class="number">1 / 4</span>; <span class="comment">/* Spans all 3 columns */</span>
+}</code></pre>
+        </div>
+
+        <h3>Centered Content</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.centered</span> {
+  <span class="attr">display</span>: grid;
+  <span class="attr">place-items</span>: <span class="string">center</span>; <span class="comment">/* Shorthand for justify-items + align-items */</span>
+  <span class="attr">min-height</span>: <span class="number">100</span>vh;
+}</code></pre>
+        </div>
+
+        <h2>Grid vs Flexbox: When to Use What</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Choosing Between Grid and Flexbox</div>
+          <p><strong>Use Grid when:</strong></p>
+          <ul>
+            <li>You need 2D layout (rows AND columns)</li>
+            <li>Creating page-level layouts</li>
+            <li>You know the structure in advance</li>
+            <li>Items need to align in both directions</li>
+          </ul>
+          <p><strong>Use Flexbox when:</strong></p>
+          <ul>
+            <li>You need 1D layout (row OR column)</li>
+            <li>Creating component-level layouts</li>
+            <li>Content determines the layout</li>
+            <li>Items need flexible sizing</li>
+          </ul>
+          <p><strong>Often use both!</strong> Grid for overall layout, Flexbox for components.</p>
+        </div>
+
+        <h2>Browser Support</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">✅ Excellent Browser Support</div>
+          <p>CSS Grid is supported in all modern browsers. For older browsers (IE 11),
+          use Flexbox as a fallback or consider using a CSS Grid polyfill.</p>
+        </div>
+
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li>Grid is a 2D layout system (rows and columns)</li>
+            <li>Use <code>display: grid</code> on container</li>
+            <li>Define columns with <code>grid-template-columns</code></li>
+            <li>Define rows with <code>grid-template-rows</code></li>
+            <li><code>fr</code> unit creates flexible columns/rows</li>
+            <li><code>repeat()</code> simplifies repetitive definitions</li>
+            <li><code>gap</code> adds space between items</li>
+            <li>Items can span multiple columns/rows</li>
+            <li>Template areas provide semantic layouts</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="flexbox.html" class="nav-button">← Flexbox</a>
+          <a href="responsive-design.html" class="nav-button">Responsive Design →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

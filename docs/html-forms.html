@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Forms - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>HTML Forms</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>📝 HTML Forms</h1>
+
+        <p>
+          Forms are how websites collect information from users. Whether it's a login page,
+          contact form, or search bar, forms are essential for user interaction.
+        </p>
+
+        <h2>The &lt;form&gt; Element</h2>
+
+        <p>
+          The <code>&lt;form&gt;</code> element wraps all form controls and defines how data is submitted.
+        </p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Basic form structure --&gt;
+&lt;form action="/submit" method="POST"&gt;
+  &lt;!-- Form inputs go here --&gt;
+&lt;/form&gt;</code></pre>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>action</code></td>
+              <td>URL where form data is sent</td>
+            </tr>
+            <tr>
+              <td><code>method</code></td>
+              <td>HTTP method (GET or POST)</td>
+            </tr>
+            <tr>
+              <td><code>name</code></td>
+              <td>Form identifier</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Text Inputs</h2>
+
+        <p>The <code>&lt;input&gt;</code> element creates various input fields:</p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Text input --&gt;
+&lt;label for="username"&gt;Username:&lt;/label&gt;
+&lt;input type="text" id="username" name="username" required&gt;
+
+&lt;!-- Email input (validates email format) --&gt;
+&lt;label for="email"&gt;Email:&lt;/label&gt;
+&lt;input type="email" id="email" name="email" required&gt;
+
+&lt;!-- Password input (hides characters) --&gt;
+&lt;label for="password"&gt;Password:&lt;/label&gt;
+&lt;input type="password" id="password" name="password" required&gt;</code></pre>
+        </div>
+
+        <div class="demo-section">
+          <div class="demo-title">Live Example</div>
+          <form style="max-width: 400px;">
+            <div style="margin-bottom: 1rem;">
+              <label for="demo-username">Username:</label><br>
+              <input type="text" id="demo-username" style="width: 100%; padding: 0.5rem; margin-top: 0.25rem;">
+            </div>
+            <div style="margin-bottom: 1rem;">
+              <label for="demo-email">Email:</label><br>
+              <input type="email" id="demo-email" style="width: 100%; padding: 0.5rem; margin-top: 0.25rem;">
+            </div>
+            <div style="margin-bottom: 1rem;">
+              <label for="demo-password">Password:</label><br>
+              <input type="password" id="demo-password" style="width: 100%; padding: 0.5rem; margin-top: 0.25rem;">
+            </div>
+          </form>
+        </div>
+
+        <h2>Input Types</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Purpose</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>text</code></td>
+              <td>Single-line text</td>
+              <td>Name, username</td>
+            </tr>
+            <tr>
+              <td><code>email</code></td>
+              <td>Email address</td>
+              <td>user@example.com</td>
+            </tr>
+            <tr>
+              <td><code>password</code></td>
+              <td>Hidden text</td>
+              <td>••••••••</td>
+            </tr>
+            <tr>
+              <td><code>number</code></td>
+              <td>Numeric input</td>
+              <td>Age, quantity</td>
+            </tr>
+            <tr>
+              <td><code>tel</code></td>
+              <td>Phone number</td>
+              <td>(123) 456-7890</td>
+            </tr>
+            <tr>
+              <td><code>url</code></td>
+              <td>Web address</td>
+              <td>https://example.com</td>
+            </tr>
+            <tr>
+              <td><code>date</code></td>
+              <td>Date picker</td>
+              <td>2024-01-15</td>
+            </tr>
+            <tr>
+              <td><code>checkbox</code></td>
+              <td>Multiple choice</td>
+              <td>☑ Agree to terms</td>
+            </tr>
+            <tr>
+              <td><code>radio</code></td>
+              <td>Single choice</td>
+              <td>◉ Option A ○ Option B</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Labels</h2>
+
+        <p>
+          <strong>Always</strong> use <code>&lt;label&gt;</code> with inputs for accessibility:
+        </p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Method 1: Using 'for' attribute (most common) --&gt;
+&lt;label for="username"&gt;Username:&lt;/label&gt;
+&lt;input type="text" id="username" name="username"&gt;
+
+&lt;!-- Method 2: Wrapping input (implicit association) --&gt;
+&lt;label&gt;
+  Username:
+  &lt;input type="text" name="username"&gt;
+&lt;/label&gt;</code></pre>
+        </div>
+
+        <div class="info-box important">
+          <div class="info-box-title">♿ Accessibility</div>
+          <p>Labels are essential for screen readers and improve usability. Users can click
+          the label to focus the input.</p>
+        </div>
+
+        <h2>Checkboxes and Radio Buttons</h2>
+
+        <div class="code-example">
+          <div class="example-label">Checkboxes (multiple selection)</div>
+          <pre><code class="language-html">&lt;label&gt;
+  &lt;input type="checkbox" name="hobbies" value="reading"&gt;
+  Reading
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input type="checkbox" name="hobbies" value="sports"&gt;
+  Sports
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input type="checkbox" name="hobbies" value="music"&gt;
+  Music
+&lt;/label&gt;</code></pre>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">Radio Buttons (single selection)</div>
+          <pre><code class="language-html">&lt;!-- Same 'name' groups radio buttons together --&gt;
+&lt;label&gt;
+  &lt;input type="radio" name="size" value="small"&gt;
+  Small
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input type="radio" name="size" value="medium" checked&gt;
+  Medium
+&lt;/label&gt;
+&lt;label&gt;
+  &lt;input type="radio" name="size" value="large"&gt;
+  Large
+&lt;/label&gt;</code></pre>
+        </div>
+
+        <h2>Textarea</h2>
+
+        <p>For multi-line text input:</p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;label for="message"&gt;Message:&lt;/label&gt;
+&lt;textarea id="message" name="message" rows="5" cols="50"&gt;
+Default text here...
+&lt;/textarea&gt;</code></pre>
+        </div>
+
+        <h2>Select Dropdown</h2>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;label for="country"&gt;Country:&lt;/label&gt;
+&lt;select id="country" name="country"&gt;
+  &lt;option value=""&gt;-- Select --&lt;/option&gt;
+  &lt;option value="us"&gt;United States&lt;/option&gt;
+  &lt;option value="uk"&gt;United Kingdom&lt;/option&gt;
+  &lt;option value="ca"&gt;Canada&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;!-- With option groups --&gt;
+&lt;select name="food"&gt;
+  &lt;optgroup label="Fruits"&gt;
+    &lt;option value="apple"&gt;Apple&lt;/option&gt;
+    &lt;option value="banana"&gt;Banana&lt;/option&gt;
+  &lt;/optgroup&gt;
+  &lt;optgroup label="Vegetables"&gt;
+    &lt;option value="carrot"&gt;Carrot&lt;/option&gt;
+    &lt;option value="broccoli"&gt;Broccoli&lt;/option&gt;
+  &lt;/optgroup&gt;
+&lt;/select&gt;</code></pre>
+        </div>
+
+        <h2>Buttons</h2>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Submit button (submits form) --&gt;
+&lt;button type="submit"&gt;Submit&lt;/button&gt;
+
+&lt;!-- Reset button (clears form) --&gt;
+&lt;button type="reset"&gt;Reset&lt;/button&gt;
+
+&lt;!-- Regular button (no default action) --&gt;
+&lt;button type="button"&gt;Click Me&lt;/button&gt;
+
+&lt;!-- Alternative submit button --&gt;
+&lt;input type="submit" value="Submit"&gt;</code></pre>
+        </div>
+
+        <h2>Form Validation</h2>
+
+        <h3>HTML5 Validation Attributes</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>required</code></td>
+              <td>Field must be filled</td>
+            </tr>
+            <tr>
+              <td><code>minlength</code></td>
+              <td>Minimum text length</td>
+            </tr>
+            <tr>
+              <td><code>maxlength</code></td>
+              <td>Maximum text length</td>
+            </tr>
+            <tr>
+              <td><code>min</code> / <code>max</code></td>
+              <td>Number range</td>
+            </tr>
+            <tr>
+              <td><code>pattern</code></td>
+              <td>Regex validation</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Required field --&gt;
+&lt;input type="text" name="username" required&gt;
+
+&lt;!-- Length constraints --&gt;
+&lt;input type="password" minlength="8" maxlength="20" required&gt;
+
+&lt;!-- Number range --&gt;
+&lt;input type="number" min="1" max="100"&gt;
+
+&lt;!-- Pattern matching (regex) --&gt;
+&lt;input type="text" pattern="[A-Za-z]{3,}" title="At least 3 letters"&gt;
+
+&lt;!-- Email validation (built-in) --&gt;
+&lt;input type="email" required&gt;</code></pre>
+        </div>
+
+        <h2>Complete Form Example</h2>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;form action="/submit" method="POST"&gt;
+  &lt;!-- Personal Information --&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Personal Information&lt;/legend&gt;
+
+    &lt;label for="name"&gt;Full Name:&lt;/label&gt;
+    &lt;input type="text" id="name" name="name" required&gt;
+
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" id="email" name="email" required&gt;
+
+    &lt;label for="phone"&gt;Phone:&lt;/label&gt;
+    &lt;input type="tel" id="phone" name="phone"&gt;
+  &lt;/fieldset&gt;
+
+  &lt;!-- Preferences --&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Preferences&lt;/legend&gt;
+
+    &lt;label for="country"&gt;Country:&lt;/label&gt;
+    &lt;select id="country" name="country"&gt;
+      &lt;option value=""&gt;-- Select --&lt;/option&gt;
+      &lt;option value="us"&gt;United States&lt;/option&gt;
+      &lt;option value="uk"&gt;United Kingdom&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;label&gt;
+      &lt;input type="checkbox" name="newsletter"&gt;
+      Subscribe to newsletter
+    &lt;/label&gt;
+  &lt;/fieldset&gt;
+
+  &lt;!-- Submit --&gt;
+  &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+        </div>
+
+        <h2>Form Best Practices</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Best Practices</div>
+          <ul>
+            <li>Always use labels with inputs</li>
+            <li>Use appropriate input types for validation</li>
+            <li>Provide clear error messages</li>
+            <li>Use placeholder text for examples, not labels</li>
+            <li>Group related fields with <code>&lt;fieldset&gt;</code></li>
+            <li>Make required fields obvious</li>
+            <li>Keep forms as short as possible</li>
+          </ul>
+        </div>
+
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li>Form structure with <code>&lt;form&gt;</code> element</li>
+            <li>Various input types (text, email, password, etc.)</li>
+            <li>Labels and their importance for accessibility</li>
+            <li>Checkboxes and radio buttons</li>
+            <li>Textareas and select dropdowns</li>
+            <li>HTML5 validation attributes</li>
+            <li>Complete form structure with fieldsets</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="semantic-html.html" class="nav-button">← Semantic HTML</a>
+          <a href="css-basics.html" class="nav-button">CSS Basics →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

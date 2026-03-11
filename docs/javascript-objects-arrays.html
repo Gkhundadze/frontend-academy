@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Objects & Arrays - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>JavaScript Objects & Arrays</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Fundamentals</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Working with APIs</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+          <li><a href="../projects/quiz-app/index.html">Quiz App Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>📦 JavaScript Objects & Arrays</h1>
+
+        <p>
+          Objects and arrays are the most important data structures in JavaScript. They allow you to organize and store complex data in meaningful ways. Understanding how to work with them is essential for any JavaScript developer.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 Key Concept</div>
+          <p><strong>Objects</strong> store key-value pairs, while <strong>arrays</strong> store ordered lists. Both are reference types and can hold any type of data including other objects and arrays.</p>
+        </div>
+
+        <!-- Objects Section -->
+        <h2>📋 JavaScript Objects</h2>
+
+        <p>
+          Objects are collections of related data and functionality. They store data as key-value pairs, where each key (property) has an associated value.
+        </p>
+
+        <h3>Creating Objects</h3>
+
+        <p>There are several ways to create objects in JavaScript:</p>
+
+        <div class="code-example">
+          <div class="example-label">Object Literal (Most Common)</div>
+          <pre><code>// Object literal notation
+const person = {
+  firstName: 'John',
+  lastName: 'Doe',
+  age: 30,
+  isStudent: false,
+  hobbies: ['reading', 'coding', 'gaming']
+};
+
+// Empty object
+const emptyObject = {};
+
+// Object with methods
+const calculator = {
+  add: function(a, b) {
+    return a + b;
+  },
+  subtract: function(a, b) {
+    return a - b;
+  }
+};</code></pre>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">Other Ways to Create Objects</div>
+          <pre><code>// Using new Object()
+const person = new Object();
+person.name = 'Alice';
+person.age = 25;
+
+// Using Object.create()
+const personPrototype = {
+  greet: function() {
+    return `Hello, I'm ${this.name}`;
+  }
+};
+const john = Object.create(personPrototype);
+john.name = 'John';</code></pre>
+        </div>
+
+        <h3>Accessing Object Properties</h3>
+
+        <p>You can access object properties using dot notation or bracket notation:</p>
+
+        <div class="code-example">
+          <div class="example-label">Property Access</div>
+          <pre><code>const person = {
+  firstName: 'John',
+  lastName: 'Doe',
+  age: 30,
+  'favorite color': 'blue'  // Property with spaces
+};
+
+// Dot notation (most common)
+console.log(person.firstName);  // "John"
+console.log(person.age);        // 30
+
+// Bracket notation (use when property name has spaces or is in a variable)
+console.log(person['lastName']);       // "Doe"
+console.log(person['favorite color']); // "blue"
+
+// Using variables
+const propertyName = 'age';
+console.log(person[propertyName]);     // 30</code></pre>
+        </div>
+
+        <h3>Adding, Modifying, and Deleting Properties</h3>
+
+        <div class="code-example">
+          <div class="example-label">Manipulating Object Properties</div>
+          <pre><code>const person = {
+  name: 'John',
+  age: 30
+};
+
+// Adding properties
+person.email = 'john@example.com';
+person['phone'] = '555-1234';
+
+console.log(person);
+// { name: 'John', age: 30, email: 'john@example.com', phone: '555-1234' }
+
+// Modifying properties
+person.age = 31;
+person['name'] = 'John Doe';
+
+// Deleting properties
+delete person.phone;
+console.log(person);
+// { name: 'John Doe', age: 31, email: 'john@example.com' }</code></pre>
+        </div>
+
+        <h3>Object Methods</h3>
+
+        <p>Objects can contain functions, which are called methods when they're properties of an object:</p>
+
+        <div class="code-example">
+          <div class="example-label">Object Methods</div>
+          <pre><code>const person = {
+  firstName: 'John',
+  lastName: 'Doe',
+  age: 30,
+
+  // Method (function inside an object)
+  getFullName: function() {
+    return this.firstName + ' ' + this.lastName;
+  },
+
+  // Shorthand method syntax (ES6)
+  greet() {
+    return `Hello, I'm ${this.firstName}!`;
+  },
+
+  // Method that modifies the object
+  celebrateBirthday() {
+    this.age++;
+    return `Happy birthday! Now ${this.age} years old.`;
+  }
+};
+
+console.log(person.getFullName());      // "John Doe"
+console.log(person.greet());            // "Hello, I'm John!"
+console.log(person.celebrateBirthday()); // "Happy birthday! Now 31 years old."</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 The 'this' Keyword</div>
+          <p>Inside an object method, <code>this</code> refers to the object itself. It allows methods to access and modify the object's properties.</p>
+        </div>
+
+        <h3>Nested Objects</h3>
+
+        <p>Objects can contain other objects, creating nested structures:</p>
+
+        <div class="code-example">
+          <div class="example-label">Nested Objects</div>
+          <pre><code>const student = {
+  name: 'Alice',
+  age: 20,
+  address: {
+    street: '123 Main St',
+    city: 'Springfield',
+    country: 'USA'
+  },
+  grades: {
+    math: 95,
+    english: 88,
+    science: 92
+  }
+};
+
+// Accessing nested properties
+console.log(student.address.city);        // "Springfield"
+console.log(student.grades.math);         // 95
+
+// Modifying nested properties
+student.address.street = '456 Oak Ave';
+student.grades.english = 90;</code></pre>
+        </div>
+
+        <h3>Checking if Properties Exist</h3>
+
+        <div class="code-example">
+          <div class="example-label">Property Existence</div>
+          <pre><code>const person = {
+  name: 'John',
+  age: 30
+};
+
+// Using 'in' operator
+console.log('name' in person);    // true
+console.log('email' in person);   // false
+
+// Using hasOwnProperty()
+console.log(person.hasOwnProperty('age'));    // true
+console.log(person.hasOwnProperty('phone'));  // false
+
+// Checking if value is undefined
+console.log(person.email === undefined);  // true</code></pre>
+        </div>
+
+        <h3>Looping Through Objects</h3>
+
+        <div class="code-example">
+          <div class="example-label">Iterating Over Object Properties</div>
+          <pre><code>const person = {
+  name: 'John',
+  age: 30,
+  city: 'New York'
+};
+
+// for...in loop
+for (let key in person) {
+  console.log(key + ': ' + person[key]);
+}
+// Output:
+// name: John
+// age: 30
+// city: New York
+
+// Object.keys() - returns array of keys
+const keys = Object.keys(person);
+console.log(keys);  // ['name', 'age', 'city']
+
+// Object.values() - returns array of values
+const values = Object.values(person);
+console.log(values);  // ['John', 30, 'New York']
+
+// Object.entries() - returns array of [key, value] pairs
+const entries = Object.entries(person);
+console.log(entries);
+// [['name', 'John'], ['age', 30], ['city', 'New York']]
+
+// Using forEach with Object.entries()
+Object.entries(person).forEach(([key, value]) => {
+  console.log(`${key}: ${value}`);
+});</code></pre>
+        </div>
+
+        <!-- Arrays Section -->
+        <h2>📚 JavaScript Arrays</h2>
+
+        <p>
+          Arrays are ordered collections of values. They can hold any type of data and are zero-indexed (the first element is at index 0).
+        </p>
+
+        <h3>Creating Arrays</h3>
+
+        <div class="code-example">
+          <div class="example-label">Array Creation</div>
+          <pre><code>// Array literal (most common)
+const numbers = [1, 2, 3, 4, 5];
+const fruits = ['apple', 'banana', 'orange'];
+const mixed = [1, 'hello', true, null, { name: 'John' }];
+
+// Empty array
+const empty = [];
+
+// Using Array constructor
+const arr1 = new Array(5);        // Creates array with 5 empty slots
+const arr2 = new Array(1, 2, 3);  // Creates [1, 2, 3]
+
+// Array.of() - creates array from arguments
+const arr3 = Array.of(5);         // [5] (not an array with 5 slots)
+
+// Array.from() - creates array from iterable
+const arr4 = Array.from('hello'); // ['h', 'e', 'l', 'l', 'o']</code></pre>
+        </div>
+
+        <h3>Accessing Array Elements</h3>
+
+        <div class="code-example">
+          <div class="example-label">Array Access</div>
+          <pre><code>const fruits = ['apple', 'banana', 'orange', 'grape'];
+
+// Access by index (zero-based)
+console.log(fruits[0]);   // "apple"
+console.log(fruits[2]);   // "orange"
+
+// Negative indexing doesn't work, but you can calculate from end
+console.log(fruits[fruits.length - 1]);  // "grape" (last element)
+
+// Using at() method (ES2022) - supports negative indexing
+console.log(fruits.at(0));   // "apple"
+console.log(fruits.at(-1));  // "grape" (last element)
+console.log(fruits.at(-2));  // "orange" (second to last)</code></pre>
+        </div>
+
+        <h3>Array Length</h3>
+
+        <div class="code-example">
+          <div class="example-label">Array Length Property</div>
+          <pre><code>const numbers = [1, 2, 3, 4, 5];
+
+// Get length
+console.log(numbers.length);  // 5
+
+// Modify length to truncate array
+numbers.length = 3;
+console.log(numbers);  // [1, 2, 3]
+
+// Set length to add empty slots
+numbers.length = 5;
+console.log(numbers);  // [1, 2, 3, empty × 2]</code></pre>
+        </div>
+
+        <h3>Adding and Removing Elements</h3>
+
+        <div class="code-example">
+          <div class="example-label">Modifying Arrays</div>
+          <pre><code>const fruits = ['apple', 'banana'];
+
+// Add to end - push()
+fruits.push('orange');
+console.log(fruits);  // ['apple', 'banana', 'orange']
+
+// Add to beginning - unshift()
+fruits.unshift('grape');
+console.log(fruits);  // ['grape', 'apple', 'banana', 'orange']
+
+// Remove from end - pop()
+const lastFruit = fruits.pop();
+console.log(lastFruit);  // 'orange'
+console.log(fruits);     // ['grape', 'apple', 'banana']
+
+// Remove from beginning - shift()
+const firstFruit = fruits.shift();
+console.log(firstFruit);  // 'grape'
+console.log(fruits);      // ['apple', 'banana']
+
+// Add/remove at specific position - splice()
+fruits.splice(1, 0, 'mango', 'kiwi');  // At index 1, delete 0, add items
+console.log(fruits);  // ['apple', 'mango', 'kiwi', 'banana']
+
+fruits.splice(2, 1);  // At index 2, delete 1 item
+console.log(fruits);  // ['apple', 'mango', 'banana']</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Mutating vs Non-Mutating</div>
+          <p><code>push()</code>, <code>pop()</code>, <code>shift()</code>, <code>unshift()</code>, and <code>splice()</code> modify the original array. Methods like <code>slice()</code>, <code>concat()</code>, and spread operator create new arrays.</p>
+        </div>
+
+        <h3>Finding Elements</h3>
+
+        <div class="code-example">
+          <div class="example-label">Searching in Arrays</div>
+          <pre><code>const numbers = [1, 2, 3, 4, 5, 3];
+
+// indexOf() - returns first index, -1 if not found
+console.log(numbers.indexOf(3));     // 2
+console.log(numbers.indexOf(10));    // -1
+
+// lastIndexOf() - returns last index
+console.log(numbers.lastIndexOf(3)); // 5
+
+// includes() - returns boolean
+console.log(numbers.includes(4));    // true
+console.log(numbers.includes(10));   // false
+
+// find() - returns first element that matches
+const found = numbers.find(num => num > 3);
+console.log(found);  // 4
+
+// findIndex() - returns index of first match
+const index = numbers.findIndex(num => num > 3);
+console.log(index);  // 3</code></pre>
+        </div>
+
+        <h3>Combining and Slicing Arrays</h3>
+
+        <div class="code-example">
+          <div class="example-label">Array Manipulation</div>
+          <pre><code>const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+
+// concat() - combines arrays (returns new array)
+const combined = arr1.concat(arr2);
+console.log(combined);  // [1, 2, 3, 4, 5, 6]
+
+// slice() - extracts portion (returns new array)
+const fruits = ['apple', 'banana', 'orange', 'grape', 'mango'];
+const sliced = fruits.slice(1, 4);  // From index 1 to 4 (not including 4)
+console.log(sliced);  // ['banana', 'orange', 'grape']
+console.log(fruits);  // Original unchanged
+
+// slice with negative indices
+const lastTwo = fruits.slice(-2);
+console.log(lastTwo);  // ['grape', 'mango']
+
+// Shallow copy of array
+const copy = fruits.slice();
+console.log(copy);  // ['apple', 'banana', 'orange', 'grape', 'mango']</code></pre>
+        </div>
+
+        <h3>Array Destructuring</h3>
+
+        <p>Destructuring allows you to unpack values from arrays into separate variables:</p>
+
+        <div class="code-example">
+          <div class="example-label">Array Destructuring (ES6)</div>
+          <pre><code>// Basic destructuring
+const colors = ['red', 'green', 'blue'];
+const [first, second, third] = colors;
+console.log(first);   // "red"
+console.log(second);  // "green"
+console.log(third);   // "blue"
+
+// Skipping elements
+const [color1, , color3] = colors;
+console.log(color1);  // "red"
+console.log(color3);  // "blue"
+
+// Rest operator
+const numbers = [1, 2, 3, 4, 5];
+const [one, two, ...rest] = numbers;
+console.log(one);   // 1
+console.log(two);   // 2
+console.log(rest);  // [3, 4, 5]
+
+// Default values
+const [a, b, c = 10] = [1, 2];
+console.log(c);  // 10 (default value used)
+
+// Swapping variables
+let x = 1, y = 2;
+[x, y] = [y, x];
+console.log(x, y);  // 2, 1</code></pre>
+        </div>
+
+        <h3>Object Destructuring</h3>
+
+        <div class="code-example">
+          <div class="example-label">Object Destructuring (ES6)</div>
+          <pre><code>const person = {
+  firstName: 'John',
+  lastName: 'Doe',
+  age: 30,
+  email: 'john@example.com'
+};
+
+// Basic destructuring
+const { firstName, lastName } = person;
+console.log(firstName);  // "John"
+console.log(lastName);   // "Doe"
+
+// Renaming variables
+const { firstName: fName, age: years } = person;
+console.log(fName);   // "John"
+console.log(years);   // 30
+
+// Default values
+const { phone = '555-0000' } = person;
+console.log(phone);  // "555-0000" (default used)
+
+// Rest operator
+const { firstName: name, ...otherInfo } = person;
+console.log(name);       // "John"
+console.log(otherInfo);  // { lastName: 'Doe', age: 30, email: '...' }
+
+// Nested destructuring
+const student = {
+  name: 'Alice',
+  address: {
+    city: 'New York',
+    country: 'USA'
+  }
+};
+
+const { address: { city, country } } = student;
+console.log(city);     // "New York"
+console.log(country);  // "USA"</code></pre>
+        </div>
+
+        <h3>Spread Operator</h3>
+
+        <p>The spread operator (...) expands arrays and objects:</p>
+
+        <div class="code-example">
+          <div class="example-label">Spread Operator (ES6)</div>
+          <pre><code>// Combining arrays
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const combined = [...arr1, ...arr2];
+console.log(combined);  // [1, 2, 3, 4, 5, 6]
+
+// Copying arrays
+const original = [1, 2, 3];
+const copy = [...original];
+console.log(copy);  // [1, 2, 3]
+
+// Adding elements
+const numbers = [1, 2, 3];
+const moreNumbers = [0, ...numbers, 4, 5];
+console.log(moreNumbers);  // [0, 1, 2, 3, 4, 5]
+
+// Copying objects
+const person = { name: 'John', age: 30 };
+const personCopy = { ...person };
+console.log(personCopy);  // { name: 'John', age: 30 }
+
+// Combining objects
+const basic = { name: 'John', age: 30 };
+const details = { email: 'john@example.com', city: 'NYC' };
+const complete = { ...basic, ...details };
+console.log(complete);
+// { name: 'John', age: 30, email: 'john@example.com', city: 'NYC' }
+
+// Overriding properties
+const user = { name: 'John', age: 30 };
+const updated = { ...user, age: 31 };
+console.log(updated);  // { name: 'John', age: 31 }</code></pre>
+        </div>
+
+        <h3>Multi-Dimensional Arrays</h3>
+
+        <div class="code-example">
+          <div class="example-label">Arrays of Arrays</div>
+          <pre><code>// 2D array (matrix)
+const matrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+];
+
+// Accessing elements
+console.log(matrix[0][0]);  // 1
+console.log(matrix[1][2]);  // 6
+console.log(matrix[2][1]);  // 8
+
+// Iterating through 2D array
+for (let i = 0; i < matrix.length; i++) {
+  for (let j = 0; j < matrix[i].length; j++) {
+    console.log(`Element at [${i}][${j}]: ${matrix[i][j]}`);
+  }
+}
+
+// Array of objects (very common pattern)
+const students = [
+  { name: 'Alice', grade: 95 },
+  { name: 'Bob', grade: 87 },
+  { name: 'Charlie', grade: 92 }
+];
+
+console.log(students[0].name);   // "Alice"
+console.log(students[1].grade);  // 87</code></pre>
+        </div>
+
+        <!-- Practical Examples -->
+        <h2>🎯 Practical Examples</h2>
+
+        <h3>Example 1: Shopping Cart</h3>
+
+        <div class="code-example">
+          <div class="example-label">Shopping Cart with Objects and Arrays</div>
+          <pre><code>const cart = {
+  items: [
+    { id: 1, name: 'Laptop', price: 999, quantity: 1 },
+    { id: 2, name: 'Mouse', price: 29, quantity: 2 },
+    { id: 3, name: 'Keyboard', price: 79, quantity: 1 }
+  ],
+
+  // Calculate total price
+  getTotal() {
+    return this.items.reduce((total, item) => {
+      return total + (item.price * item.quantity);
+    }, 0);
+  },
+
+  // Add item to cart
+  addItem(item) {
+    const existing = this.items.find(i => i.id === item.id);
+    if (existing) {
+      existing.quantity += item.quantity;
+    } else {
+      this.items.push(item);
+    }
+  },
+
+  // Remove item from cart
+  removeItem(id) {
+    this.items = this.items.filter(item => item.id !== id);
+  },
+
+  // Get item count
+  getItemCount() {
+    return this.items.reduce((count, item) => count + item.quantity, 0);
+  }
+};
+
+console.log('Total:', cart.getTotal());        // 1136
+console.log('Items:', cart.getItemCount());    // 4
+
+cart.addItem({ id: 4, name: 'Monitor', price: 299, quantity: 1 });
+console.log('New Total:', cart.getTotal());    // 1435
+
+cart.removeItem(2);  // Remove mouse
+console.log('Items:', cart.getItemCount());    // 3</code></pre>
+        </div>
+
+        <h3>Example 2: Student Grade Manager</h3>
+
+        <div class="code-example">
+          <div class="example-label">Managing Student Data</div>
+          <pre><code>const classroom = {
+  students: [
+    { name: 'Alice', grades: [95, 87, 92, 88] },
+    { name: 'Bob', grades: [78, 85, 91, 79] },
+    { name: 'Charlie', grades: [92, 95, 88, 94] }
+  ],
+
+  // Calculate average grade for a student
+  getStudentAverage(name) {
+    const student = this.students.find(s => s.name === name);
+    if (!student) return null;
+
+    const sum = student.grades.reduce((total, grade) => total + grade, 0);
+    return sum / student.grades.length;
+  },
+
+  // Get class average
+  getClassAverage() {
+    const allGrades = this.students.flatMap(s => s.grades);
+    const sum = allGrades.reduce((total, grade) => total + grade, 0);
+    return sum / allGrades.length;
+  },
+
+  // Find top student
+  getTopStudent() {
+    return this.students.reduce((top, student) => {
+      const avg = this.getStudentAverage(student.name);
+      const topAvg = this.getStudentAverage(top.name);
+      return avg > topAvg ? student : top;
+    });
+  },
+
+  // Add grade to student
+  addGrade(name, grade) {
+    const student = this.students.find(s => s.name === name);
+    if (student) {
+      student.grades.push(grade);
+    }
+  }
+};
+
+console.log('Alice average:', classroom.getStudentAverage('Alice'));  // 90.5
+console.log('Class average:', classroom.getClassAverage());           // 87.58
+console.log('Top student:', classroom.getTopStudent().name);          // "Charlie"
+
+classroom.addGrade('Bob', 95);
+console.log('Bob new average:', classroom.getStudentAverage('Bob')); // 85.6</code></pre>
+        </div>
+
+        <h3>Example 3: Data Transformation</h3>
+
+        <div class="code-example">
+          <div class="example-label">Converting Between Structures</div>
+          <pre><code>// Array of objects to object of arrays
+const students = [
+  { name: 'Alice', age: 20, grade: 'A' },
+  { name: 'Bob', age: 21, grade: 'B' },
+  { name: 'Charlie', age: 19, grade: 'A' }
+];
+
+const grouped = students.reduce((acc, student) => {
+  acc.names = acc.names || [];
+  acc.ages = acc.ages || [];
+  acc.grades = acc.grades || [];
+
+  acc.names.push(student.name);
+  acc.ages.push(student.age);
+  acc.grades.push(student.grade);
+
+  return acc;
+}, {});
+
+console.log(grouped);
+// { names: ['Alice', 'Bob', 'Charlie'], ages: [20, 21, 19], grades: ['A', 'B', 'A'] }
+
+// Group by property
+const groupedByGrade = students.reduce((acc, student) => {
+  if (!acc[student.grade]) {
+    acc[student.grade] = [];
+  }
+  acc[student.grade].push(student.name);
+  return acc;
+}, {});
+
+console.log(groupedByGrade);
+// { A: ['Alice', 'Charlie'], B: ['Bob'] }</code></pre>
+        </div>
+
+        <!-- Best Practices -->
+        <h2>✅ Best Practices</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Objects Best Practices</div>
+          <ul>
+            <li>Use meaningful property names that describe the data</li>
+            <li>Use object destructuring to extract multiple properties cleanly</li>
+            <li>Prefer dot notation unless you need bracket notation</li>
+            <li>Use shorthand property names when variable name matches key name</li>
+            <li>Use const for objects that won't be reassigned (even if properties change)</li>
+          </ul>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Arrays Best Practices</div>
+          <ul>
+            <li>Use array methods (<code>map</code>, <code>filter</code>, <code>reduce</code>) instead of loops when possible</li>
+            <li>Prefer <code>const</code> for arrays to prevent reassignment</li>
+            <li>Use spread operator for copying arrays instead of loops</li>
+            <li>Check array length before accessing elements to avoid undefined</li>
+            <li>Use meaningful variable names when destructuring arrays</li>
+          </ul>
+        </div>
+
+        <!-- Common Patterns -->
+        <h2>📋 Common Patterns</h2>
+
+        <div class="code-example">
+          <div class="example-label">Useful Patterns</div>
+          <pre><code>// Clone deep nested object (simple version)
+const original = { a: 1, b: { c: 2 } };
+const deepClone = JSON.parse(JSON.stringify(original));
+
+// Merge objects with nested properties
+const defaults = { theme: 'light', fontSize: 14 };
+const userPrefs = { theme: 'dark' };
+const settings = { ...defaults, ...userPrefs };
+
+// Remove duplicates from array
+const numbers = [1, 2, 2, 3, 4, 4, 5];
+const unique = [...new Set(numbers)];  // [1, 2, 3, 4, 5]
+
+// Flatten nested arrays
+const nested = [1, [2, 3], [4, [5, 6]]];
+const flat = nested.flat(2);  // [1, 2, 3, 4, 5, 6]
+
+// Check if array is empty
+if (arr.length === 0) {
+  console.log('Array is empty');
+}
+
+// Optional chaining (avoid errors with nested properties)
+const city = person?.address?.city;  // undefined if address doesn't exist
+
+// Array from range
+const range = Array.from({ length: 5 }, (_, i) => i + 1);
+console.log(range);  // [1, 2, 3, 4, 5]</code></pre>
+        </div>
+
+        <!-- Summary -->
+        <div class="info-box note">
+          <div class="info-box-title">📝 Summary</div>
+          <ul>
+            <li><strong>Objects</strong> store key-value pairs and are perfect for representing entities with properties</li>
+            <li><strong>Arrays</strong> store ordered lists and are perfect for collections of similar items</li>
+            <li>Use <strong>destructuring</strong> to extract values cleanly from objects and arrays</li>
+            <li>Use <strong>spread operator</strong> to copy and combine data structures</li>
+            <li>Objects and arrays can be nested to create complex data structures</li>
+            <li>Modern JavaScript provides many built-in methods for working with these structures</li>
+          </ul>
+        </div>
+
+        <!-- Navigation -->
+        <div class="page-navigation">
+          <a href="javascript-basics.html" class="nav-button">← JavaScript Fundamentals</a>
+          <a href="array-methods.html" class="nav-button">Array Methods →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

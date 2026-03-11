@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Basics - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>JavaScript Basics</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Fundamentals</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Working with APIs</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+          <li><a href="../projects/dark-mode/index.html">Dark Mode Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>⚡ JavaScript Basics</h1>
+
+        <p>
+          JavaScript is a programming language that brings interactivity to websites. While HTML provides
+          structure and CSS provides styling, JavaScript provides behavior and logic.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 Note</div>
+          <p>JavaScript runs in the browser (client-side) and can also run on servers (Node.js).
+          In this course, we focus on browser JavaScript for frontend development.</p>
+        </div>
+
+        <h2>Adding JavaScript to HTML</h2>
+
+        <p>There are three ways to include JavaScript in your web page:</p>
+
+        <h3>1. Inline JavaScript</h3>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Directly in HTML attributes (NOT RECOMMENDED) --&gt;
+&lt;button onclick="alert('Hello!')"&gt;Click me&lt;/button&gt;</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Avoid Inline JavaScript</div>
+          <p>Inline JavaScript mixes structure (HTML) with behavior (JavaScript), making code hard to maintain.
+          Use this method only for quick tests.</p>
+        </div>
+
+        <h3>2. Internal JavaScript</h3>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- In a &lt;script&gt; tag within the HTML file --&gt;
+&lt;body&gt;
+  &lt;button id="myButton"&gt;Click me&lt;/button&gt;
+
+  &lt;script&gt;
+    // JavaScript code goes here
+    const button = document.getElementById('myButton');
+    button.addEventListener('click', function() {
+      alert('Hello!');
+    });
+  &lt;/script&gt;
+&lt;/body&gt;</code></pre>
+        </div>
+
+        <h3>3. External JavaScript (RECOMMENDED)</h3>
+
+        <div class="code-example">
+          <div class="example-label">HTML File</div>
+          <pre><code class="language-html">&lt;body&gt;
+  &lt;button id="myButton"&gt;Click me&lt;/button&gt;
+
+  &lt;!-- Load external JS file at end of body --&gt;
+  &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+
+          <div class="example-label">script.js File</div>
+          <pre><code><span class="comment">// All JavaScript code in separate file</span>
+<span class="keyword">const</span> button = document.<span class="function">getElementById</span>(<span class="string">'myButton'</span>);
+button.<span class="function">addEventListener</span>(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+  <span class="function">alert</span>(<span class="string">'Hello!'</span>);
+});</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Best Practice</div>
+          <p>Place <code>&lt;script&gt;</code> tags at the end of the <code>&lt;body&gt;</code> to ensure
+          the HTML loads before JavaScript runs. Alternatively, use the <code>defer</code> attribute.</p>
+        </div>
+
+        <h2>Variables</h2>
+
+        <p>
+          Variables store data values. JavaScript has three ways to declare variables:
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>Scope</th>
+              <th>Can Reassign?</th>
+              <th>When to Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>const</code></td>
+              <td>Block</td>
+              <td>❌ No</td>
+              <td>Default choice (values that don't change)</td>
+            </tr>
+            <tr>
+              <td><code>let</code></td>
+              <td>Block</td>
+              <td>✅ Yes</td>
+              <td>Values that will change</td>
+            </tr>
+            <tr>
+              <td><code>var</code></td>
+              <td>Function</td>
+              <td>✅ Yes</td>
+              <td>Legacy code (avoid in new code)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// const: Cannot be reassigned</span>
+<span class="keyword">const</span> name = <span class="string">'Alice'</span>;
+<span class="comment">// name = 'Bob'; // ERROR: Cannot reassign const</span>
+
+<span class="comment">// let: Can be reassigned</span>
+<span class="keyword">let</span> age = <span class="number">25</span>;
+age = <span class="number">26</span>; <span class="comment">// ✅ This works</span>
+
+<span class="comment">// var: Old way (avoid)</span>
+<span class="keyword">var</span> city = <span class="string">'New York'</span>;
+city = <span class="string">'Boston'</span>; <span class="comment">// Works but use let instead</span></code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Best Practice</div>
+          <p>Always use <code>const</code> by default. Only use <code>let</code> when you know the value
+          will change. Never use <code>var</code> in modern JavaScript.</p>
+        </div>
+
+        <h2>Data Types</h2>
+
+        <p>JavaScript has several primitive data types:</p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// String: Text</span>
+<span class="keyword">const</span> message = <span class="string">'Hello, World!'</span>;
+<span class="keyword">const</span> name = <span class="string">"Alice"</span>; <span class="comment">// Single or double quotes both work</span>
+<span class="keyword">const</span> greeting = <span class="string">`Hello, ${name}!`</span>; <span class="comment">// Template literal (backticks)</span>
+
+<span class="comment">// Number: Integers and decimals</span>
+<span class="keyword">const</span> age = <span class="number">25</span>;
+<span class="keyword">const</span> price = <span class="number">19.99</span>;
+<span class="keyword">const</span> negative = <span class="number">-10</span>;
+
+<span class="comment">// Boolean: True or false</span>
+<span class="keyword">const</span> isActive = <span class="keyword">true</span>;
+<span class="keyword">const</span> isLoggedIn = <span class="keyword">false</span>;
+
+<span class="comment">// Null: Intentionally empty value</span>
+<span class="keyword">const</span> emptyValue = <span class="keyword">null</span>;
+
+<span class="comment">// Undefined: Variable declared but not assigned</span>
+<span class="keyword">let</span> notAssigned;
+console.<span class="function">log</span>(notAssigned); <span class="comment">// undefined</span>
+
+<span class="comment">// Array: List of values</span>
+<span class="keyword">const</span> colors = [<span class="string">'red'</span>, <span class="string">'green'</span>, <span class="string">'blue'</span>];
+
+<span class="comment">// Object: Key-value pairs</span>
+<span class="keyword">const</span> person = {
+  name: <span class="string">'Alice'</span>,
+  age: <span class="number">25</span>,
+  city: <span class="string">'New York'</span>
+};</code></pre>
+        </div>
+
+        <h2>Operators</h2>
+
+        <h3>Arithmetic Operators</h3>
+
+        <div class="code-example">
+          <pre><code><span class="keyword">const</span> a = <span class="number">10</span>;
+<span class="keyword">const</span> b = <span class="number">3</span>;
+
+console.<span class="function">log</span>(a + b); <span class="comment">// 13 (addition)</span>
+console.<span class="function">log</span>(a - b); <span class="comment">// 7  (subtraction)</span>
+console.<span class="function">log</span>(a * b); <span class="comment">// 30 (multiplication)</span>
+console.<span class="function">log</span>(a / b); <span class="comment">// 3.333... (division)</span>
+console.<span class="function">log</span>(a % b); <span class="comment">// 1  (remainder/modulo)</span>
+console.<span class="function">log</span>(a ** b); <span class="comment">// 1000 (exponentiation: 10³)</span></code></pre>
+        </div>
+
+        <h3>Assignment Operators</h3>
+
+        <div class="code-example">
+          <pre><code><span class="keyword">let</span> x = <span class="number">5</span>;
+
+x += <span class="number">3</span>;  <span class="comment">// Same as: x = x + 3  (x is now 8)</span>
+x -= <span class="number">2</span>;  <span class="comment">// Same as: x = x - 2  (x is now 6)</span>
+x *= <span class="number">2</span>;  <span class="comment">// Same as: x = x * 2  (x is now 12)</span>
+x /= <span class="number">3</span>;  <span class="comment">// Same as: x = x / 3  (x is now 4)</span>
+
+<span class="comment">// Increment and decrement</span>
+x++;     <span class="comment">// Same as: x = x + 1  (x is now 5)</span>
+x--;     <span class="comment">// Same as: x = x - 1  (x is now 4)</span></code></pre>
+        </div>
+
+        <h3>Comparison Operators</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// Equality (strict - checks value AND type)</span>
+<span class="number">5</span> === <span class="number">5</span>          <span class="comment">// true</span>
+<span class="number">5</span> === <span class="string">'5'</span>        <span class="comment">// false (different types)</span>
+<span class="number">5</span> !== <span class="number">3</span>          <span class="comment">// true (not equal)</span>
+
+<span class="comment">// Loose equality (converts types - AVOID)</span>
+<span class="number">5</span> == <span class="string">'5'</span>         <span class="comment">// true (converts string to number)</span>
+
+<span class="comment">// Comparisons</span>
+<span class="number">5</span> > <span class="number">3</span>           <span class="comment">// true (greater than)</span>
+<span class="number">5</span> < <span class="number">3</span>           <span class="comment">// false (less than)</span>
+<span class="number">5</span> >= <span class="number">5</span>          <span class="comment">// true (greater than or equal)</span>
+<span class="number">3</span> <= <span class="number">5</span>          <span class="comment">// true (less than or equal)</span></code></pre>
+        </div>
+
+        <div class="info-box important">
+          <div class="info-box-title">⚠️ Always Use === and !==</div>
+          <p>Use strict equality (<code>===</code>) and strict inequality (<code>!==</code>) to avoid
+          unexpected type conversions. The loose equality (<code>==</code>) can cause bugs.</p>
+        </div>
+
+        <h3>Logical Operators</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// AND (&&): Both conditions must be true</span>
+<span class="keyword">const</span> age = <span class="number">25</span>;
+<span class="keyword">const</span> hasLicense = <span class="keyword">true</span>;
+
+<span class="keyword">if</span> (age >= <span class="number">18</span> && hasLicense) {
+  console.<span class="function">log</span>(<span class="string">'Can drive'</span>);
+}
+
+<span class="comment">// OR (||): At least one condition must be true</span>
+<span class="keyword">const</span> isWeekend = <span class="keyword">false</span>;
+<span class="keyword">const</span> isHoliday = <span class="keyword">true</span>;
+
+<span class="keyword">if</span> (isWeekend || isHoliday) {
+  console.<span class="function">log</span>(<span class="string">'No work today!'</span>);
+}
+
+<span class="comment">// NOT (!): Inverts boolean value</span>
+<span class="keyword">const</span> isLoggedIn = <span class="keyword">false</span>;
+
+<span class="keyword">if</span> (!isLoggedIn) {
+  console.<span class="function">log</span>(<span class="string">'Please log in'</span>);
+}</code></pre>
+        </div>
+
+        <h2>Functions</h2>
+
+        <p>
+          Functions are reusable blocks of code. There are several ways to create functions:
+        </p>
+
+        <h3>Function Declaration</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// Traditional function declaration</span>
+<span class="comment">// Can be called before it's defined (hoisting)</span>
+
+<span class="keyword">function</span> <span class="function">greet</span>(name) {
+  <span class="keyword">return</span> <span class="string">`Hello, ${name}!`</span>;
+}
+
+<span class="keyword">const</span> message = <span class="function">greet</span>(<span class="string">'Alice'</span>);
+console.<span class="function">log</span>(message); <span class="comment">// "Hello, Alice!"</span></code></pre>
+        </div>
+
+        <h3>Function Expression</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// Function stored in a variable</span>
+<span class="comment">// Cannot be called before it's defined</span>
+
+<span class="keyword">const</span> greet = <span class="keyword">function</span>(name) {
+  <span class="keyword">return</span> <span class="string">`Hello, ${name}!`</span>;
+};
+
+<span class="keyword">const</span> message = <span class="function">greet</span>(<span class="string">'Bob'</span>);
+console.<span class="function">log</span>(message); <span class="comment">// "Hello, Bob!"</span></code></pre>
+        </div>
+
+        <h3>Arrow Functions (Modern)</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// Modern, concise syntax</span>
+
+<span class="comment">// Basic arrow function</span>
+<span class="keyword">const</span> greet = (name) => {
+  <span class="keyword">return</span> <span class="string">`Hello, ${name}!`</span>;
+};
+
+<span class="comment">// Short form (implicit return, no curly braces)</span>
+<span class="keyword">const</span> greet = name => <span class="string">`Hello, ${name}!`</span>;
+
+<span class="comment">// Multiple parameters</span>
+<span class="keyword">const</span> add = (a, b) => a + b;
+
+<span class="comment">// No parameters (empty parentheses required)</span>
+<span class="keyword">const</span> sayHello = () => <span class="string">'Hello!'</span>;</code></pre>
+        </div>
+
+        <h2>Conditionals</h2>
+
+        <h3>if / else if / else</h3>
+
+        <div class="code-example">
+          <pre><code><span class="keyword">const</span> age = <span class="number">18</span>;
+
+<span class="keyword">if</span> (age < <span class="number">13</span>) {
+  console.<span class="function">log</span>(<span class="string">'Child'</span>);
+} <span class="keyword">else if</span> (age < <span class="number">18</span>) {
+  console.<span class="function">log</span>(<span class="string">'Teenager'</span>);
+} <span class="keyword">else if</span> (age < <span class="number">65</span>) {
+  console.<span class="function">log</span>(<span class="string">'Adult'</span>);
+} <span class="keyword">else</span> {
+  console.<span class="function">log</span>(<span class="string">'Senior'</span>);
+}</code></pre>
+        </div>
+
+        <h3>Ternary Operator</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// Shorthand for simple if/else</span>
+<span class="comment">// condition ? valueIfTrue : valueIfFalse</span>
+
+<span class="keyword">const</span> age = <span class="number">20</span>;
+<span class="keyword">const</span> status = age >= <span class="number">18</span> ? <span class="string">'Adult'</span> : <span class="string">'Minor'</span>;
+
+console.<span class="function">log</span>(status); <span class="comment">// "Adult"</span></code></pre>
+        </div>
+
+        <h3>Switch Statement</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// For checking one value against multiple cases</span>
+
+<span class="keyword">const</span> day = <span class="string">'Monday'</span>;
+
+<span class="keyword">switch</span> (day) {
+  <span class="keyword">case</span> <span class="string">'Monday'</span>:
+    console.<span class="function">log</span>(<span class="string">'Start of work week'</span>);
+    <span class="keyword">break</span>; <span class="comment">// Exit switch</span>
+
+  <span class="keyword">case</span> <span class="string">'Friday'</span>:
+    console.<span class="function">log</span>(<span class="string">'TGIF!'</span>);
+    <span class="keyword">break</span>;
+
+  <span class="keyword">case</span> <span class="string">'Saturday'</span>:
+  <span class="keyword">case</span> <span class="string">'Sunday'</span>:
+    console.<span class="function">log</span>(<span class="string">'Weekend!'</span>);
+    <span class="keyword">break</span>;
+
+  <span class="keyword">default</span>:
+    console.<span class="function">log</span>(<span class="string">'Regular day'</span>);
+}</code></pre>
+        </div>
+
+        <h2>Console Methods</h2>
+
+        <p>
+          The <code>console</code> object provides methods to debug and output information:
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// Log messages</span>
+console.<span class="function">log</span>(<span class="string">'Regular message'</span>);
+console.<span class="function">info</span>(<span class="string">'Information'</span>);
+console.<span class="function">warn</span>(<span class="string">'Warning message'</span>);
+console.<span class="function">error</span>(<span class="string">'Error message'</span>);
+
+<span class="comment">// Log variables</span>
+<span class="keyword">const</span> user = { name: <span class="string">'Alice'</span>, age: <span class="number">25</span> };
+console.<span class="function">log</span>(<span class="string">'User:'</span>, user);
+
+<span class="comment">// Table format for arrays/objects</span>
+console.<span class="function">table</span>(user);
+
+<span class="comment">// Clear console</span>
+console.<span class="function">clear</span>();</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Developer Tools Console</div>
+          <p>Press <code>F12</code> (or <code>Cmd+Option+I</code> on Mac) and click the "Console" tab to
+          see your console.log output. This is essential for debugging!</p>
+        </div>
+
+        <h2>Practice Exercise</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">🎯 Try This</div>
+          <p>Create a function that:</p>
+          <ol>
+            <li>Takes a person's name and age as parameters</li>
+            <li>Returns a greeting message</li>
+            <li>If age is 18 or older, say "Welcome, [name]!"</li>
+            <li>If under 18, say "Sorry, [name]. You must be 18 or older."</li>
+          </ol>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">Solution</div>
+          <pre><code><span class="comment">// Function to check age and return greeting</span>
+<span class="keyword">function</span> <span class="function">checkAge</span>(name, age) {
+  <span class="keyword">if</span> (age >= <span class="number">18</span>) {
+    <span class="keyword">return</span> <span class="string">`Welcome, ${name}!`</span>;
+  } <span class="keyword">else</span> {
+    <span class="keyword">return</span> <span class="string">`Sorry, ${name}. You must be 18 or older.`</span>;
+  }
+}
+
+<span class="comment">// Test the function</span>
+console.<span class="function">log</span>(<span class="function">checkAge</span>(<span class="string">'Alice'</span>, <span class="number">25</span>)); <span class="comment">// "Welcome, Alice!"</span>
+console.<span class="function">log</span>(<span class="function">checkAge</span>(<span class="string">'Bob'</span>, <span class="number">16</span>));   <span class="comment">// "Sorry, Bob. You must be 18 or older."</span>
+
+<span class="comment">// Arrow function version</span>
+<span class="keyword">const</span> checkAge = (name, age) =>
+  age >= <span class="number">18</span> ? <span class="string">`Welcome, ${name}!`</span> : <span class="string">`Sorry, ${name}. You must be 18 or older.`</span>;</code></pre>
+        </div>
+
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li>How to add JavaScript to HTML (external files are best)</li>
+            <li>Variables: use <code>const</code> by default, <code>let</code> when values change</li>
+            <li>Data types: strings, numbers, booleans, null, undefined, arrays, objects</li>
+            <li>Operators: arithmetic, assignment, comparison, logical</li>
+            <li>Functions: declarations, expressions, arrow functions</li>
+            <li>Conditionals: if/else, ternary operator, switch</li>
+            <li>Console methods for debugging</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="../index.html" class="nav-button">← Course Home</a>
+          <a href="javascript-objects-arrays.html" class="nav-button">Objects & Arrays →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

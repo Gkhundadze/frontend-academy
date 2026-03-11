@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Array Methods - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>Array Methods</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Fundamentals</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Working with APIs</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+          <li><a href="../projects/memory-game/index.html">Memory Game Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>🔄 Array Methods</h1>
+
+        <p>
+          JavaScript provides powerful built-in methods for working with arrays. These methods allow you to transform, filter, search, and manipulate arrays in elegant and efficient ways. Mastering array methods is essential for modern JavaScript development.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 Key Concept</div>
+          <p>Array methods can be <strong>mutating</strong> (modify the original array) or <strong>non-mutating</strong> (return a new array). Understanding the difference is crucial to avoid bugs.</p>
+        </div>
+
+        <!-- forEach -->
+        <h2>🔁 forEach() - Iterate Over Elements</h2>
+
+        <p>
+          <code>forEach()</code> executes a provided function once for each array element. It's the most basic iteration method.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">forEach() Syntax and Usage</div>
+          <pre><code>// Basic syntax
+array.forEach((element, index, array) => {
+  // Code to execute for each element
+});
+
+// Example: Logging each element
+const fruits = ['apple', 'banana', 'orange'];
+fruits.forEach((fruit) => {
+  console.log(fruit);
+});
+// Output:
+// apple
+// banana
+// orange
+
+// Example: Using index parameter
+const numbers = [10, 20, 30];
+numbers.forEach((num, index) => {
+  console.log(`Index ${index}: ${num}`);
+});
+// Output:
+// Index 0: 10
+// Index 1: 20
+// Index 2: 30
+
+// Example: Modifying external variable
+let sum = 0;
+const values = [1, 2, 3, 4, 5];
+values.forEach((value) => {
+  sum += value;
+});
+console.log(sum);  // 15</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Important</div>
+          <p><code>forEach()</code> does not return a value (returns undefined). If you need to transform or filter an array, use <code>map()</code> or <code>filter()</code> instead.</p>
+        </div>
+
+        <!-- map -->
+        <h2>🗺️ map() - Transform Elements</h2>
+
+        <p>
+          <code>map()</code> creates a new array by applying a function to each element. It's one of the most commonly used array methods.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">map() - Creating New Arrays</div>
+          <pre><code>// Basic syntax
+const newArray = array.map((element, index, array) => {
+  return newValue;
+});
+
+// Example: Double each number
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map((num) => num * 2);
+console.log(doubled);  // [2, 4, 6, 8, 10]
+console.log(numbers);  // [1, 2, 3, 4, 5] (original unchanged)
+
+// Example: Extract property from objects
+const users = [
+  { id: 1, name: 'Alice', age: 25 },
+  { id: 2, name: 'Bob', age: 30 },
+  { id: 3, name: 'Charlie', age: 35 }
+];
+const names = users.map((user) => user.name);
+console.log(names);  // ['Alice', 'Bob', 'Charlie']
+
+// Example: Transform to different structure
+const prices = [10, 20, 30];
+const products = prices.map((price, index) => ({
+  id: index + 1,
+  price: price,
+  discounted: price * 0.9
+}));
+console.log(products);
+// [
+//   { id: 1, price: 10, discounted: 9 },
+//   { id: 2, price: 20, discounted: 18 },
+//   { id: 3, price: 30, discounted: 27 }
+// ]
+
+// Example: Convert strings to uppercase
+const words = ['hello', 'world', 'javascript'];
+const uppercase = words.map((word) => word.toUpperCase());
+console.log(uppercase);  // ['HELLO', 'WORLD', 'JAVASCRIPT']</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Tip</div>
+          <p><code>map()</code> always returns an array with the same length as the original. If you need to filter out elements, use <code>filter()</code> or combine <code>filter()</code> and <code>map()</code>.</p>
+        </div>
+
+        <!-- filter -->
+        <h2>🔍 filter() - Select Elements</h2>
+
+        <p>
+          <code>filter()</code> creates a new array containing only elements that pass a test (return true from the callback function).
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">filter() - Creating Filtered Arrays</div>
+          <pre><code>// Basic syntax
+const newArray = array.filter((element, index, array) => {
+  return condition; // Return true to keep element, false to exclude
+});
+
+// Example: Filter even numbers
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8];
+const evenNumbers = numbers.filter((num) => num % 2 === 0);
+console.log(evenNumbers);  // [2, 4, 6, 8]
+
+// Example: Filter by property
+const users = [
+  { name: 'Alice', age: 25, active: true },
+  { name: 'Bob', age: 17, active: false },
+  { name: 'Charlie', age: 30, active: true },
+  { name: 'David', age: 16, active: true }
+];
+
+const activeAdults = users.filter((user) => user.age >= 18 && user.active);
+console.log(activeAdults);
+// [
+//   { name: 'Alice', age: 25, active: true },
+//   { name: 'Charlie', age: 30, active: true }
+// ]
+
+// Example: Filter by string condition
+const words = ['apple', 'banana', 'apricot', 'cherry', 'avocado'];
+const aWords = words.filter((word) => word.startsWith('a'));
+console.log(aWords);  // ['apple', 'apricot', 'avocado']
+
+// Example: Remove falsy values
+const mixed = [0, 1, false, 2, '', 3, null, undefined, 4, NaN];
+const truthy = mixed.filter(Boolean);  // Shorthand for (val) => Boolean(val)
+console.log(truthy);  // [1, 2, 3, 4]</code></pre>
+        </div>
+
+        <!-- reduce -->
+        <h2>📊 reduce() - Accumulate Values</h2>
+
+        <p>
+          <code>reduce()</code> executes a reducer function on each element, resulting in a single output value. It's the most versatile array method.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">reduce() - Reducing to Single Value</div>
+          <pre><code>// Basic syntax
+const result = array.reduce((accumulator, currentValue, index, array) => {
+  return newAccumulator;
+}, initialValue);
+
+// Example: Sum all numbers
+const numbers = [1, 2, 3, 4, 5];
+const sum = numbers.reduce((total, num) => {
+  return total + num;
+}, 0);
+console.log(sum);  // 15
+
+// Example: Find maximum value
+const max = numbers.reduce((maximum, num) => {
+  return num > maximum ? num : maximum;
+}, numbers[0]);
+console.log(max);  // 5
+
+// Example: Count occurrences
+const fruits = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple'];
+const count = fruits.reduce((acc, fruit) => {
+  acc[fruit] = (acc[fruit] || 0) + 1;
+  return acc;
+}, {});
+console.log(count);  // { apple: 3, banana: 2, orange: 1 }
+
+// Example: Flatten nested arrays
+const nested = [[1, 2], [3, 4], [5, 6]];
+const flattened = nested.reduce((acc, arr) => {
+  return acc.concat(arr);
+}, []);
+console.log(flattened);  // [1, 2, 3, 4, 5, 6]
+
+// Example: Group by property
+const people = [
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 30 },
+  { name: 'Charlie', age: 25 },
+  { name: 'David', age: 30 }
+];
+const groupedByAge = people.reduce((acc, person) => {
+  const age = person.age;
+  if (!acc[age]) {
+    acc[age] = [];
+  }
+  acc[age].push(person.name);
+  return acc;
+}, {});
+console.log(groupedByAge);
+// { 25: ['Alice', 'Charlie'], 30: ['Bob', 'David'] }</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Pro Tip</div>
+          <p>Always provide an initial value to <code>reduce()</code> to avoid unexpected behavior with empty arrays and to make your code more predictable.</p>
+        </div>
+
+        <!-- find and findIndex -->
+        <h2>🎯 find() and findIndex() - Locate Elements</h2>
+
+        <p>
+          <code>find()</code> returns the first element that matches a condition. <code>findIndex()</code> returns its index.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">find() and findIndex()</div>
+          <pre><code>const users = [
+  { id: 1, name: 'Alice', age: 25 },
+  { id: 2, name: 'Bob', age: 30 },
+  { id: 3, name: 'Charlie', age: 35 }
+];
+
+// find() - Returns the first matching element
+const user = users.find((user) => user.id === 2);
+console.log(user);  // { id: 2, name: 'Bob', age: 30 }
+
+const adult = users.find((user) => user.age > 18);
+console.log(adult);  // { id: 1, name: 'Alice', age: 25 } (first match)
+
+const notFound = users.find((user) => user.age > 40);
+console.log(notFound);  // undefined
+
+// findIndex() - Returns the index of first matching element
+const index = users.findIndex((user) => user.name === 'Charlie');
+console.log(index);  // 2
+
+const notFoundIndex = users.findIndex((user) => user.age > 40);
+console.log(notFoundIndex);  // -1
+
+// Practical example: Update specific item
+const products = [
+  { id: 1, name: 'Laptop', price: 999 },
+  { id: 2, name: 'Mouse', price: 29 },
+  { id: 3, name: 'Keyboard', price: 79 }
+];
+
+const productIndex = products.findIndex((p) => p.id === 2);
+if (productIndex !== -1) {
+  products[productIndex].price = 25;  // Update price
+}
+console.log(products[productIndex]);  // { id: 2, name: 'Mouse', price: 25 }</code></pre>
+        </div>
+
+        <!-- some and every -->
+        <h2>✅ some() and every() - Test Conditions</h2>
+
+        <p>
+          <code>some()</code> tests if at least one element passes a condition. <code>every()</code> tests if all elements pass.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">some() and every()</div>
+          <pre><code>const numbers = [1, 2, 3, 4, 5];
+
+// some() - Returns true if ANY element passes the test
+const hasEven = numbers.some((num) => num % 2 === 0);
+console.log(hasEven);  // true (2 and 4 are even)
+
+const hasLarge = numbers.some((num) => num > 10);
+console.log(hasLarge);  // false
+
+// every() - Returns true if ALL elements pass the test
+const allPositive = numbers.every((num) => num > 0);
+console.log(allPositive);  // true
+
+const allEven = numbers.every((num) => num % 2 === 0);
+console.log(allEven);  // false (1, 3, 5 are odd)
+
+// Practical example: Form validation
+const formFields = [
+  { name: 'username', value: 'john_doe', valid: true },
+  { name: 'email', value: 'john@example.com', valid: true },
+  { name: 'password', value: '123', valid: false }
+];
+
+const hasInvalidField = formFields.some((field) => !field.valid);
+console.log(hasInvalidField);  // true
+
+const allFieldsValid = formFields.every((field) => field.valid);
+console.log(allFieldsValid);  // false
+
+// Example: Age verification
+const people = [
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 30 },
+  { name: 'Charlie', age: 17 }
+];
+
+const hasMinor = people.some((person) => person.age < 18);
+console.log(hasMinor);  // true
+
+const allAdults = people.every((person) => person.age >= 18);
+console.log(allAdults);  // false</code></pre>
+        </div>
+
+        <!-- sort -->
+        <h2>🔀 sort() - Order Elements</h2>
+
+        <p>
+          <code>sort()</code> sorts the elements of an array <strong>in place</strong> (mutates the original array).
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">sort() - Sorting Arrays</div>
+          <pre><code>// Default sort (converts to strings and sorts alphabetically)
+const fruits = ['banana', 'apple', 'cherry', 'date'];
+fruits.sort();
+console.log(fruits);  // ['apple', 'banana', 'cherry', 'date']
+
+// WARNING: Default sort on numbers doesn't work as expected!
+const numbers = [10, 5, 40, 25, 1000, 1];
+numbers.sort();
+console.log(numbers);  // [1, 10, 1000, 25, 40, 5] (sorted as strings!)
+
+// Correct way to sort numbers: provide compare function
+const nums = [10, 5, 40, 25, 1000, 1];
+
+// Ascending order
+nums.sort((a, b) => a - b);
+console.log(nums);  // [1, 5, 10, 25, 40, 1000]
+
+// Descending order
+nums.sort((a, b) => b - a);
+console.log(nums);  // [1000, 40, 25, 10, 5, 1]
+
+// Sort objects by property
+const users = [
+  { name: 'Charlie', age: 35 },
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 30 }
+];
+
+// Sort by age
+users.sort((a, b) => a.age - b.age);
+console.log(users);
+// [
+//   { name: 'Alice', age: 25 },
+//   { name: 'Bob', age: 30 },
+//   { name: 'Charlie', age: 35 }
+// ]
+
+// Sort by name (alphabetically)
+users.sort((a, b) => a.name.localeCompare(b.name));
+console.log(users);
+// [
+//   { name: 'Alice', age: 25 },
+//   { name: 'Bob', age: 30 },
+//   { name: 'Charlie', age: 35 }
+// ]
+
+// Sort without mutating original (create copy first)
+const original = [3, 1, 4, 1, 5, 9];
+const sorted = [...original].sort((a, b) => a - b);
+console.log(original);  // [3, 1, 4, 1, 5, 9] (unchanged)
+console.log(sorted);    // [1, 1, 3, 4, 5, 9]</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Mutating Method</div>
+          <p><code>sort()</code> modifies the original array! Use the spread operator <code>[...array].sort()</code> if you need to preserve the original.</p>
+        </div>
+
+        <!-- reverse -->
+        <h2>↩️ reverse() - Reverse Order</h2>
+
+        <div class="code-example">
+          <div class="example-label">reverse() - Reversing Arrays</div>
+          <pre><code>// reverse() mutates the original array
+const numbers = [1, 2, 3, 4, 5];
+numbers.reverse();
+console.log(numbers);  // [5, 4, 3, 2, 1]
+
+const letters = ['a', 'b', 'c', 'd'];
+letters.reverse();
+console.log(letters);  // ['d', 'c', 'b', 'a']
+
+// Reverse without mutating (create copy first)
+const original = [1, 2, 3, 4, 5];
+const reversed = [...original].reverse();
+console.log(original);  // [1, 2, 3, 4, 5] (unchanged)
+console.log(reversed);  // [5, 4, 3, 2, 1]
+
+// Alternative: reverse using other methods
+const arr = [1, 2, 3, 4, 5];
+const rev = arr.slice().reverse();  // slice() creates copy
+console.log(rev);  // [5, 4, 3, 2, 1]</code></pre>
+        </div>
+
+        <!-- join and split -->
+        <h2>🔗 join() - Array to String</h2>
+
+        <div class="code-example">
+          <div class="example-label">join() - Joining Array Elements</div>
+          <pre><code>// join() converts array to string with separator
+const fruits = ['apple', 'banana', 'orange'];
+
+// Default separator is comma
+console.log(fruits.join());  // "apple,banana,orange"
+
+// Custom separator
+console.log(fruits.join(', '));   // "apple, banana, orange"
+console.log(fruits.join(' - '));  // "apple - banana - orange"
+console.log(fruits.join(''));     // "applebananaorange"
+
+// Practical example: Create sentence
+const words = ['JavaScript', 'is', 'awesome'];
+const sentence = words.join(' ');
+console.log(sentence);  // "JavaScript is awesome"
+
+// Practical example: Create CSV
+const data = ['John', 'Doe', '30', 'NYC'];
+const csv = data.join(',');
+console.log(csv);  // "John,Doe,30,NYC"
+
+// Split (opposite of join) - String to Array
+const text = "hello-world-javascript";
+const parts = text.split('-');
+console.log(parts);  // ['hello', 'world', 'javascript']
+
+const sentence2 = "The quick brown fox";
+const words2 = sentence2.split(' ');
+console.log(words2);  // ['The', 'quick', 'brown', 'fox']</code></pre>
+        </div>
+
+        <!-- includes and indexOf -->
+        <h2>🔎 includes() and indexOf() - Check Existence</h2>
+
+        <div class="code-example">
+          <div class="example-label">includes() and indexOf()</div>
+          <pre><code>const fruits = ['apple', 'banana', 'orange', 'grape'];
+
+// includes() - Returns boolean
+console.log(fruits.includes('banana'));  // true
+console.log(fruits.includes('mango'));   // false
+
+// Check from specific index
+console.log(fruits.includes('apple', 1));  // false (start from index 1)
+
+// indexOf() - Returns index or -1
+console.log(fruits.indexOf('orange'));  // 2
+console.log(fruits.indexOf('mango'));   // -1
+
+// lastIndexOf() - Returns last index
+const numbers = [1, 2, 3, 2, 1];
+console.log(numbers.indexOf(2));      // 1 (first occurrence)
+console.log(numbers.lastIndexOf(2));  // 3 (last occurrence)
+
+// Practical example: Check if item exists before adding
+const cart = ['apple', 'banana'];
+const newItem = 'orange';
+
+if (!cart.includes(newItem)) {
+  cart.push(newItem);
+}
+console.log(cart);  // ['apple', 'banana', 'orange']
+
+// Remove item if exists
+const items = ['a', 'b', 'c', 'd'];
+const toRemove = 'c';
+const index = items.indexOf(toRemove);
+if (index !== -1) {
+  items.splice(index, 1);
+}
+console.log(items);  // ['a', 'b', 'd']</code></pre>
+        </div>
+
+        <!-- slice and splice -->
+        <h2>✂️ slice() vs splice() - Extract and Modify</h2>
+
+        <div class="code-example">
+          <div class="example-label">slice() - Non-Mutating Extract</div>
+          <pre><code>// slice(start, end) - Returns new array, original unchanged
+const fruits = ['apple', 'banana', 'orange', 'grape', 'mango'];
+
+const sliced = fruits.slice(1, 4);  // From index 1 to 4 (not including 4)
+console.log(sliced);  // ['banana', 'orange', 'grape']
+console.log(fruits);  // Original unchanged
+
+// Negative indices (count from end)
+const lastTwo = fruits.slice(-2);
+console.log(lastTwo);  // ['grape', 'mango']
+
+const allButLast = fruits.slice(0, -1);
+console.log(allButLast);  // ['apple', 'banana', 'orange', 'grape']
+
+// Copy array
+const copy = fruits.slice();
+console.log(copy);  // ['apple', 'banana', 'orange', 'grape', 'mango']</code></pre>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">splice() - Mutating Modify</div>
+          <pre><code>// splice(start, deleteCount, item1, item2, ...) - Modifies original
+const fruits = ['apple', 'banana', 'orange', 'grape'];
+
+// Remove elements
+const removed = fruits.splice(1, 2);  // Remove 2 elements starting at index 1
+console.log(removed);  // ['banana', 'orange']
+console.log(fruits);   // ['apple', 'grape'] (original modified)
+
+// Insert elements (deleteCount = 0)
+const fruits2 = ['apple', 'grape'];
+fruits2.splice(1, 0, 'banana', 'orange');  // Insert at index 1
+console.log(fruits2);  // ['apple', 'banana', 'orange', 'grape']
+
+// Replace elements
+const fruits3 = ['apple', 'banana', 'orange'];
+fruits3.splice(1, 1, 'mango', 'kiwi');  // Remove 1, add 2 at index 1
+console.log(fruits3);  // ['apple', 'mango', 'kiwi', 'orange']
+
+// Remove from specific index to end
+const numbers = [1, 2, 3, 4, 5];
+numbers.splice(2);  // Remove from index 2 to end
+console.log(numbers);  // [1, 2]</code></pre>
+        </div>
+
+        <!-- concat and flat -->
+        <h2>🔗 concat() and flat() - Combine Arrays</h2>
+
+        <div class="code-example">
+          <div class="example-label">concat() and flat()</div>
+          <pre><code>// concat() - Merge arrays (returns new array)
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const arr3 = [7, 8, 9];
+
+const combined = arr1.concat(arr2, arr3);
+console.log(combined);  // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+console.log(arr1);      // [1, 2, 3] (unchanged)
+
+// Can also add individual elements
+const merged = arr1.concat(4, 5, arr2);
+console.log(merged);  // [1, 2, 3, 4, 5, 4, 5, 6]
+
+// Modern alternative: spread operator
+const combined2 = [...arr1, ...arr2, ...arr3];
+console.log(combined2);  // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+// flat() - Flatten nested arrays
+const nested = [1, 2, [3, 4], [5, [6, 7]]];
+const flattened = nested.flat();
+console.log(flattened);  // [1, 2, 3, 4, 5, [6, 7]] (1 level deep)
+
+// Specify depth
+const deepFlat = nested.flat(2);
+console.log(deepFlat);  // [1, 2, 3, 4, 5, 6, 7] (2 levels deep)
+
+// Flatten all levels
+const fullyFlat = nested.flat(Infinity);
+console.log(fullyFlat);  // [1, 2, 3, 4, 5, 6, 7]
+
+// flatMap() - map() then flat() in one step
+const sentences = ['hello world', 'foo bar'];
+const words = sentences.flatMap((sentence) => sentence.split(' '));
+console.log(words);  // ['hello', 'world', 'foo', 'bar']</code></pre>
+        </div>
+
+        <!-- Chaining Methods -->
+        <h2>⛓️ Chaining Array Methods</h2>
+
+        <p>
+          Array methods can be chained together to perform complex operations in a readable way.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Method Chaining Examples</div>
+          <pre><code>// Example 1: Filter, map, and sort
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const result = numbers
+  .filter((num) => num % 2 === 0)    // Get even numbers: [2, 4, 6, 8, 10]
+  .map((num) => num * 2)             // Double them: [4, 8, 12, 16, 20]
+  .sort((a, b) => b - a);            // Sort descending: [20, 16, 12, 8, 4]
+
+console.log(result);  // [20, 16, 12, 8, 4]
+
+// Example 2: Process user data
+const users = [
+  { name: 'Alice', age: 25, active: true },
+  { name: 'Bob', age: 17, active: false },
+  { name: 'Charlie', age: 30, active: true },
+  { name: 'David', age: 22, active: true },
+  { name: 'Eve', age: 16, active: true }
+];
+
+const activeAdultNames = users
+  .filter((user) => user.active && user.age >= 18)  // Active adults only
+  .map((user) => user.name)                         // Get names
+  .sort();                                          // Sort alphabetically
+
+console.log(activeAdultNames);  // ['Alice', 'Charlie', 'David']
+
+// Example 3: Calculate total price with discount
+const products = [
+  { name: 'Laptop', price: 1000, category: 'electronics' },
+  { name: 'Shirt', price: 30, category: 'clothing' },
+  { name: 'Phone', price: 800, category: 'electronics' },
+  { name: 'Pants', price: 50, category: 'clothing' }
+];
+
+const electronicsTotal = products
+  .filter((p) => p.category === 'electronics')
+  .map((p) => p.price * 0.9)  // 10% discount
+  .reduce((sum, price) => sum + price, 0);
+
+console.log(electronicsTotal);  // 1620
+
+// Example 4: Extract and flatten tags
+const posts = [
+  { title: 'Post 1', tags: ['javascript', 'web'] },
+  { title: 'Post 2', tags: ['react', 'javascript'] },
+  { title: 'Post 3', tags: ['css', 'web'] }
+];
+
+const uniqueTags = posts
+  .flatMap((post) => post.tags)           // Flatten tags
+  .filter((tag, index, arr) => arr.indexOf(tag) === index)  // Remove duplicates
+  .sort();                                // Sort alphabetically
+
+console.log(uniqueTags);  // ['css', 'javascript', 'react', 'web']</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Chaining Best Practices</div>
+          <ul>
+            <li>Format each method call on a new line for readability</li>
+            <li>Use meaningful variable names for intermediate results if chain gets complex</li>
+            <li>Consider performance: chaining creates multiple iterations</li>
+            <li>Break complex chains into multiple steps if it improves clarity</li>
+          </ul>
+        </div>
+
+        <!-- Performance Considerations -->
+        <h2>⚡ Performance Considerations</h2>
+
+        <div class="code-example">
+          <div class="example-label">Optimization Tips</div>
+          <pre><code>// ❌ Bad: Multiple iterations
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const result = numbers
+  .filter((num) => num % 2 === 0)
+  .map((num) => num * 2)
+  .filter((num) => num > 10);
+// 3 separate iterations!
+
+// ✅ Good: Single reduce
+const result2 = numbers.reduce((acc, num) => {
+  if (num % 2 === 0) {
+    const doubled = num * 2;
+    if (doubled > 10) {
+      acc.push(doubled);
+    }
+  }
+  return acc;
+}, []);
+// 1 iteration only!
+
+console.log(result);   // [12, 16, 20]
+console.log(result2);  // [12, 16, 20]
+
+// When to use chaining vs single loop:
+// - Small arrays (< 1000 elements): Use chaining for readability
+// - Large arrays or performance-critical: Consider single loop
+// - Always measure if performance matters
+
+// Example: Finding and breaking early
+const users = [...Array(10000)].map((_, i) => ({ id: i, name: `User${i}` }));
+
+// forEach cannot break early (always iterates all)
+// ❌ Bad for large arrays when you just need to find one item
+users.forEach((user) => {
+  if (user.id === 5000) {
+    // Can't break here!
+  }
+});
+
+// ✅ Good: Use for...of or find() which can break early
+const found = users.find((user) => user.id === 5000);
+console.log(found);  // Stops at first match</code></pre>
+        </div>
+
+        <!-- Practical Examples -->
+        <h2>🎯 Practical Real-World Examples</h2>
+
+        <h3>Example 1: Shopping Cart Calculations</h3>
+
+        <div class="code-example">
+          <div class="example-label">Shopping Cart with Array Methods</div>
+          <pre><code>const cartItems = [
+  { id: 1, name: 'Laptop', price: 999, quantity: 1, category: 'electronics' },
+  { id: 2, name: 'Mouse', price: 29, quantity: 2, category: 'electronics' },
+  { id: 3, name: 'Shirt', price: 39, quantity: 3, category: 'clothing' },
+  { id: 4, name: 'Keyboard', price: 79, quantity: 1, category: 'electronics' }
+];
+
+// Calculate total price
+const total = cartItems.reduce((sum, item) => {
+  return sum + (item.price * item.quantity);
+}, 0);
+console.log('Total:', total);  // 1223
+
+// Calculate total with 10% discount on electronics
+const discountedTotal = cartItems.reduce((sum, item) => {
+  const itemTotal = item.price * item.quantity;
+  const discount = item.category === 'electronics' ? 0.9 : 1;
+  return sum + (itemTotal * discount);
+}, 0);
+console.log('Discounted Total:', discountedTotal.toFixed(2));  // 1113.90
+
+// Get all product names
+const productNames = cartItems.map((item) => item.name).join(', ');
+console.log('Products:', productNames);
+// "Laptop, Mouse, Shirt, Keyboard"
+
+// Count items by category
+const itemsByCategory = cartItems.reduce((acc, item) => {
+  acc[item.category] = (acc[item.category] || 0) + item.quantity;
+  return acc;
+}, {});
+console.log(itemsByCategory);  // { electronics: 4, clothing: 3 }</code></pre>
+        </div>
+
+        <h3>Example 2: Data Analysis</h3>
+
+        <div class="code-example">
+          <div class="example-label">Student Grade Analysis</div>
+          <pre><code>const students = [
+  { name: 'Alice', scores: [85, 92, 88, 95] },
+  { name: 'Bob', scores: [78, 81, 75, 80] },
+  { name: 'Charlie', scores: [92, 95, 90, 94] },
+  { name: 'David', scores: [88, 85, 87, 86] }
+];
+
+// Calculate average score for each student
+const averages = students.map((student) => {
+  const sum = student.scores.reduce((total, score) => total + score, 0);
+  const average = sum / student.scores.length;
+  return { name: student.name, average: average };
+});
+
+console.log(averages);
+// [
+//   { name: 'Alice', average: 90 },
+//   { name: 'Bob', average: 78.5 },
+//   { name: 'Charlie', average: 92.75 },
+//   { name: 'David', average: 86.5 }
+// ]
+
+// Find students with average >= 85
+const topStudents = averages
+  .filter((student) => student.average >= 85)
+  .map((student) => student.name);
+
+console.log('Top students:', topStudents);  // ['Alice', 'Charlie', 'David']
+
+// Calculate class average
+const classAverage = students
+  .flatMap((student) => student.scores)
+  .reduce((sum, score, _, arr) => sum + score / arr.length, 0);
+
+console.log('Class average:', classAverage.toFixed(2));  // 86.94</code></pre>
+        </div>
+
+        <h3>Example 3: Text Processing</h3>
+
+        <div class="code-example">
+          <div class="example-label">Word Frequency Counter</div>
+          <pre><code>const text = `
+  JavaScript is awesome. JavaScript is powerful.
+  Many developers love JavaScript.
+  JavaScript JavaScript JavaScript!
+`;
+
+// Count word frequency
+const wordCount = text
+  .toLowerCase()                           // Convert to lowercase
+  .replace(/[^\w\s]/g, '')                // Remove punctuation
+  .split(/\s+/)                           // Split by whitespace
+  .filter((word) => word.length > 0)      // Remove empty strings
+  .reduce((count, word) => {
+    count[word] = (count[word] || 0) + 1;
+    return count;
+  }, {});
+
+console.log(wordCount);
+// {
+//   javascript: 5,
+//   is: 2,
+//   awesome: 1,
+//   powerful: 1,
+//   many: 1,
+//   developers: 1,
+//   love: 1
+// }
+
+// Get top 3 most common words
+const topWords = Object.entries(wordCount)
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 3)
+  .map(([word, count]) => ({ word, count }));
+
+console.log('Top 3 words:', topWords);
+// [
+//   { word: 'javascript', count: 5 },
+//   { word: 'is', count: 2 },
+//   { word: 'awesome', count: 1 }
+// ]</code></pre>
+        </div>
+
+        <!-- Quick Reference -->
+        <h2>📋 Quick Reference Table</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Mutates?</th>
+              <th>Returns</th>
+              <th>Use Case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>forEach()</code></td>
+              <td>No</td>
+              <td>undefined</td>
+              <td>Execute function for each element</td>
+            </tr>
+            <tr>
+              <td><code>map()</code></td>
+              <td>No</td>
+              <td>New array</td>
+              <td>Transform each element</td>
+            </tr>
+            <tr>
+              <td><code>filter()</code></td>
+              <td>No</td>
+              <td>New array</td>
+              <td>Select elements by condition</td>
+            </tr>
+            <tr>
+              <td><code>reduce()</code></td>
+              <td>No</td>
+              <td>Single value</td>
+              <td>Accumulate to single result</td>
+            </tr>
+            <tr>
+              <td><code>find()</code></td>
+              <td>No</td>
+              <td>Element or undefined</td>
+              <td>Find first matching element</td>
+            </tr>
+            <tr>
+              <td><code>findIndex()</code></td>
+              <td>No</td>
+              <td>Index or -1</td>
+              <td>Find index of first match</td>
+            </tr>
+            <tr>
+              <td><code>some()</code></td>
+              <td>No</td>
+              <td>Boolean</td>
+              <td>Test if any element matches</td>
+            </tr>
+            <tr>
+              <td><code>every()</code></td>
+              <td>No</td>
+              <td>Boolean</td>
+              <td>Test if all elements match</td>
+            </tr>
+            <tr>
+              <td><code>sort()</code></td>
+              <td><strong>Yes</strong></td>
+              <td>Sorted array</td>
+              <td>Sort elements in place</td>
+            </tr>
+            <tr>
+              <td><code>reverse()</code></td>
+              <td><strong>Yes</strong></td>
+              <td>Reversed array</td>
+              <td>Reverse order in place</td>
+            </tr>
+            <tr>
+              <td><code>splice()</code></td>
+              <td><strong>Yes</strong></td>
+              <td>Removed elements</td>
+              <td>Add/remove elements in place</td>
+            </tr>
+            <tr>
+              <td><code>slice()</code></td>
+              <td>No</td>
+              <td>New array</td>
+              <td>Extract portion of array</td>
+            </tr>
+            <tr>
+              <td><code>concat()</code></td>
+              <td>No</td>
+              <td>New array</td>
+              <td>Merge arrays</td>
+            </tr>
+            <tr>
+              <td><code>join()</code></td>
+              <td>No</td>
+              <td>String</td>
+              <td>Convert array to string</td>
+            </tr>
+            <tr>
+              <td><code>includes()</code></td>
+              <td>No</td>
+              <td>Boolean</td>
+              <td>Check if element exists</td>
+            </tr>
+            <tr>
+              <td><code>flat()</code></td>
+              <td>No</td>
+              <td>New array</td>
+              <td>Flatten nested arrays</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Summary -->
+        <div class="info-box note">
+          <div class="info-box-title">📝 Summary</div>
+          <ul>
+            <li><strong>forEach()</strong> iterates but doesn't return anything useful</li>
+            <li><strong>map()</strong> transforms each element into a new array</li>
+            <li><strong>filter()</strong> selects elements that match a condition</li>
+            <li><strong>reduce()</strong> accumulates array into a single value</li>
+            <li><strong>find/findIndex()</strong> locate specific elements efficiently</li>
+            <li><strong>some/every()</strong> test conditions across the array</li>
+            <li><strong>sort/reverse()</strong> modify the original array (mutating)</li>
+            <li><strong>Method chaining</strong> creates powerful, readable transformations</li>
+            <li>Always consider whether a method <strong>mutates</strong> the original array</li>
+          </ul>
+        </div>
+
+        <!-- Navigation -->
+        <div class="page-navigation">
+          <a href="javascript-objects-arrays.html" class="nav-button">← Objects & Arrays</a>
+          <a href="dom-manipulation.html" class="nav-button">DOM Manipulation →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

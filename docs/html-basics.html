@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Basics - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>HTML Basics</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>📄 HTML Basics</h1>
+
+        <p>
+          HTML (HyperText Markup Language) is the backbone of every website. It structures content
+          using elements called <strong>tags</strong>. Let's learn how to create your first web page!
+        </p>
+
+        <h2>HTML Document Structure</h2>
+
+        <p>
+          Every HTML document follows a standard structure. This is the minimal template you need:
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Basic HTML Template</div>
+          <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;!-- Declares this is an HTML5 document --&gt;
+
+&lt;html lang="en"&gt;
+&lt;!-- Root element, contains all content. lang="en" sets language to English --&gt;
+
+&lt;head&gt;
+  &lt;!-- Metadata: information ABOUT the page (not displayed) --&gt;
+
+  &lt;meta charset="UTF-8"&gt;
+  &lt;!-- Character encoding: supports all languages and symbols --&gt;
+
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;!-- Makes page responsive on mobile devices --&gt;
+
+  &lt;title&gt;My First Web Page&lt;/title&gt;
+  &lt;!-- Title shown in browser tab --&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;!-- Visible content goes here --&gt;
+  &lt;h1&gt;Hello, World!&lt;/h1&gt;
+  &lt;p&gt;This is my first web page.&lt;/p&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="info-box important">
+          <div class="info-box-title">⚠️ Important</div>
+          <p>Save your HTML files with the <code>.html</code> extension (e.g., <code>index.html</code>).
+          The file named <code>index.html</code> is special - it's the default page browsers load
+          when you visit a website or folder.</p>
+        </div>
+
+        <h2>HTML Tags and Elements</h2>
+
+        <p>
+          HTML uses <strong>tags</strong> to mark up content. Most tags come in pairs:
+        </p>
+
+        <div class="demo-section">
+          <div class="demo-title">Tag Structure</div>
+          <pre><code class="language-html">&lt;tagname&gt;Content goes here&lt;/tagname&gt;
+   ↑              ↑              ↑
+Opening tag    Content      Closing tag
+
+&lt;!-- Together, they form an ELEMENT --&gt;</code></pre>
+        </div>
+
+        <ul>
+          <li><strong>Opening tag</strong>: <code>&lt;tagname&gt;</code> - Marks where the element starts</li>
+          <li><strong>Content</strong>: The text or other elements inside</li>
+          <li><strong>Closing tag</strong>: <code>&lt;/tagname&gt;</code> - Marks where it ends (has a forward slash)</li>
+        </ul>
+
+        <h3>Self-Closing Tags</h3>
+
+        <p>Some tags don't have content and don't need a closing tag:</p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Images --&gt;
+&lt;img src="photo.jpg" alt="Description"&gt;
+
+&lt;!-- Line breaks --&gt;
+&lt;br&gt;
+
+&lt;!-- Horizontal line --&gt;
+&lt;hr&gt;
+
+&lt;!-- Link to CSS or other files --&gt;
+&lt;link rel="stylesheet" href="style.css"&gt;</code></pre>
+        </div>
+
+        <h2>Common HTML Tags</h2>
+
+        <h3>Headings</h3>
+
+        <p>
+          Headings create a hierarchy of content, from most important (h1) to least important (h6).
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">HTML</div>
+          <pre><code class="language-html">&lt;!-- Always use only ONE h1 per page (main heading) --&gt;
+&lt;h1&gt;Main Page Title&lt;/h1&gt;
+
+&lt;h2&gt;Section Heading&lt;/h2&gt;
+&lt;h3&gt;Subsection&lt;/h3&gt;
+&lt;h4&gt;Sub-subsection&lt;/h4&gt;
+&lt;h5&gt;Smaller heading&lt;/h5&gt;
+&lt;h6&gt;Smallest heading&lt;/h6&gt;</code></pre>
+        </div>
+
+        <div class="demo-section">
+          <div class="demo-title">Live Example</div>
+          <h1 style="font-size: 2em; margin: 10px 0;">Main Page Title</h1>
+          <h2 style="font-size: 1.5em; margin: 10px 0;">Section Heading</h2>
+          <h3 style="font-size: 1.25em; margin: 10px 0;">Subsection</h3>
+          <h4 style="font-size: 1em; margin: 10px 0;">Sub-subsection</h4>
+        </div>
+
+        <h3>Paragraphs and Text</h3>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Paragraph: block of text --&gt;
+&lt;p&gt;This is a paragraph of text.&lt;/p&gt;
+
+&lt;!-- Line break: creates a new line within text --&gt;
+&lt;p&gt;First line&lt;br&gt;Second line&lt;/p&gt;
+
+&lt;!-- Strong (bold) text --&gt;
+&lt;p&gt;This is &lt;strong&gt;very important&lt;/strong&gt;&lt;/p&gt;
+
+&lt;!-- Emphasis (italic) text --&gt;
+&lt;p&gt;This is &lt;em&gt;emphasized&lt;/em&gt;&lt;/p&gt;
+
+&lt;!-- Mark (highlight) text --&gt;
+&lt;p&gt;This is &lt;mark&gt;highlighted&lt;/mark&gt;&lt;/p&gt;</code></pre>
+        </div>
+
+        <h3>Links (Anchors)</h3>
+
+        <p>
+          Links let users navigate between pages. The <code>href</code> attribute specifies the destination.
+        </p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Link to another page --&gt;
+&lt;a href="about.html"&gt;About Us&lt;/a&gt;
+
+&lt;!-- Link to external website --&gt;
+&lt;a href="https://google.com"&gt;Visit Google&lt;/a&gt;
+
+&lt;!-- Open in new tab (target="_blank") --&gt;
+&lt;a href="https://google.com" target="_blank"&gt;Open in new tab&lt;/a&gt;
+
+&lt;!-- Email link --&gt;
+&lt;a href="mailto:hello@example.com"&gt;Send us an email&lt;/a&gt;
+
+&lt;!-- Phone link (clickable on mobile) --&gt;
+&lt;a href="tel:+1234567890"&gt;Call us&lt;/a&gt;</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Accessibility Tip</div>
+          <p>Always write descriptive link text. Instead of "click here", use meaningful text like
+          "download the report" or "read our privacy policy".</p>
+        </div>
+
+        <h3>Images</h3>
+
+        <p>
+          The <code>img</code> tag displays images. The <code>src</code> attribute is the image path,
+          and <code>alt</code> provides alternative text for accessibility.
+        </p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Basic image --&gt;
+&lt;img src="logo.png" alt="Company logo"&gt;
+
+&lt;!-- Image with size attributes --&gt;
+&lt;img src="photo.jpg" alt="Beach sunset" width="600" height="400"&gt;
+
+&lt;!-- Image from external URL --&gt;
+&lt;img src="https://example.com/image.jpg" alt="Description"&gt;</code></pre>
+        </div>
+
+        <div class="info-box important">
+          <div class="info-box-title">⚠️ Always Include Alt Text</div>
+          <p>The <code>alt</code> attribute is crucial for accessibility. Screen readers use it to
+          describe images to visually impaired users. It also shows if the image fails to load.</p>
+        </div>
+
+        <h3>Lists</h3>
+
+        <p>HTML supports ordered (numbered) and unordered (bulleted) lists:</p>
+
+        <div class="code-example">
+          <div class="example-label">Unordered List (bullets)</div>
+          <pre><code class="language-html">&lt;ul&gt;
+  &lt;!-- ul = unordered list --&gt;
+  &lt;li&gt;First item&lt;/li&gt;
+  &lt;li&gt;Second item&lt;/li&gt;
+  &lt;li&gt;Third item&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        </div>
+
+        <div class="demo-section">
+          <ul>
+            <li>First item</li>
+            <li>Second item</li>
+            <li>Third item</li>
+          </ul>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">Ordered List (numbers)</div>
+          <pre><code class="language-html">&lt;ol&gt;
+  &lt;!-- ol = ordered list --&gt;
+  &lt;li&gt;Step one&lt;/li&gt;
+  &lt;li&gt;Step two&lt;/li&gt;
+  &lt;li&gt;Step three&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+        </div>
+
+        <div class="demo-section">
+          <ol>
+            <li>Step one</li>
+            <li>Step two</li>
+            <li>Step three</li>
+          </ol>
+        </div>
+
+        <h2>HTML Attributes</h2>
+
+        <p>
+          Attributes provide additional information about elements. They go in the opening tag:
+        </p>
+
+        <div class="demo-section">
+          <div class="demo-title">Attribute Syntax</div>
+          <pre><code class="language-html">&lt;tagname attribute="value"&gt;Content&lt;/tagname&gt;
+            ↑            ↑
+        Attribute     Value (in quotes)</code></pre>
+        </div>
+
+        <h3>Common Attributes</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Used on</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>href</code></td>
+              <td><code>&lt;a&gt;</code></td>
+              <td>Link destination</td>
+            </tr>
+            <tr>
+              <td><code>src</code></td>
+              <td><code>&lt;img&gt;</code></td>
+              <td>Image source path</td>
+            </tr>
+            <tr>
+              <td><code>alt</code></td>
+              <td><code>&lt;img&gt;</code></td>
+              <td>Alternative text</td>
+            </tr>
+            <tr>
+              <td><code>id</code></td>
+              <td>Any element</td>
+              <td>Unique identifier</td>
+            </tr>
+            <tr>
+              <td><code>class</code></td>
+              <td>Any element</td>
+              <td>CSS styling group</td>
+            </tr>
+            <tr>
+              <td><code>style</code></td>
+              <td>Any element</td>
+              <td>Inline CSS styles</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Multiple attributes on one element --&gt;
+&lt;img src="logo.png" alt="Logo" width="200" class="header-logo"&gt;
+
+&lt;!-- ID must be unique on the page --&gt;
+&lt;div id="main-content"&gt;...&lt;/div&gt;
+
+&lt;!-- Class can be reused multiple times --&gt;
+&lt;p class="highlight"&gt;Important text&lt;/p&gt;
+&lt;p class="highlight"&gt;More important text&lt;/p&gt;</code></pre>
+        </div>
+
+        <h2>Comments</h2>
+
+        <p>
+          Comments are notes in your code that browsers ignore. They're only for developers:
+        </p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- This is a comment. It won't appear on the page. --&gt;
+
+&lt;!--
+  Multi-line comment
+  Use comments to explain your code
+  or temporarily disable code
+--&gt;
+
+&lt;p&gt;This text IS visible&lt;/p&gt;
+&lt;!-- &lt;p&gt;This text is NOT visible (commented out)&lt;/p&gt; --&gt;</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Use Comments Wisely</div>
+          <p>Write comments to explain <em>why</em> you're doing something, not <em>what</em> the code does.
+          Good code should be self-explanatory, with comments for complex logic or important decisions.</p>
+        </div>
+
+        <h2>Nested Elements</h2>
+
+        <p>
+          Elements can be placed inside other elements (nesting). Proper indentation makes this clear:
+        </p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Properly nested and indented --&gt;
+&lt;div&gt;
+  &lt;h2&gt;Product Title&lt;/h2&gt;
+  &lt;p&gt;
+    This is the description with &lt;strong&gt;bold text&lt;/strong&gt; inside.
+  &lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Feature one&lt;/li&gt;
+    &lt;li&gt;Feature two&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Common Mistake: Incorrect Nesting</div>
+          <pre><code class="language-html">&lt;!-- WRONG: Tags overlap --&gt;
+&lt;p&gt;Text with &lt;strong&gt;bold&lt;/p&gt;&lt;/strong&gt;
+
+&lt;!-- CORRECT: Tags properly nested --&gt;
+&lt;p&gt;Text with &lt;strong&gt;bold&lt;/strong&gt;&lt;/p&gt;</code></pre>
+        </div>
+
+        <h2>Practice Exercise</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">🎯 Try This</div>
+          <p>Create an HTML file with:</p>
+          <ol>
+            <li>A main heading with your name</li>
+            <li>A paragraph about yourself</li>
+            <li>An unordered list of your hobbies</li>
+            <li>A link to your favorite website</li>
+            <li>An image (any image you like)</li>
+          </ol>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">Solution Example</div>
+          <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;About Me&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;John Doe&lt;/h1&gt;
+
+  &lt;p&gt;
+    I'm a beginner web developer learning HTML, CSS, and JavaScript.
+    I enjoy creating beautiful and functional websites.
+  &lt;/p&gt;
+
+  &lt;h2&gt;My Hobbies&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Coding&lt;/li&gt;
+    &lt;li&gt;Reading&lt;/li&gt;
+    &lt;li&gt;Photography&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;a href="https://github.com" target="_blank"&gt;Visit GitHub&lt;/a&gt;
+
+  &lt;img src="photo.jpg" alt="My photo" width="300"&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li>HTML document structure (DOCTYPE, html, head, body)</li>
+            <li>Common tags: headings, paragraphs, links, images, lists</li>
+            <li>How to use attributes to provide extra information</li>
+            <li>Proper nesting and indentation</li>
+            <li>How to write HTML comments</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="web-fundamentals.html" class="nav-button">← Web Fundamentals</a>
+          <a href="semantic-html.html" class="nav-button">Semantic HTML →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

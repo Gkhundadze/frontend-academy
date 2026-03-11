@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Mode Toggle - Practice Project</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!--
+    DARK MODE TOGGLE PROJECT
+
+    Learning Objectives:
+    - DOM manipulation (selecting elements)
+    - Event handling (click events)
+    - classList methods (add, remove, toggle)
+    - localStorage (persisting user preferences)
+    - CSS custom properties (CSS variables)
+
+    This project demonstrates how to implement a dark mode toggle
+    that remembers the user's preference even after page reload.
+  -->
+
+  <div class="container">
+
+    <!-- Header with toggle button -->
+    <header>
+      <h1>Dark Mode Toggle</h1>
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+        <!-- Moon icon for light mode -->
+        <span class="icon icon-moon">🌙</span>
+        <!-- Sun icon for dark mode -->
+        <span class="icon icon-sun">☀️</span>
+      </button>
+    </header>
+
+    <!-- Main content -->
+    <main>
+      <section class="intro">
+        <h2>Welcome to the Dark Mode Demo</h2>
+        <p>
+          Click the toggle button in the header to switch between light and dark modes.
+          Your preference will be saved and remembered when you return!
+        </p>
+      </section>
+
+      <section class="features">
+        <h2>How It Works</h2>
+
+        <div class="card">
+          <h3>1️⃣ CSS Variables</h3>
+          <p>
+            We use CSS custom properties (variables) to define colors for both themes.
+            This makes it easy to switch themes by changing one class on the body element.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>2️⃣ JavaScript Toggle</h3>
+          <p>
+            When you click the button, JavaScript toggles a "dark-mode" class on the body element.
+            This changes all the CSS variables, updating the entire page instantly.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>3️⃣ LocalStorage</h3>
+          <p>
+            Your theme preference is saved in localStorage, so it persists even after
+            you close the browser or refresh the page.
+          </p>
+        </div>
+      </section>
+
+      <section class="demo-content">
+        <h2>Sample Content</h2>
+        <p>
+          This is sample content to demonstrate how text and elements look in both themes.
+          Notice how all colors transition smoothly when you switch modes.
+        </p>
+
+        <blockquote>
+          "Design is not just what it looks like and feels like. Design is how it works."
+          <footer>— Steve Jobs</footer>
+        </blockquote>
+
+        <p>
+          Try toggling between modes to see how the entire page theme changes seamlessly.
+          This technique is used by popular websites like Twitter, YouTube, and GitHub.
+        </p>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>Dark Mode Toggle Project | Frontend Course</p>
+      <a href="../../index.html">← Back to Course Home</a>
+    </footer>
+
+  </div>
+
+  <!-- Load JavaScript file -->
+  <script src="script.js"></script>
+</body>
+</html>

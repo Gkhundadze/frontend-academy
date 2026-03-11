@@ -1,0 +1,240 @@
+/*
+  TIC TAC TOE - STYLES
+  Clean, modern styling for the React Tic Tac Toe game
+*/
+
+/* ===================================
+   GLOBAL STYLES
+   =================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+#root {
+  width: 100%;
+  max-width: 600px;
+}
+
+/* ===================================
+   GAME CONTAINER
+   =================================== */
+
+.game {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.game-info h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+
+/* ===================================
+   BOARD
+   =================================== */
+
+.game-board {
+  margin-bottom: 30px;
+}
+
+.status {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.status.winner {
+  background-color: #4caf50;
+  color: white;
+  animation: celebrate 0.5s ease;
+}
+
+/* Celebration animation when someone wins */
+@keyframes celebrate {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* ===================================
+   SQUARES
+   =================================== */
+
+.square {
+  aspect-ratio: 1; /* Makes square perfectly square */
+  background-color: #f8f9fa;
+  border: 3px solid #667eea;
+  border-radius: 10px;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.square:hover {
+  background-color: #e3f2fd;
+  transform: scale(1.05);
+  border-color: #5568d3;
+}
+
+.square:active {
+  transform: scale(0.95);
+}
+
+/* Disable hover effects for filled squares */
+.square:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ===================================
+   GAME HISTORY
+   =================================== */
+
+.game-history {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.game-history h3 {
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+.game-history ol {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.game-history li {
+  margin-bottom: 8px;
+}
+
+.history-button {
+  width: 100%;
+  padding: 10px 15px;
+  background-color: white;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.history-button:hover {
+  background-color: #667eea;
+  color: white;
+  border-color: #667eea;
+  transform: translateX(5px);
+}
+
+.reset-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 15px;
+}
+
+.reset-button:hover {
+  background-color: #5568d3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.reset-button:active {
+  transform: translateY(0);
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+@media (max-width: 500px) {
+  .game {
+    padding: 20px;
+  }
+
+  .game-info h1 {
+    font-size: 2rem;
+  }
+
+  .square {
+    font-size: 2rem;
+    min-height: 80px;
+  }
+
+  .status {
+    font-size: 1.2rem;
+  }
+}
+
+/* ===================================
+   SCROLLBAR STYLING (optional)
+   =================================== */
+
+.game-history ol::-webkit-scrollbar {
+  width: 8px;
+}
+
+.game-history ol::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.game-history ol::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 10px;
+}
+
+.game-history ol::-webkit-scrollbar-thumb:hover {
+  background: #5568d3;
+}

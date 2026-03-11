@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCSS Basics - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>SCSS Basics</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+          <li><a href="../projects/landing-page/index.html">Landing Page Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>🎨 SCSS Basics</h1>
+
+        <p>
+          <strong>SCSS</strong> (Sassy CSS) is a preprocessor that extends CSS with powerful features
+          like variables, nesting, mixins, and functions. It makes CSS more maintainable and easier to write.
+        </p>
+
+        <h2>What is SCSS?</h2>
+
+        <p>
+          SCSS is part of Sass (Syntactically Awesome StyleSheets). It's a superset of CSS,
+          meaning all valid CSS is also valid SCSS.
+        </p>
+
+        <div class="demo-section">
+          <div class="demo-title">SCSS Compilation</div>
+          <pre><code>style.scss  →  [Compiler]  →  style.css  →  Browser
+(You write)    (Processes)     (Output)      (Reads)</code></pre>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 SCSS vs Sass</div>
+          <p><strong>SCSS</strong> uses CSS-like syntax with curly braces <code>{}</code></p>
+          <p><strong>Sass</strong> uses indentation (older syntax)</p>
+          <p>Most developers prefer SCSS because it's closer to regular CSS.</p>
+        </div>
+
+        <h2>Setup</h2>
+
+        <h3>Installation</h3>
+
+        <div class="code-example">
+          <div class="example-label">Using npm</div>
+          <pre><code><span class="comment"># Install Sass globally</span>
+npm install -g sass
+
+<span class="comment"># Watch and compile SCSS to CSS</span>
+sass --watch style.scss:style.css
+
+<span class="comment"># Watch entire folder</span>
+sass --watch scss:css</code></pre>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">VS Code Extension</div>
+          <p>Install "Live Sass Compiler" extension - compiles automatically on save.</p>
+        </div>
+
+        <h2>Variables</h2>
+
+        <p>
+          Store reusable values (colors, fonts, sizes) in variables.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">SCSS</div>
+          <pre><code><span class="comment">// Define variables with $</span>
+<span class="keyword">$primary-color</span>: <span class="string">#4a90e2</span>;
+<span class="keyword">$secondary-color</span>: <span class="string">#50c878</span>;
+<span class="keyword">$font-stack</span>: <span class="string">Arial, sans-serif</span>;
+<span class="keyword">$base-padding</span>: <span class="number">20</span>px;
+
+<span class="comment">// Use variables</span>
+<span class="tag">body</span> {
+  <span class="attr">font-family</span>: <span class="keyword">$font-stack</span>;
+  <span class="attr">color</span>: <span class="keyword">$primary-color</span>;
+  <span class="attr">padding</span>: <span class="keyword">$base-padding</span>;
+}
+
+<span class="tag">.button</span> {
+  <span class="attr">background-color</span>: <span class="keyword">$primary-color</span>;
+  <span class="attr">padding</span>: <span class="keyword">$base-padding</span> / <span class="number">2</span>; <span class="comment">// Math operations!</span>
+}</code></pre>
+
+          <div class="example-label">Compiled CSS</div>
+          <pre><code><span class="tag">body</span> {
+  <span class="attr">font-family</span>: <span class="string">Arial, sans-serif</span>;
+  <span class="attr">color</span>: <span class="string">#4a90e2</span>;
+  <span class="attr">padding</span>: <span class="number">20</span>px;
+}
+
+<span class="tag">.button</span> {
+  <span class="attr">background-color</span>: <span class="string">#4a90e2</span>;
+  <span class="attr">padding</span>: <span class="number">10</span>px;
+}</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Variable Benefits</div>
+          <ul>
+            <li>Change one value, update everywhere</li>
+            <li>Maintain consistent design system</li>
+            <li>Self-documenting code</li>
+            <li>Easy theme switching</li>
+          </ul>
+        </div>
+
+        <h2>Nesting</h2>
+
+        <p>
+          Nest selectors inside one another to mirror HTML structure.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">SCSS (Nested)</div>
+          <pre><code><span class="tag">.nav</span> {
+  <span class="attr">background</span>: <span class="string">#333</span>;
+  <span class="attr">padding</span>: <span class="number">10</span>px;
+
+  <span class="comment">// Nested selector</span>
+  <span class="tag">ul</span> {
+    <span class="attr">list-style</span>: <span class="string">none</span>;
+    <span class="attr">margin</span>: <span class="number">0</span>;
+    <span class="attr">padding</span>: <span class="number">0</span>;
+  }
+
+  <span class="tag">li</span> {
+    <span class="attr">display</span>: <span class="string">inline-block</span>;
+  }
+
+  <span class="tag">a</span> {
+    <span class="attr">color</span>: <span class="string">white</span>;
+    <span class="attr">text-decoration</span>: <span class="string">none</span>;
+
+    <span class="comment">// & refers to parent selector (.nav a)</span>
+    <span class="keyword">&:hover</span> {
+      <span class="attr">color</span>: <span class="string">#4a90e2</span>;
+    }
+  }
+}</code></pre>
+
+          <div class="example-label">Compiled CSS</div>
+          <pre><code><span class="tag">.nav</span> {
+  <span class="attr">background</span>: <span class="string">#333</span>;
+  <span class="attr">padding</span>: <span class="number">10</span>px;
+}
+
+<span class="tag">.nav ul</span> {
+  <span class="attr">list-style</span>: <span class="string">none</span>;
+  <span class="attr">margin</span>: <span class="number">0</span>;
+  <span class="attr">padding</span>: <span class="number">0</span>;
+}
+
+<span class="tag">.nav li</span> {
+  <span class="attr">display</span>: <span class="string">inline-block</span>;
+}
+
+<span class="tag">.nav a</span> {
+  <span class="attr">color</span>: <span class="string">white</span>;
+  <span class="attr">text-decoration</span>: <span class="string">none</span>;
+}
+
+<span class="tag">.nav a:hover</span> {
+  <span class="attr">color</span>: <span class="string">#4a90e2</span>;
+}</code></pre>
+        </div>
+
+        <h3>Parent Selector (&)</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.button</span> {
+  <span class="attr">background</span>: <span class="string">blue</span>;
+
+  <span class="comment">// Pseudo-classes</span>
+  <span class="keyword">&:hover</span> {
+    <span class="attr">background</span>: <span class="string">darkblue</span>;
+  }
+
+  <span class="keyword">&:active</span> {
+    <span class="attr">transform</span>: <span class="function">scale</span>(<span class="number">0.95</span>);
+  }
+
+  <span class="comment">// Modifier classes</span>
+  <span class="keyword">&--large</span> {
+    <span class="attr">padding</span>: <span class="number">20</span>px <span class="number">40</span>px;
+  }
+
+  <span class="keyword">&--small</span> {
+    <span class="attr">padding</span>: <span class="number">5</span>px <span class="number">10</span>px;
+  }
+}</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Don't Over-Nest</div>
+          <p>Avoid nesting more than 3-4 levels deep. It makes CSS too specific and hard to override.</p>
+        </div>
+
+        <h2>Partials and @import</h2>
+
+        <p>
+          Split CSS into smaller, modular files (partials) and import them.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">File Structure</div>
+          <pre><code>scss/
+├── _variables.scss    (starts with _)
+├── _mixins.scss
+├── _buttons.scss
+├── _navigation.scss
+└── main.scss          (imports all partials)</code></pre>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">_variables.scss</div>
+          <pre><code><span class="keyword">$primary-color</span>: <span class="string">#4a90e2</span>;
+<span class="keyword">$font-stack</span>: <span class="string">Arial, sans-serif</span>;</code></pre>
+
+          <div class="example-label">main.scss</div>
+          <pre><code><span class="comment">// Import partials (no _ or .scss needed)</span>
+<span class="keyword">@import</span> <span class="string">'variables'</span>;
+<span class="keyword">@import</span> <span class="string">'mixins'</span>;
+<span class="keyword">@import</span> <span class="string">'buttons'</span>;
+<span class="keyword">@import</span> <span class="string">'navigation'</span>;</code></pre>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 Note</div>
+          <p>Files starting with <code>_</code> are partials and won't be compiled to separate CSS files.
+          Only the main file that imports them will be compiled.</p>
+        </div>
+
+        <h2>Mixins</h2>
+
+        <p>
+          Reusable chunks of CSS that can accept parameters.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Define Mixin</div>
+          <pre><code><span class="comment">// Mixin without parameters</span>
+<span class="keyword">@mixin</span> <span class="function">reset-list</span> {
+  <span class="attr">margin</span>: <span class="number">0</span>;
+  <span class="attr">padding</span>: <span class="number">0</span>;
+  <span class="attr">list-style</span>: <span class="string">none</span>;
+}
+
+<span class="comment">// Mixin with parameters</span>
+<span class="keyword">@mixin</span> <span class="function">button-style</span>(<span class="keyword">$bg-color</span>, <span class="keyword">$text-color</span>) {
+  <span class="attr">background-color</span>: <span class="keyword">$bg-color</span>;
+  <span class="attr">color</span>: <span class="keyword">$text-color</span>;
+  <span class="attr">padding</span>: <span class="number">10</span>px <span class="number">20</span>px;
+  <span class="attr">border</span>: <span class="string">none</span>;
+  <span class="attr">border-radius</span>: <span class="number">4</span>px;
+  <span class="attr">cursor</span>: <span class="string">pointer</span>;
+
+  <span class="keyword">&:hover</span> {
+    <span class="attr">opacity</span>: <span class="number">0.8</span>;
+  }
+}
+
+<span class="comment">// Use mixin with @include</span>
+<span class="tag">ul</span> {
+  <span class="keyword">@include</span> <span class="function">reset-list</span>;
+}
+
+<span class="tag">.btn-primary</span> {
+  <span class="keyword">@include</span> <span class="function">button-style</span>(<span class="string">#4a90e2</span>, <span class="string">white</span>);
+}
+
+<span class="tag">.btn-danger</span> {
+  <span class="keyword">@include</span> <span class="function">button-style</span>(<span class="string">#e74c3c</span>, <span class="string">white</span>);
+}</code></pre>
+        </div>
+
+        <h3>Common Mixin Examples</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// Flexbox centering</span>
+<span class="keyword">@mixin</span> <span class="function">flex-center</span> {
+  <span class="attr">display</span>: <span class="string">flex</span>;
+  <span class="attr">justify-content</span>: <span class="string">center</span>;
+  <span class="attr">align-items</span>: <span class="string">center</span>;
+}
+
+<span class="comment">// Responsive breakpoint</span>
+<span class="keyword">@mixin</span> <span class="function">tablet</span> {
+  <span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="number">768</span>px) {
+    <span class="keyword">@content</span>; <span class="comment">// Insert content here</span>
+  }
+}
+
+<span class="comment">// Usage</span>
+<span class="tag">.container</span> {
+  <span class="attr">padding</span>: <span class="number">10</span>px;
+
+  <span class="keyword">@include</span> <span class="function">tablet</span> {
+    <span class="attr">padding</span>: <span class="number">20</span>px;
+  }
+}</code></pre>
+        </div>
+
+        <h2>Functions</h2>
+
+        <p>
+          Functions return values (unlike mixins which output CSS).
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// Define function</span>
+<span class="keyword">@function</span> <span class="function">calculate-rem</span>(<span class="keyword">$size</span>) {
+  <span class="keyword">@return</span> <span class="keyword">$size</span> / <span class="number">16</span>px * <span class="number">1</span>rem;
+}
+
+<span class="comment">// Built-in color functions</span>
+<span class="keyword">$base-color</span>: <span class="string">#4a90e2</span>;
+
+<span class="tag">.box</span> {
+  <span class="attr">background</span>: <span class="keyword">$base-color</span>;
+  <span class="attr">border</span>: <span class="number">1</span>px <span class="string">solid</span> <span class="function">darken</span>(<span class="keyword">$base-color</span>, <span class="number">10%</span>);
+
+  <span class="keyword">&:hover</span> {
+    <span class="attr">background</span>: <span class="function">lighten</span>(<span class="keyword">$base-color</span>, <span class="number">10%</span>);
+  }
+}
+
+<span class="comment">// Usage</span>
+<span class="tag">h1</span> {
+  <span class="attr">font-size</span>: <span class="function">calculate-rem</span>(<span class="number">32</span>px); <span class="comment">// 2rem</span>
+}</code></pre>
+        </div>
+
+        <h3>Useful Built-in Functions</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Function</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>darken($color, $amount)</code></td>
+              <td>Makes color darker</td>
+            </tr>
+            <tr>
+              <td><code>lighten($color, $amount)</code></td>
+              <td>Makes color lighter</td>
+            </tr>
+            <tr>
+              <td><code>mix($color1, $color2)</code></td>
+              <td>Mixes two colors</td>
+            </tr>
+            <tr>
+              <td><code>rgba($color, $alpha)</code></td>
+              <td>Adds transparency</td>
+            </tr>
+            <tr>
+              <td><code>percentage($number)</code></td>
+              <td>Converts to percentage</td>
+            </tr>
+            <tr>
+              <td><code>round($number)</code></td>
+              <td>Rounds number</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Operators</h2>
+
+        <p>
+          SCSS supports mathematical operations.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="keyword">$base-size</span>: <span class="number">16</span>px;
+
+<span class="tag">.container</span> {
+  <span class="attr">width</span>: <span class="number">100%</span> / <span class="number">3</span>;           <span class="comment">// 33.333%</span>
+  <span class="attr">padding</span>: <span class="keyword">$base-size</span> * <span class="number">2</span>;     <span class="comment">// 32px</span>
+  <span class="attr">margin</span>: <span class="keyword">$base-size</span> / <span class="number">2</span>;      <span class="comment">// 8px</span>
+  <span class="attr">font-size</span>: <span class="keyword">$base-size</span> + <span class="number">4</span>px; <span class="comment">// 20px</span>
+}</code></pre>
+        </div>
+
+        <h2>@extend</h2>
+
+        <p>
+          Share styles between selectors.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// Base button styles</span>
+<span class="tag">.button</span> {
+  <span class="attr">padding</span>: <span class="number">10</span>px <span class="number">20</span>px;
+  <span class="attr">border</span>: <span class="string">none</span>;
+  <span class="attr">border-radius</span>: <span class="number">4</span>px;
+  <span class="attr">cursor</span>: <span class="string">pointer</span>;
+}
+
+<span class="comment">// Extend base styles</span>
+<span class="tag">.button-primary</span> {
+  <span class="keyword">@extend</span> <span class="tag">.button</span>;
+  <span class="attr">background</span>: <span class="string">blue</span>;
+  <span class="attr">color</span>: <span class="string">white</span>;
+}
+
+<span class="tag">.button-danger</span> {
+  <span class="keyword">@extend</span> <span class="tag">.button</span>;
+  <span class="attr">background</span>: <span class="string">red</span>;
+  <span class="attr">color</span>: <span class="string">white</span>;
+}</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Mixin vs Extend</div>
+          <p><strong>Mixins</strong>: Copy code to each selector (more CSS, more flexible)</p>
+          <p><strong>@extend</strong>: Groups selectors (less CSS, less flexible)</p>
+          <p>Generally prefer mixins for clarity and control.</p>
+        </div>
+
+        <h2>Practical Example</h2>
+
+        <div class="code-example">
+          <div class="example-label">_variables.scss</div>
+          <pre><code><span class="comment">// Colors</span>
+<span class="keyword">$primary</span>: <span class="string">#4a90e2</span>;
+<span class="keyword">$secondary</span>: <span class="string">#50c878</span>;
+<span class="keyword">$danger</span>: <span class="string">#e74c3c</span>;
+<span class="keyword">$text-color</span>: <span class="string">#333</span>;
+
+<span class="comment">// Spacing</span>
+<span class="keyword">$spacing-unit</span>: <span class="number">8</span>px;
+
+<span class="comment">// Breakpoints</span>
+<span class="keyword">$tablet</span>: <span class="number">768</span>px;
+<span class="keyword">$desktop</span>: <span class="number">1200</span>px;</code></pre>
+
+          <div class="example-label">_mixins.scss</div>
+          <pre><code><span class="keyword">@mixin</span> <span class="function">respond-to</span>(<span class="keyword">$breakpoint</span>) {
+  <span class="keyword">@media</span> (<span class="attr">min-width</span>: <span class="keyword">$breakpoint</span>) {
+    <span class="keyword">@content</span>;
+  }
+}
+
+<span class="keyword">@mixin</span> <span class="function">button</span>(<span class="keyword">$bg</span>, <span class="keyword">$color</span>: <span class="string">white</span>) {
+  <span class="attr">background-color</span>: <span class="keyword">$bg</span>;
+  <span class="attr">color</span>: <span class="keyword">$color</span>;
+  <span class="attr">padding</span>: <span class="keyword">$spacing-unit</span> <span class="keyword">$spacing-unit</span> * <span class="number">2</span>;
+  <span class="attr">border</span>: <span class="string">none</span>;
+  <span class="attr">border-radius</span>: <span class="number">4</span>px;
+
+  <span class="keyword">&:hover</span> {
+    <span class="attr">background-color</span>: <span class="function">darken</span>(<span class="keyword">$bg</span>, <span class="number">10%</span>);
+  }
+}</code></pre>
+
+          <div class="example-label">main.scss</div>
+          <pre><code><span class="keyword">@import</span> <span class="string">'variables'</span>;
+<span class="keyword">@import</span> <span class="string">'mixins'</span>;
+
+<span class="tag">.btn-primary</span> {
+  <span class="keyword">@include</span> <span class="function">button</span>(<span class="keyword">$primary</span>);
+}
+
+<span class="tag">.btn-danger</span> {
+  <span class="keyword">@include</span> <span class="function">button</span>(<span class="keyword">$danger</span>);
+}
+
+<span class="tag">.container</span> {
+  <span class="attr">padding</span>: <span class="keyword">$spacing-unit</span> * <span class="number">2</span>;
+
+  <span class="keyword">@include</span> <span class="function">respond-to</span>(<span class="keyword">$tablet</span>) {
+    <span class="attr">padding</span>: <span class="keyword">$spacing-unit</span> * <span class="number">4</span>;
+  }
+}</code></pre>
+        </div>
+
+        <h2>Best Practices</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 SCSS Best Practices</div>
+          <ul>
+            <li>✅ Use variables for colors, sizes, and reusable values</li>
+            <li>✅ Keep nesting shallow (max 3-4 levels)</li>
+            <li>✅ Organize with partials (_variables, _mixins, etc.)</li>
+            <li>✅ Use mixins for repeated patterns</li>
+            <li>✅ Prefer mixins over @extend</li>
+            <li>✅ Use meaningful variable names ($primary-color, not $blue)</li>
+            <li>✅ Comment complex logic</li>
+            <li>❌ Don't nest media queries too deep</li>
+            <li>❌ Don't over-use @extend (can bloat CSS)</li>
+          </ul>
+        </div>
+
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li>SCSS is a CSS preprocessor with extra features</li>
+            <li>Variables store reusable values</li>
+            <li>Nesting mirrors HTML structure</li>
+            <li>Partials organize code into modules</li>
+            <li>Mixins create reusable code blocks</li>
+            <li>Functions return calculated values</li>
+            <li>Built-in functions manipulate colors and numbers</li>
+            <li>@extend shares styles between selectors</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="responsive-design.html" class="nav-button">← Responsive Design</a>
+          <a href="javascript-basics.html" class="nav-button">JavaScript Basics →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

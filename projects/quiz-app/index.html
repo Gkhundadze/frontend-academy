@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Quiz App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- Start Screen -->
+    <div id="startScreen" class="screen active">
+      <h1>JavaScript Quiz</h1>
+      <p class="subtitle">Test your JavaScript knowledge!</p>
+
+      <div class="quiz-info">
+        <div class="info-item">
+          <span class="info-label">Questions:</span>
+          <span class="info-value" id="totalQuestions">10</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Time per question:</span>
+          <span class="info-value">20 seconds</span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-large" id="startBtn">Start Quiz</button>
+
+      <div class="footer">
+        <a href="../../index.html" class="home-link">← Back to Course</a>
+      </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quizScreen" class="screen">
+      <!-- Quiz Header -->
+      <div class="quiz-header">
+        <div class="progress-container">
+          <div class="progress-text">
+            Question <span id="currentQuestion">1</span> of <span id="totalQuestionsQuiz">10</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+
+        <div class="timer-container">
+          <svg class="timer-ring" width="60" height="60">
+            <circle class="timer-ring-bg" cx="30" cy="30" r="26" stroke-width="4" fill="none"></circle>
+            <circle class="timer-ring-progress" id="timerRing" cx="30" cy="30" r="26" stroke-width="4" fill="none"></circle>
+          </svg>
+          <div class="timer-text" id="timerText">20</div>
+        </div>
+      </div>
+
+      <!-- Question Container -->
+      <div class="question-container">
+        <h2 class="question-text" id="questionText">Loading question...</h2>
+
+        <div class="options-container" id="optionsContainer">
+          <!-- Options will be dynamically generated -->
+        </div>
+      </div>
+
+      <!-- Quiz Controls -->
+      <div class="quiz-controls">
+        <button class="btn btn-secondary" id="skipBtn">Skip Question</button>
+        <button class="btn btn-primary" id="nextBtn" disabled>Next Question</button>
+      </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="resultsScreen" class="screen">
+      <div class="results-container">
+        <div class="results-icon" id="resultsIcon">🎉</div>
+        <h1 class="results-title" id="resultsTitle">Quiz Complete!</h1>
+
+        <div class="score-circle">
+          <svg width="200" height="200">
+            <circle cx="100" cy="100" r="90" stroke-width="12" fill="none" class="score-circle-bg"></circle>
+            <circle cx="100" cy="100" r="90" stroke-width="12" fill="none" class="score-circle-progress" id="scoreCircle"></circle>
+          </svg>
+          <div class="score-text">
+            <div class="score-percentage" id="scorePercentage">0%</div>
+            <div class="score-label">Score</div>
+          </div>
+        </div>
+
+        <div class="results-stats">
+          <div class="stat-item">
+            <div class="stat-value" id="correctAnswers">0</div>
+            <div class="stat-label">Correct</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="wrongAnswers">0</div>
+            <div class="stat-label">Wrong</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="skippedAnswers">0</div>
+            <div class="stat-label">Skipped</div>
+          </div>
+        </div>
+
+        <div class="results-message" id="resultsMessage">
+          Great job! Keep learning and improving!
+        </div>
+
+        <div class="results-actions">
+          <button class="btn btn-secondary" id="reviewBtn">Review Answers</button>
+          <button class="btn btn-primary" id="restartBtn">Take Quiz Again</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review Screen -->
+    <div id="reviewScreen" class="screen">
+      <h1>Review Answers</h1>
+
+      <div id="reviewContainer" class="review-container">
+        <!-- Review items will be dynamically generated -->
+      </div>
+
+      <div class="review-actions">
+        <button class="btn btn-primary" id="backToResultsBtn">Back to Results</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

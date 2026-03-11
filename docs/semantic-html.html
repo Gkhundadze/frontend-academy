@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semantic HTML - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>Semantic HTML</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>🏗️ Semantic HTML</h1>
+
+        <p>
+          <strong>Semantic HTML</strong> means using HTML tags that clearly describe their content and purpose.
+          Instead of using generic <code>&lt;div&gt;</code> tags everywhere, we use meaningful tags like
+          <code>&lt;article&gt;</code>, <code>&lt;nav&gt;</code>, and <code>&lt;footer&gt;</code>.
+        </p>
+
+        <h2>Why Use Semantic HTML?</h2>
+
+        <div class="course-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+          <div class="info-box tip">
+            <div class="info-box-title">♿ Accessibility</div>
+            <p>Screen readers can better understand and navigate your content, helping visually impaired users.</p>
+          </div>
+
+          <div class="info-box tip">
+            <div class="info-box-title">🔍 SEO</div>
+            <p>Search engines better understand your content structure, improving your search rankings.</p>
+          </div>
+
+          <div class="info-box tip">
+            <div class="info-box-title">📖 Readability</div>
+            <p>Your code is easier to read and maintain. Other developers instantly know what each section does.</p>
+          </div>
+
+          <div class="info-box tip">
+            <div class="info-box-title">🎯 Maintainability</div>
+            <p>Finding and updating specific sections becomes much easier in large codebases.</p>
+          </div>
+        </div>
+
+        <h2>Non-Semantic vs. Semantic</h2>
+
+        <div class="code-example">
+          <div class="example-label">❌ Non-Semantic (Bad)</div>
+          <pre><code class="language-html">&lt;!-- Uses generic div tags - no meaning --&gt;
+&lt;div id="header"&gt;
+  &lt;div id="nav"&gt;
+    &lt;div&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;a href="/about"&gt;About&lt;/a&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id="main"&gt;
+  &lt;div class="post"&gt;
+    &lt;div class="title"&gt;Article Title&lt;/div&gt;
+    &lt;div class="content"&gt;Article content...&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id="footer"&gt;
+  &lt;div&gt;© 2024 My Website&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">✅ Semantic (Good)</div>
+          <pre><code class="language-html">&lt;!-- Uses meaningful HTML5 semantic tags --&gt;
+&lt;header&gt;
+  &lt;nav&gt;
+    &lt;a href="/"&gt;Home&lt;/a&gt;
+    &lt;a href="/about"&gt;About&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+  &lt;article&gt;
+    &lt;h1&gt;Article Title&lt;/h1&gt;
+    &lt;p&gt;Article content...&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+  &lt;p&gt;© 2024 My Website&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+        </div>
+
+        <h2>Semantic HTML5 Elements</h2>
+
+        <h3>Page Structure Elements</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Tag</th>
+              <th>Purpose</th>
+              <th>Example Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;header&gt;</code></td>
+              <td>Introductory content or navigation</td>
+              <td>Site header with logo and menu</td>
+            </tr>
+            <tr>
+              <td><code>&lt;nav&gt;</code></td>
+              <td>Navigation links</td>
+              <td>Main menu, sidebar menu</td>
+            </tr>
+            <tr>
+              <td><code>&lt;main&gt;</code></td>
+              <td>Main content (unique to page)</td>
+              <td>Primary page content</td>
+            </tr>
+            <tr>
+              <td><code>&lt;article&gt;</code></td>
+              <td>Self-contained content</td>
+              <td>Blog post, news article, comment</td>
+            </tr>
+            <tr>
+              <td><code>&lt;section&gt;</code></td>
+              <td>Thematic grouping of content</td>
+              <td>Chapters, tabs, content blocks</td>
+            </tr>
+            <tr>
+              <td><code>&lt;aside&gt;</code></td>
+              <td>Tangentially related content</td>
+              <td>Sidebar, callout box, ads</td>
+            </tr>
+            <tr>
+              <td><code>&lt;footer&gt;</code></td>
+              <td>Footer content</td>
+              <td>Copyright, links, contact info</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Complete Page Structure Example</h3>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;My Blog&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;!-- Page header: logo, site title, main navigation --&gt;
+  &lt;header&gt;
+    &lt;h1&gt;My Awesome Blog&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/about"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;!-- Main content: should be unique to each page --&gt;
+  &lt;main&gt;
+
+    &lt;!-- Blog post article --&gt;
+    &lt;article&gt;
+      &lt;header&gt;
+        &lt;!-- Articles can have their own headers --&gt;
+        &lt;h2&gt;How to Learn Web Development&lt;/h2&gt;
+        &lt;p&gt;Posted on &lt;time datetime="2024-01-15"&gt;January 15, 2024&lt;/time&gt;&lt;/p&gt;
+      &lt;/header&gt;
+
+      &lt;p&gt;Learning web development is an exciting journey...&lt;/p&gt;
+
+      &lt;section&gt;
+        &lt;h3&gt;Step 1: Learn HTML&lt;/h3&gt;
+        &lt;p&gt;Start with the basics of HTML...&lt;/p&gt;
+      &lt;/section&gt;
+
+      &lt;section&gt;
+        &lt;h3&gt;Step 2: Learn CSS&lt;/h3&gt;
+        &lt;p&gt;Once you know HTML, move to CSS...&lt;/p&gt;
+      &lt;/section&gt;
+
+      &lt;footer&gt;
+        &lt;!-- Article footer: author, tags, share buttons --&gt;
+        &lt;p&gt;Tags: &lt;a href="/tag/tutorial"&gt;tutorial&lt;/a&gt;, &lt;a href="/tag/web-dev"&gt;web-dev&lt;/a&gt;&lt;/p&gt;
+      &lt;/footer&gt;
+    &lt;/article&gt;
+
+    &lt;!-- Sidebar with related content --&gt;
+    &lt;aside&gt;
+      &lt;h3&gt;Related Articles&lt;/h3&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="/article1"&gt;CSS Basics&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/article2"&gt;JavaScript 101&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/aside&gt;
+
+  &lt;/main&gt;
+
+  &lt;!-- Page footer --&gt;
+  &lt;footer&gt;
+    &lt;p&gt;&copy; 2024 My Awesome Blog. All rights reserved.&lt;/p&gt;
+    &lt;nav&gt;
+      &lt;a href="/privacy"&gt;Privacy Policy&lt;/a&gt; |
+      &lt;a href="/terms"&gt;Terms of Service&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/footer&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <h2>Content Semantic Elements</h2>
+
+        <h3>&lt;article&gt; vs &lt;section&gt;</h3>
+
+        <p>These two are often confused. Here's the difference:</p>
+
+        <div class="info-box note">
+          <div class="info-box-title">📄 &lt;article&gt;</div>
+          <p><strong>Use when:</strong> Content makes sense on its own and could be distributed independently.</p>
+          <p><strong>Examples:</strong> Blog posts, news articles, forum posts, product cards, comments</p>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📦 &lt;section&gt;</div>
+          <p><strong>Use when:</strong> Grouping related content that belongs together thematically.</p>
+          <p><strong>Examples:</strong> Chapters in an article, tabbed content, different parts of a page</p>
+        </div>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Article contains sections --&gt;
+&lt;article&gt;
+  &lt;h2&gt;Complete Guide to CSS&lt;/h2&gt;
+
+  &lt;section&gt;
+    &lt;h3&gt;Introduction&lt;/h3&gt;
+    &lt;p&gt;CSS stands for...&lt;/p&gt;
+  &lt;/section&gt;
+
+  &lt;section&gt;
+    &lt;h3&gt;Selectors&lt;/h3&gt;
+    &lt;p&gt;CSS selectors let you...&lt;/p&gt;
+  &lt;/section&gt;
+&lt;/article&gt;</code></pre>
+        </div>
+
+        <h3>Text-Level Semantics</h3>
+
+        <p>Use these tags to give meaning to inline text:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Tag</th>
+              <th>Purpose</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;strong&gt;</code></td>
+              <td>Strong importance</td>
+              <td><strong>Warning:</strong> Do not enter</td>
+            </tr>
+            <tr>
+              <td><code>&lt;em&gt;</code></td>
+              <td>Emphasis</td>
+              <td>I <em>really</em> mean it</td>
+            </tr>
+            <tr>
+              <td><code>&lt;mark&gt;</code></td>
+              <td>Highlighted reference</td>
+              <td>Search results: <mark>keyword</mark></td>
+            </tr>
+            <tr>
+              <td><code>&lt;time&gt;</code></td>
+              <td>Date/time</td>
+              <td>Posted on <code>&lt;time&gt;2024-01-15&lt;/time&gt;</code></td>
+            </tr>
+            <tr>
+              <td><code>&lt;code&gt;</code></td>
+              <td>Code snippet</td>
+              <td>Use the <code>display</code> property</td>
+            </tr>
+            <tr>
+              <td><code>&lt;abbr&gt;</code></td>
+              <td>Abbreviation</td>
+              <td><code>&lt;abbr title="HyperText Markup Language"&gt;HTML&lt;/abbr&gt;</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;p&gt;
+  &lt;strong&gt;Important:&lt;/strong&gt; The deadline is
+  &lt;time datetime="2024-12-31"&gt;December 31, 2024&lt;/time&gt;.
+  Please use the &lt;code&gt;submit()&lt;/code&gt; function.
+&lt;/p&gt;
+
+&lt;p&gt;
+  &lt;abbr title="Cascading Style Sheets"&gt;CSS&lt;/abbr&gt; is &lt;em&gt;essential&lt;/em&gt;
+  for styling web pages.
+&lt;/p&gt;</code></pre>
+        </div>
+
+        <h2>Figures and Captions</h2>
+
+        <p>
+          Use <code>&lt;figure&gt;</code> and <code>&lt;figcaption&gt;</code> for images, diagrams,
+          code examples, or any content with a caption:
+        </p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Image with caption --&gt;
+&lt;figure&gt;
+  &lt;img src="chart.png" alt="Sales chart showing growth"&gt;
+  &lt;figcaption&gt;Figure 1: Sales growth from 2020-2024&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;!-- Code example with caption --&gt;
+&lt;figure&gt;
+  &lt;pre&gt;&lt;code&gt;
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+  &lt;/code&gt;&lt;/pre&gt;
+  &lt;figcaption&gt;Example: Simple greeting function&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+        </div>
+
+        <h2>Accessibility Features</h2>
+
+        <h3>ARIA Landmarks (When Needed)</h3>
+
+        <p>
+          Modern semantic HTML usually provides sufficient accessibility. However, you can add
+          ARIA roles for older browsers or screen readers:
+        </p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;!-- Semantic HTML already has implicit roles --&gt;
+&lt;header role="banner"&gt;...&lt;/header&gt;
+&lt;nav role="navigation"&gt;...&lt;/nav&gt;
+&lt;main role="main"&gt;...&lt;/main&gt;
+&lt;footer role="contentinfo"&gt;...&lt;/footer&gt;</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Best Practice</div>
+          <p>Use semantic HTML first. Only add ARIA attributes when semantic HTML isn't sufficient.
+          Remember: "No ARIA is better than bad ARIA."</p>
+        </div>
+
+        <h3>Skip Navigation Links</h3>
+
+        <p>
+          Help keyboard users skip repetitive navigation and jump to main content:
+        </p>
+
+        <div class="code-example">
+          <pre><code class="language-html">&lt;body&gt;
+  &lt;!-- Skip link (hidden visually, shown on keyboard focus) --&gt;
+  &lt;a href="#main-content" class="skip-link"&gt;Skip to main content&lt;/a&gt;
+
+  &lt;header&gt;
+    &lt;nav&gt;...lots of links...&lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main id="main-content"&gt;
+    &lt;!-- Main content starts here --&gt;
+  &lt;/main&gt;
+&lt;/body&gt;</code></pre>
+        </div>
+
+        <h2>Common Mistakes to Avoid</h2>
+
+        <div class="info-box warning">
+          <div class="info-box-title">❌ Don't Overuse Divs and Spans</div>
+          <pre><code class="language-html">&lt;!-- BAD: Everything is a div --&gt;
+&lt;div class="header"&gt;
+  &lt;div class="nav"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- GOOD: Use semantic tags --&gt;
+&lt;header&gt;
+  &lt;nav&gt;...&lt;/nav&gt;
+&lt;/header&gt;</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">❌ Multiple Main or H1 Elements</div>
+          <pre><code class="language-html">&lt;!-- BAD: Multiple main tags --&gt;
+&lt;main&gt;...&lt;/main&gt;
+&lt;main&gt;...&lt;/main&gt;
+
+&lt;!-- GOOD: Only one main per page --&gt;
+&lt;main&gt;...&lt;/main&gt;</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">❌ Using Tags for Styling Only</div>
+          <pre><code class="language-html">&lt;!-- BAD: Using &lt;strong&gt; just to make text bold --&gt;
+&lt;strong&gt;This text needs to be bold&lt;/strong&gt;
+
+&lt;!-- GOOD: Use CSS for styling --&gt;
+&lt;span class="bold-text"&gt;This text needs to be bold&lt;/span&gt;</code></pre>
+        </div>
+
+        <h2>Quick Reference: When to Use What</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Use Case</th>
+              <th>Tag</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Main site header</td>
+              <td><code>&lt;header&gt;</code></td>
+            </tr>
+            <tr>
+              <td>Site navigation menu</td>
+              <td><code>&lt;nav&gt;</code></td>
+            </tr>
+            <tr>
+              <td>Primary page content</td>
+              <td><code>&lt;main&gt;</code></td>
+            </tr>
+            <tr>
+              <td>Blog post or news article</td>
+              <td><code>&lt;article&gt;</code></td>
+            </tr>
+            <tr>
+              <td>Related content group</td>
+              <td><code>&lt;section&gt;</code></td>
+            </tr>
+            <tr>
+              <td>Sidebar or callout</td>
+              <td><code>&lt;aside&gt;</code></td>
+            </tr>
+            <tr>
+              <td>Footer content</td>
+              <td><code>&lt;footer&gt;</code></td>
+            </tr>
+            <tr>
+              <td>No semantic meaning</td>
+              <td><code>&lt;div&gt;</code> or <code>&lt;span&gt;</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li>Why semantic HTML matters (accessibility, SEO, readability)</li>
+            <li>HTML5 semantic elements: header, nav, main, article, section, aside, footer</li>
+            <li>The difference between article and section</li>
+            <li>Text-level semantic tags: strong, em, mark, time, code</li>
+            <li>How to use figure and figcaption</li>
+            <li>Common mistakes to avoid</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="html-basics.html" class="nav-button">← HTML Basics</a>
+          <a href="html-forms.html" class="nav-button">HTML Forms →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

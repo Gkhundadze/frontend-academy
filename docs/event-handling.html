@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Handling - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>Event Handling</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Fundamentals</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Working with APIs</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+          <li><a href="../projects/burger-menu/index.html">Burger Menu Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>⚡ Event Handling</h1>
+
+        <p>
+          Events are actions or occurrences that happen in the browser—like clicks, key presses, mouse movements, or page loads. Event handling allows you to respond to these user interactions and create dynamic, interactive web applications.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 Key Concept</div>
+          <p>Event handling is the foundation of interactivity on the web. Every button click, form submission, and animation trigger relies on events.</p>
+        </div>
+
+        <!-- What Are Events -->
+        <h2>🎯 What Are Events?</h2>
+
+        <p>
+          Events are signals that something has happened in the browser. They can be triggered by the user (clicks, typing) or by the browser itself (page load, timer completion).
+        </p>
+
+        <h3>Common Event Types</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Events</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Mouse</strong></td>
+              <td>click, dblclick, mousedown, mouseup, mousemove, mouseenter, mouseleave</td>
+              <td>Mouse interactions</td>
+            </tr>
+            <tr>
+              <td><strong>Keyboard</strong></td>
+              <td>keydown, keyup, keypress</td>
+              <td>Keyboard input</td>
+            </tr>
+            <tr>
+              <td><strong>Form</strong></td>
+              <td>submit, input, change, focus, blur</td>
+              <td>Form interactions</td>
+            </tr>
+            <tr>
+              <td><strong>Document</strong></td>
+              <td>DOMContentLoaded, load, resize, scroll</td>
+              <td>Page lifecycle</td>
+            </tr>
+            <tr>
+              <td><strong>Drag & Drop</strong></td>
+              <td>dragstart, drag, dragend, drop</td>
+              <td>Drag and drop</td>
+            </tr>
+            <tr>
+              <td><strong>Touch</strong></td>
+              <td>touchstart, touchmove, touchend</td>
+              <td>Mobile touch events</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Adding Event Listeners -->
+        <h2>📌 Adding Event Listeners</h2>
+
+        <p>
+          There are three ways to add event listeners in JavaScript. The modern, recommended approach is <code>addEventListener()</code>.
+        </p>
+
+        <h3>Method 1: addEventListener() (Recommended)</h3>
+
+        <div class="code-example">
+          <div class="example-label">addEventListener() - Modern Approach</div>
+          <pre><code>// Syntax
+element.addEventListener(eventType, handlerFunction, options);
+
+// Example: Click event
+const button = document.querySelector('#myButton');
+
+button.addEventListener('click', function() {
+  console.log('Button clicked!');
+});
+
+// Arrow function syntax
+button.addEventListener('click', () => {
+  console.log('Button clicked!');
+});
+
+// Named function (allows removal later)
+function handleClick() {
+  console.log('Button clicked!');
+}
+button.addEventListener('click', handleClick);
+
+// Multiple listeners on same element
+button.addEventListener('click', () => {
+  console.log('First listener');
+});
+button.addEventListener('click', () => {
+  console.log('Second listener');
+});
+// Both will execute!</code></pre>
+        </div>
+
+        <h3>Method 2: Inline Event Handlers (Not Recommended)</h3>
+
+        <div class="code-example">
+          <div class="example-label">Inline HTML Attributes</div>
+          <pre><code class="language-html">&lt;!-- ❌ Not recommended - mixes HTML and JavaScript --&gt;
+&lt;button onclick="alert('Clicked!')"&gt;Click Me&lt;/button&gt;
+
+&lt;!-- ❌ Not recommended - hard to maintain --&gt;
+&lt;button onclick="handleClick()"&gt;Click Me&lt;/button&gt;
+&lt;script&gt;
+  function handleClick() {
+    alert('Clicked!');
+  }
+&lt;/script&gt;</code></pre>
+        </div>
+
+        <h3>Method 3: DOM Property (Limited)</h3>
+
+        <div class="code-example">
+          <div class="example-label">DOM Event Properties</div>
+          <pre><code>// ⚠️ Limited - can only have ONE handler per event type
+const button = document.querySelector('#myButton');
+
+button.onclick = function() {
+  console.log('First handler');
+};
+
+// This REPLACES the previous handler
+button.onclick = function() {
+  console.log('Second handler');  // Only this one will run
+};</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Best Practice</div>
+          <p>Always use <code>addEventListener()</code>. It allows multiple listeners, is more flexible, and provides better control over event handling.</p>
+        </div>
+
+        <!-- The Event Object -->
+        <h2>📦 The Event Object</h2>
+
+        <p>
+          When an event occurs, the browser creates an <strong>event object</strong> containing information about the event and passes it to the handler function.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Event Object Properties</div>
+          <pre><code>button.addEventListener('click', function(event) {
+  // event (or 'e') is the event object
+
+  console.log(event.type);           // "click"
+  console.log(event.target);         // Element that triggered the event
+  console.log(event.currentTarget);  // Element listener is attached to
+  console.log(event.timeStamp);      // When event occurred
+});
+
+// Commonly named 'e' or 'evt'
+button.addEventListener('click', (e) => {
+  console.log(e.target);
+});
+
+// Mouse event properties
+element.addEventListener('click', (e) => {
+  console.log(e.clientX);    // Mouse X coordinate (viewport)
+  console.log(e.clientY);    // Mouse Y coordinate (viewport)
+  console.log(e.pageX);      // Mouse X coordinate (document)
+  console.log(e.pageY);      // Mouse Y coordinate (document)
+  console.log(e.button);     // Which mouse button (0=left, 1=middle, 2=right)
+});
+
+// Keyboard event properties
+input.addEventListener('keydown', (e) => {
+  console.log(e.key);         // Key that was pressed ("a", "Enter", "Escape")
+  console.log(e.code);        // Physical key code ("KeyA", "Enter")
+  console.log(e.shiftKey);    // true if Shift was held
+  console.log(e.ctrlKey);     // true if Ctrl was held
+  console.log(e.altKey);      // true if Alt was held
+  console.log(e.metaKey);     // true if Meta/Cmd was held
+});</code></pre>
+        </div>
+
+        <!-- Common Events -->
+        <h2>🖱️ Mouse Events</h2>
+
+        <div class="code-example">
+          <div class="example-label">Mouse Event Examples</div>
+          <pre><code>const box = document.querySelector('#box');
+
+// Click events
+box.addEventListener('click', () => {
+  console.log('Single click');
+});
+
+box.addEventListener('dblclick', () => {
+  console.log('Double click');
+});
+
+// Mouse down and up
+box.addEventListener('mousedown', () => {
+  console.log('Mouse button pressed');
+});
+
+box.addEventListener('mouseup', () => {
+  console.log('Mouse button released');
+});
+
+// Mouse enter and leave
+box.addEventListener('mouseenter', () => {
+  console.log('Mouse entered element');
+  box.style.backgroundColor = 'lightblue';
+});
+
+box.addEventListener('mouseleave', () => {
+  console.log('Mouse left element');
+  box.style.backgroundColor = '';
+});
+
+// Mouse move (fires continuously while moving)
+box.addEventListener('mousemove', (e) => {
+  console.log(`Mouse at: ${e.clientX}, ${e.clientY}`);
+});
+
+// Context menu (right-click)
+box.addEventListener('contextmenu', (e) => {
+  e.preventDefault();  // Prevent default context menu
+  console.log('Right-clicked!');
+});</code></pre>
+        </div>
+
+        <div class="demo-section">
+          <div class="demo-title">Interactive Demo: Mouse Tracker</div>
+          <pre><code>const tracker = document.querySelector('#tracker');
+const display = document.querySelector('#display');
+
+tracker.addEventListener('mousemove', (e) => {
+  const x = e.offsetX;  // Mouse X relative to element
+  const y = e.offsetY;  // Mouse Y relative to element
+  display.textContent = `Position: (${x}, ${y})`;
+});</code></pre>
+        </div>
+
+        <h2>⌨️ Keyboard Events</h2>
+
+        <div class="code-example">
+          <div class="example-label">Keyboard Event Examples</div>
+          <pre><code>const input = document.querySelector('#textInput');
+
+// keydown - fires when key is pressed
+input.addEventListener('keydown', (e) => {
+  console.log('Key pressed:', e.key);
+
+  // Check for specific keys
+  if (e.key === 'Enter') {
+    console.log('Enter key pressed!');
+  }
+
+  if (e.key === 'Escape') {
+    console.log('Escape pressed!');
+  }
+});
+
+// keyup - fires when key is released
+input.addEventListener('keyup', (e) => {
+  console.log('Key released:', e.key);
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  // Ctrl/Cmd + S (Save)
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();  // Prevent browser save dialog
+    console.log('Save shortcut triggered!');
+  }
+
+  // Ctrl/Cmd + K
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    console.log('Search shortcut!');
+  }
+});
+
+// Arrow keys
+document.addEventListener('keydown', (e) => {
+  switch(e.key) {
+    case 'ArrowUp':
+      console.log('Up arrow');
+      break;
+    case 'ArrowDown':
+      console.log('Down arrow');
+      break;
+    case 'ArrowLeft':
+      console.log('Left arrow');
+      break;
+    case 'ArrowRight':
+      console.log('Right arrow');
+      break;
+  }
+});</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ keypress is Deprecated</div>
+          <p>The <code>keypress</code> event is deprecated. Use <code>keydown</code> or <code>keyup</code> instead.</p>
+        </div>
+
+        <h2>📝 Form Events</h2>
+
+        <div class="code-example">
+          <div class="example-label">Form Event Examples</div>
+          <pre><code>const form = document.querySelector('#myForm');
+const input = document.querySelector('#username');
+const select = document.querySelector('#country');
+
+// Submit event
+form.addEventListener('submit', (e) => {
+  e.preventDefault();  // Prevent page reload
+
+  console.log('Form submitted!');
+
+  // Get form data
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
+  console.log(data);
+});
+
+// Input event (fires on every change)
+input.addEventListener('input', (e) => {
+  console.log('Current value:', e.target.value);
+
+  // Real-time validation
+  if (e.target.value.length < 3) {
+    console.log('Username too short');
+  }
+});
+
+// Change event (fires when input loses focus)
+input.addEventListener('change', (e) => {
+  console.log('Input changed to:', e.target.value);
+});
+
+// Focus and blur events
+input.addEventListener('focus', () => {
+  console.log('Input focused');
+  input.style.borderColor = 'blue';
+});
+
+input.addEventListener('blur', () => {
+  console.log('Input lost focus');
+  input.style.borderColor = '';
+});
+
+// Select/dropdown change
+select.addEventListener('change', (e) => {
+  console.log('Selected:', e.target.value);
+});
+
+// Checkbox/radio events
+const checkbox = document.querySelector('#agree');
+checkbox.addEventListener('change', (e) => {
+  console.log('Checked:', e.target.checked);
+});</code></pre>
+        </div>
+
+        <h2>📄 Document Events</h2>
+
+        <div class="code-example">
+          <div class="example-label">Document Lifecycle Events</div>
+          <pre><code>// DOMContentLoaded - fires when HTML is parsed (before images load)
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM is ready!');
+  // Safe to manipulate DOM here
+});
+
+// load - fires when entire page is loaded (including images)
+window.addEventListener('load', () => {
+  console.log('Page fully loaded!');
+});
+
+// beforeunload - fires before page unload (leaving page)
+window.addEventListener('beforeunload', (e) => {
+  e.preventDefault();
+  e.returnValue = '';  // Show confirmation dialog
+});
+
+// Resize event
+window.addEventListener('resize', () => {
+  console.log('Window resized:', window.innerWidth, window.innerHeight);
+});
+
+// Scroll event
+window.addEventListener('scroll', () => {
+  console.log('Page scrolled:', window.scrollY);
+});
+
+// Scroll with throttling (better performance)
+let isScrolling;
+window.addEventListener('scroll', () => {
+  clearTimeout(isScrolling);
+  isScrolling = setTimeout(() => {
+    console.log('Scroll stopped');
+  }, 150);
+});</code></pre>
+        </div>
+
+        <!-- Event Propagation -->
+        <h2>🎈 Event Propagation (Bubbling & Capturing)</h2>
+
+        <p>
+          When an event occurs on an element, it propagates through the DOM in two phases: <strong>capturing</strong> (down) and <strong>bubbling</strong> (up).
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Event Bubbling Example</div>
+          <pre><code class="language-html">&lt;div id="parent"&gt;
+  &lt;button id="child"&gt;Click Me&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+const parent = document.querySelector('#parent');
+const child = document.querySelector('#child');
+
+// Event bubbles up from child to parent
+child.addEventListener('click', () => {
+  console.log('Child clicked');
+});
+
+parent.addEventListener('click', () => {
+  console.log('Parent clicked');
+});
+
+// When you click the button, both handlers fire:
+// Output:
+// Child clicked
+// Parent clicked
+&lt;/script&gt;</code></pre>
+        </div>
+
+        <h3>Stopping Propagation</h3>
+
+        <div class="code-example">
+          <div class="example-label">stopPropagation()</div>
+          <pre><code>child.addEventListener('click', (e) => {
+  console.log('Child clicked');
+  e.stopPropagation();  // Stop event from bubbling up
+});
+
+parent.addEventListener('click', () => {
+  console.log('Parent clicked');  // This won't fire now
+});
+
+// stopImmediatePropagation() - stops other listeners on same element too
+child.addEventListener('click', (e) => {
+  console.log('First listener');
+  e.stopImmediatePropagation();
+});
+
+child.addEventListener('click', () => {
+  console.log('Second listener');  // This won't fire
+});</code></pre>
+        </div>
+
+        <h3>Capturing Phase</h3>
+
+        <div class="code-example">
+          <div class="example-label">Event Capturing (useCapture)</div>
+          <pre><code>// Third parameter: useCapture (default false)
+parent.addEventListener('click', () => {
+  console.log('Parent (capturing)');
+}, true);  // true = capturing phase
+
+child.addEventListener('click', () => {
+  console.log('Child');
+});
+
+parent.addEventListener('click', () => {
+  console.log('Parent (bubbling)');
+}, false);  // false = bubbling phase (default)
+
+// Click order:
+// Parent (capturing) → Child → Parent (bubbling)</code></pre>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 Event Flow</div>
+          <p>Complete event flow: <strong>Capturing Phase</strong> (window → target) → <strong>Target Phase</strong> → <strong>Bubbling Phase</strong> (target → window)</p>
+        </div>
+
+        <!-- Event Delegation -->
+        <h2>🎯 Event Delegation</h2>
+
+        <p>
+          Event delegation uses event bubbling to handle events on multiple children with a single listener on a parent element. This is more efficient and works with dynamically added elements.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Event Delegation Pattern</div>
+          <pre><code>// ❌ Bad: Adding listener to each item
+const items = document.querySelectorAll('.item');
+items.forEach((item) => {
+  item.addEventListener('click', () => {
+    console.log('Item clicked');
+  });
+});
+// Problem: Doesn't work for items added later
+
+// ✅ Good: Single listener on parent
+const list = document.querySelector('#list');
+
+list.addEventListener('click', (e) => {
+  // Check if clicked element matches selector
+  if (e.target.matches('.item')) {
+    console.log('Item clicked:', e.target.textContent);
+  }
+});
+
+// Works for dynamically added items too!
+const newItem = document.createElement('li');
+newItem.className = 'item';
+newItem.textContent = 'New Item';
+list.appendChild(newItem);  // Click listener automatically works!
+
+// More complex delegation with closest()
+list.addEventListener('click', (e) => {
+  const item = e.target.closest('.item');
+  if (item) {
+    console.log('Item clicked:', item.dataset.id);
+  }
+
+  const deleteBtn = e.target.closest('.delete-btn');
+  if (deleteBtn) {
+    const item = deleteBtn.closest('.item');
+    item.remove();
+  }
+});</code></pre>
+        </div>
+
+        <!-- Removing Event Listeners -->
+        <h2>🗑️ Removing Event Listeners</h2>
+
+        <div class="code-example">
+          <div class="example-label">removeEventListener()</div>
+          <pre><code>// Must use named function to remove listener
+function handleClick() {
+  console.log('Clicked!');
+}
+
+const button = document.querySelector('#myButton');
+
+// Add listener
+button.addEventListener('click', handleClick);
+
+// Remove listener
+button.removeEventListener('click', handleClick);
+
+// ❌ Won't work - different function reference
+button.addEventListener('click', () => console.log('Click'));
+button.removeEventListener('click', () => console.log('Click'));
+
+// Pattern: One-time event listener
+function handleOnce() {
+  console.log('This runs only once');
+  button.removeEventListener('click', handleOnce);
+}
+button.addEventListener('click', handleOnce);
+
+// Modern alternative: once option
+button.addEventListener('click', () => {
+  console.log('This runs only once');
+}, { once: true });</code></pre>
+        </div>
+
+        <!-- Preventing Default Behavior -->
+        <h2>🚫 Preventing Default Behavior</h2>
+
+        <div class="code-example">
+          <div class="example-label">preventDefault()</div>
+          <pre><code>// Prevent form submission
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  console.log('Form not submitted - handling with JS');
+});
+
+// Prevent link navigation
+link.addEventListener('click', (e) => {
+  e.preventDefault();
+  console.log('Link not followed');
+});
+
+// Prevent context menu
+element.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+  console.log('Custom context menu here');
+});
+
+// Prevent text selection
+element.addEventListener('selectstart', (e) => {
+  e.preventDefault();
+});
+
+// Check if preventDefault was called
+element.addEventListener('click', (e) => {
+  if (e.defaultPrevented) {
+    console.log('Default already prevented');
+  }
+});</code></pre>
+        </div>
+
+        <!-- Custom Events -->
+        <h2>🎨 Custom Events</h2>
+
+        <div class="code-example">
+          <div class="example-label">Creating and Dispatching Custom Events</div>
+          <pre><code>// Create custom event
+const myEvent = new CustomEvent('userLoggedIn', {
+  detail: {
+    username: 'john_doe',
+    timestamp: Date.now()
+  },
+  bubbles: true,
+  cancelable: true
+});
+
+// Listen for custom event
+document.addEventListener('userLoggedIn', (e) => {
+  console.log('User logged in:', e.detail.username);
+  console.log('At:', new Date(e.detail.timestamp));
+});
+
+// Dispatch custom event
+document.dispatchEvent(myEvent);
+
+// Practical example: Component communication
+class ShoppingCart {
+  constructor() {
+    this.items = [];
+  }
+
+  addItem(item) {
+    this.items.push(item);
+
+    // Dispatch event when item added
+    const event = new CustomEvent('itemAdded', {
+      detail: { item, totalItems: this.items.length }
+    });
+    document.dispatchEvent(event);
+  }
+}
+
+// Listen for cart updates
+document.addEventListener('itemAdded', (e) => {
+  console.log('Item added:', e.detail.item);
+  console.log('Total items:', e.detail.totalItems);
+  updateCartBadge(e.detail.totalItems);
+});</code></pre>
+        </div>
+
+        <!-- Practical Examples -->
+        <h2>🎯 Practical Examples</h2>
+
+        <h3>Example 1: Interactive Todo List</h3>
+
+        <div class="code-example">
+          <div class="example-label">Complete Todo List with Events</div>
+          <pre><code>const todoForm = document.querySelector('#todoForm');
+const todoInput = document.querySelector('#todoInput');
+const todoList = document.querySelector('#todoList');
+
+// Add todo
+todoForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const text = todoInput.value.trim();
+  if (!text) return;
+
+  // Create todo item
+  const li = document.createElement('li');
+  li.innerHTML = `
+    &lt;span class="todo-text"&gt;${text}&lt;/span&gt;
+    &lt;button class="complete-btn"&gt;✓&lt;/button&gt;
+    &lt;button class="delete-btn"&gt;✕&lt;/button&gt;
+  `;
+
+  todoList.appendChild(li);
+  todoInput.value = '';
+});
+
+// Event delegation for todo actions
+todoList.addEventListener('click', (e) => {
+  // Complete todo
+  if (e.target.matches('.complete-btn')) {
+    const li = e.target.closest('li');
+    li.classList.toggle('completed');
+  }
+
+  // Delete todo
+  if (e.target.matches('.delete-btn')) {
+    const li = e.target.closest('li');
+    li.remove();
+  }
+
+  // Toggle by clicking text
+  if (e.target.matches('.todo-text')) {
+    const li = e.target.closest('li');
+    li.classList.toggle('completed');
+  }
+});</code></pre>
+        </div>
+
+        <h3>Example 2: Keyboard Navigation</h3>
+
+        <div class="code-example">
+          <div class="example-label">Arrow Key Navigation</div>
+          <pre><code>const items = document.querySelectorAll('.menu-item');
+let currentIndex = 0;
+
+function updateFocus() {
+  items.forEach((item, index) => {
+    item.classList.toggle('focused', index === currentIndex);
+  });
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    currentIndex = (currentIndex + 1) % items.length;
+    updateFocus();
+  }
+
+  if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    updateFocus();
+  }
+
+  if (e.key === 'Enter') {
+    items[currentIndex].click();
+  }
+});
+
+updateFocus();</code></pre>
+        </div>
+
+        <h3>Example 3: Drag and Drop</h3>
+
+        <div class="code-example">
+          <div class="example-label">Simple Drag and Drop</div>
+          <pre><code>const draggables = document.querySelectorAll('.draggable');
+const containers = document.querySelectorAll('.container');
+
+// Make elements draggable
+draggables.forEach((draggable) => {
+  draggable.addEventListener('dragstart', (e) => {
+    draggable.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', draggable.innerHTML);
+  });
+
+  draggable.addEventListener('dragend', () => {
+    draggable.classList.remove('dragging');
+  });
+});
+
+// Drop zones
+containers.forEach((container) => {
+  container.addEventListener('dragover', (e) => {
+    e.preventDefault();  // Allow drop
+    e.dataTransfer.dropEffect = 'move';
+    container.classList.add('drag-over');
+  });
+
+  container.addEventListener('dragleave', () => {
+    container.classList.remove('drag-over');
+  });
+
+  container.addEventListener('drop', (e) => {
+    e.preventDefault();
+    container.classList.remove('drag-over');
+
+    const dragging = document.querySelector('.dragging');
+    container.appendChild(dragging);
+  });
+});</code></pre>
+        </div>
+
+        <h3>Example 4: Debouncing and Throttling</h3>
+
+        <div class="code-example">
+          <div class="example-label">Performance Optimization</div>
+          <pre><code>// Debounce - wait until user stops typing
+function debounce(func, delay) {
+  let timeoutId;
+  return function(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+// Usage: Search input
+const searchInput = document.querySelector('#search');
+const handleSearch = debounce((e) => {
+  console.log('Searching for:', e.target.value);
+  // Make API call here
+}, 500);
+
+searchInput.addEventListener('input', handleSearch);
+
+// Throttle - limit execution rate
+function throttle(func, limit) {
+  let inThrottle;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
+
+// Usage: Scroll event
+const handleScroll = throttle(() => {
+  console.log('Scroll position:', window.scrollY);
+}, 100);
+
+window.addEventListener('scroll', handleScroll);</code></pre>
+        </div>
+
+        <!-- Best Practices -->
+        <h2>✅ Best Practices</h2>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Event Handling Best Practices</div>
+          <ul>
+            <li>Use <code>addEventListener()</code> instead of inline handlers</li>
+            <li>Always use <code>preventDefault()</code> when handling form submissions</li>
+            <li>Use event delegation for lists and dynamic content</li>
+            <li>Remove event listeners when elements are removed (prevent memory leaks)</li>
+            <li>Use named functions when you need to remove listeners later</li>
+            <li>Debounce or throttle high-frequency events (scroll, resize, input)</li>
+            <li>Use passive event listeners for scroll performance: <code>{ passive: true }</code></li>
+            <li>Check <code>event.target</code> vs <code>event.currentTarget</code> when using delegation</li>
+            <li>Be careful with <code>stopPropagation()</code> - it can break delegation patterns</li>
+          </ul>
+        </div>
+
+        <!-- Summary -->
+        <div class="info-box note">
+          <div class="info-box-title">📝 Summary</div>
+          <ul>
+            <li><strong>Events</strong> allow you to respond to user interactions and browser actions</li>
+            <li><strong>addEventListener()</strong> is the modern, flexible way to handle events</li>
+            <li><strong>Event object</strong> contains valuable information about the event</li>
+            <li><strong>Event propagation</strong> flows through capturing and bubbling phases</li>
+            <li><strong>Event delegation</strong> improves performance and works with dynamic content</li>
+            <li><strong>preventDefault()</strong> stops default browser behavior</li>
+            <li><strong>Custom events</strong> enable component communication</li>
+            <li><strong>Debouncing and throttling</strong> optimize performance for high-frequency events</li>
+          </ul>
+        </div>
+
+        <!-- Navigation -->
+        <div class="page-navigation">
+          <a href="dom-manipulation.html" class="nav-button">← DOM Manipulation</a>
+          <a href="canvas-basics.html" class="nav-button">Canvas & Animation →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

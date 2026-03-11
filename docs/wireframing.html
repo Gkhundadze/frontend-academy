@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wireframing & Prototyping - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="docs-container">
+    <nav class="sidebar">
+      <div class="logo">
+        <h2>Frontend Course</h2>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-fundamentals.html">CSS Fundamentals</a></li>
+          <li><a href="css-box-model.html">CSS Box Model</a></li>
+          <li><a href="css-flexbox.html">CSS Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="css-animations.html">CSS Animations</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html" class="active">Wireframing & Prototyping</a></li>
+          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
+          <li><a href="design-systems.html">Design Systems</a></li>
+          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Projects</div>
+        <ul class="nav-list">
+          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <button class="mobile-menu-toggle">☰</button>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+        <h1>📐 Wireframing & Prototyping</h1>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 From Idea to Interface</div>
+          <p>Wireframing and prototyping bridge the gap between research and code. They let you test ideas quickly, gather feedback early, and avoid costly mistakes—all before writing a single line of production code.</p>
+        </div>
+
+        <h2>Why Wireframe and Prototype?</h2>
+
+        <div class="demo-section">
+          <ul>
+            <li><strong>💰 Save Time & Money</strong> - Changing a wireframe takes minutes, changing code takes hours</li>
+            <li><strong>🎯 Validate Ideas Fast</strong> - Test 5 concepts in a day vs. weeks of coding</li>
+            <li><strong>🤝 Better Communication</strong> - Show, don't tell your team and stakeholders</li>
+            <li><strong>✅ Catch Issues Early</strong> - Find usability problems before they're built</li>
+            <li><strong>👥 Get Real Feedback</strong> - Users can react to something tangible</li>
+            <li><strong>📋 Clear Requirements</strong> - Prototypes become development specs</li>
+          </ul>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Common Mistake</div>
+          <p><strong>Don't skip wireframing and jump straight to code.</strong> What feels like "saving time" usually leads to multiple rewrites. A few hours wireframing can save weeks of development.</p>
+        </div>
+
+        <h2>What is a Wireframe?</h2>
+
+        <p>A wireframe is a low-fidelity sketch of a user interface. It shows structure, layout, and content hierarchy—without colors, images, or final copy.</p>
+
+        <h3>Wireframe Characteristics</h3>
+
+        <div class="demo-section">
+          <div class="demo-title">Wireframe Elements</div>
+          <pre><code>┌─────────────────────────────────────┐
+│  [LOGO]              [Nav] [Nav]    │  ← Header
+├─────────────────────────────────────┤
+│                                     │
+│    Headline Goes Here               │  ← Hero Section
+│    Subheadline text explaining      │
+│    the main value proposition       │
+│                                     │
+│    [Primary CTA Button]             │
+│                                     │
+├─────────────────────────────────────┤
+│  ┌───────┐  ┌───────┐  ┌───────┐  │
+│  │[Icon] │  │[Icon] │  │[Icon] │  │  ← Features
+│  │       │  │       │  │       │  │
+│  │ Text  │  │ Text  │  │ Text  │  │
+│  └───────┘  └───────┘  └───────┘  │
+├─────────────────────────────────────┤
+│  Footer - Links and Info            │
+└─────────────────────────────────────┘
+
+<strong>What Wireframes Show:</strong>
+✓ Layout and structure
+✓ Content hierarchy (what's most important)
+✓ Navigation flow
+✓ Functionality and interactions
+✓ Relative sizes of elements
+
+<strong>What Wireframes Don't Show:</strong>
+✗ Final colors, fonts, images
+✗ Exact copy/text content
+✗ Pixel-perfect spacing
+✗ Visual design details</code></pre>
+        </div>
+
+        <h2>Fidelity Levels: Low-Fi to High-Fi</h2>
+
+        <p>Prototypes exist on a spectrum from quick sketches to fully interactive mockups. Choose the right fidelity for your stage.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Fidelity</th>
+              <th>When to Use</th>
+              <th>Time</th>
+              <th>Tools</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Low-Fidelity</strong><br>(Paper/Sketches)</td>
+              <td>Early exploration, brainstorming</td>
+              <td>Minutes</td>
+              <td>Paper, whiteboard, Balsamiq</td>
+            </tr>
+            <tr>
+              <td><strong>Mid-Fidelity</strong><br>(Digital Wireframes)</td>
+              <td>Testing structure & flow</td>
+              <td>Hours</td>
+              <td>Figma, Adobe XD, Sketch</td>
+            </tr>
+            <tr>
+              <td><strong>High-Fidelity</strong><br>(Visual Mockups)</td>
+              <td>Final design approval</td>
+              <td>Days</td>
+              <td>Figma, Adobe XD, Sketch</td>
+            </tr>
+            <tr>
+              <td><strong>Interactive Prototype</strong></td>
+              <td>Usability testing, demos</td>
+              <td>Days</td>
+              <td>Figma, Adobe XD, Framer</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Low-Fidelity Wireframes (Lo-Fi)</h3>
+
+        <p>Quick sketches to explore ideas. Perfect for the early ideation stage.</p>
+
+        <div class="demo-section">
+          <div class="demo-title">Lo-Fi Benefits</div>
+          <ul>
+            <li><strong>⚡ Fast</strong> - Sketch 10 ideas in 30 minutes</li>
+            <li><strong>🎨 Encourages Creativity</strong> - Low commitment means wild ideas are OK</li>
+            <li><strong>👥 Collaborative</strong> - Everyone can draw boxes</li>
+            <li><strong>💭 Focuses on Concept</strong> - No one debates button colors</li>
+            <li><strong>🗑️ Easy to Discard</strong> - No emotional attachment</li>
+          </ul>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Paper Prototyping Tip</div>
+          <p>Use actual paper cutouts that users can move around. Hand them a "cursor" (your pen cap) and watch them try to click through your interface. You'll learn more in 10 minutes than hours of discussion.</p>
+        </div>
+
+        <h3>Mid-Fidelity Wireframes</h3>
+
+        <p>Digital wireframes with more structure. Still grayscale, but more refined.</p>
+
+        <div class="demo-section">
+          <div class="demo-title">Mid-Fi Example: Login Screen</div>
+          <pre><code>┌─────────────────────────────────┐
+│                                 │
+│         [Company Logo]          │
+│                                 │
+│      Welcome Back!              │
+│      Log in to your account     │
+│                                 │
+│  ┌───────────────────────────┐ │
+│  │ Email address             │ │
+│  └───────────────────────────┘ │
+│                                 │
+│  ┌───────────────────────────┐ │
+│  │ Password                  │ │
+│  └───────────────────────────┘ │
+│                                 │
+│  ☐ Remember me   [Forgot?]     │
+│                                 │
+│  ┌───────────────────────────┐ │
+│  │     Log In                │ │ ← Primary button
+│  └───────────────────────────┘ │
+│                                 │
+│  ────────── or ──────────      │
+│                                 │
+│  [G] Sign in with Google       │ ← Secondary option
+│                                 │
+│  Don't have an account? Sign up│
+│                                 │
+└─────────────────────────────────┘
+
+<strong>Decisions Made:</strong>
+✓ Vertical layout (mobile-friendly)
+✓ Social login as alternative
+✓ "Remember me" checkbox included
+✓ Clear visual hierarchy
+✓ "Forgot password" easily accessible</code></pre>
+        </div>
+
+        <h3>High-Fidelity Mockups</h3>
+
+        <p>Pixel-perfect designs with real colors, typography, images, and branding.</p>
+
+        <div class="info-box important">
+          <div class="info-box-title">❗ When to Go High-Fi</div>
+          <p>Only after you've validated the structure and flow with mid-fi wireframes. High-fi is expensive to change, so make sure you're building the right thing first.</p>
+        </div>
+
+        <h2>Prototyping Tools Comparison</h2>
+
+        <h3>1. Figma (Recommended)</h3>
+
+        <div class="demo-section">
+          <p><strong>Why Figma is Popular:</strong></p>
+          <ul>
+            <li>✅ <strong>Browser-based</strong> - No installation, works everywhere</li>
+            <li>✅ <strong>Real-time collaboration</strong> - Multiple designers work simultaneously</li>
+            <li>✅ <strong>Free for individuals</strong> - Full featured, no credit card</li>
+            <li>✅ <strong>Developer handoff</strong> - Inspect mode shows CSS/specs</li>
+            <li>✅ <strong>Huge community</strong> - Thousands of free templates and plugins</li>
+            <li>✅ <strong>Interactive prototyping</strong> - Click-through flows built-in</li>
+          </ul>
+          <p><strong>Best for:</strong> Everything—wireframes to high-fi designs to prototypes</p>
+        </div>
+
+        <h3>2. Adobe XD</h3>
+
+        <div class="demo-section">
+          <ul>
+            <li>✅ Native app (faster performance)</li>
+            <li>✅ Integrates with Adobe Creative Cloud</li>
+            <li>✅ Voice prototyping features</li>
+            <li>✅ Repeat Grid for patterns</li>
+            <li>❌ Requires desktop app installation</li>
+          </ul>
+          <p><strong>Best for:</strong> Teams already using Adobe tools</p>
+        </div>
+
+        <h3>3. Sketch</h3>
+
+        <div class="demo-section">
+          <ul>
+            <li>✅ Industry standard (many design systems available)</li>
+            <li>✅ Huge plugin ecosystem</li>
+            <li>✅ Symbols for reusable components</li>
+            <li>❌ Mac only</li>
+            <li>❌ Requires paid license ($99/year)</li>
+          </ul>
+          <p><strong>Best for:</strong> Mac users, established design teams</p>
+        </div>
+
+        <h3>4. Balsamiq</h3>
+
+        <div class="demo-section">
+          <ul>
+            <li>✅ Deliberately "sketchy" look (prevents pixel-pushing)</li>
+            <li>✅ Fast for low-fi wireframes</li>
+            <li>✅ Simple, easy to learn</li>
+            <li>❌ Limited for high-fi designs</li>
+          </ul>
+          <p><strong>Best for:</strong> Quick lo-fi wireframes only</p>
+        </div>
+
+        <h3>5. Framer</h3>
+
+        <div class="demo-section">
+          <ul>
+            <li>✅ Code-based (uses React)</li>
+            <li>✅ Most advanced interactions</li>
+            <li>✅ Real data integration</li>
+            <li>❌ Steeper learning curve</li>
+            <li>❌ More expensive</li>
+          </ul>
+          <p><strong>Best for:</strong> Complex, interactive prototypes; developers who code</p>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Recommendation for Beginners</div>
+          <p><strong>Start with Figma.</strong> It's free, works in your browser, has tons of tutorials, and it's what most companies use. Once you learn Figma, other tools are easy to pick up.</p>
+        </div>
+
+        <h2>Creating Your First Wireframe (Figma Tutorial)</h2>
+
+        <h3>Step 1: Set Up Your File</h3>
+
+        <pre><code class="language-javascript">// In Figma:
+1. Go to figma.com and create a free account
+2. Click "New design file"
+3. Press "F" to create a Frame
+4. Choose preset: iPhone 14 Pro (or Desktop)
+5. Name your frame: "Homepage - Mobile"
+
+// Pro tip: Use frames, not artboards
+// Frames stack and organize better</code></pre>
+
+        <h3>Step 2: Add Basic Shapes</h3>
+
+        <pre><code class="language-javascript">// Keyboard shortcuts:
+R = Rectangle
+O = Ellipse (circle/oval)
+T = Text
+L = Line
+
+// Build a simple header:
+1. Press R, draw a rectangle across the top
+2. Press T, type "Logo" in the left side
+3. Press T again, type "Menu" in the right side
+4. Select all three, press Option+A (Mac) or Alt+A (Windows) to align</code></pre>
+
+        <h3>Step 3: Create Content Blocks</h3>
+
+        <div class="demo-section">
+          <div class="demo-title">Wireframe Component Library</div>
+          <pre><code><strong>Common Components to Create:</strong>
+
+<strong>Header:</strong>
+[Logo] ────────────────── [Nav] [Nav] [CTA]
+
+<strong>Hero Section:</strong>
+┌─────────────────────────────────────┐
+│  Headline (32px)                    │
+│  Subheadline (18px)                 │
+│  [Button] [Button]                  │
+└─────────────────────────────────────┘
+
+<strong>Card:</strong>
+┌─────────────────┐
+│ [Image]         │
+│ Title           │
+│ Description...  │
+│ [Link]          │
+└─────────────────┘
+
+<strong>Form Field:</strong>
+Label
+┌──────────────────────┐
+│ Placeholder text     │
+└──────────────────────┘
+Help text or error
+
+<strong>Button:</strong>
+┌──────────────┐
+│   Button Text │
+└──────────────┘
+
+<strong>Navigation:</strong>
+☰ [Logo] ──── [🔍] [Profile]
+
+<strong>Footer:</strong>
+Links | Links | Links
+© 2024 Company Name</code></pre>
+        </div>
+
+        <h3>Step 4: Add Interactivity (Prototyping Mode)</h3>
+
+        <pre><code class="language-javascript">// In Figma, switch to Prototype mode:
+1. Click "Prototype" tab in right sidebar
+2. Select element (e.g., a button)
+3. Drag the blue circle to target frame
+4. Choose interaction: "On Click" → "Navigate to"
+5. Set animation: "Instant" or "Slide"
+6. Press Play button (▶) to test
+
+// Example flow:
+Homepage button → Product Page → Cart → Checkout
+
+// Pro tip: Use components for repeated elements
+// Right-click → "Create Component" (Cmd+Option+K)</code></pre>
+
+        <h2>Interactive Prototyping Best Practices</h2>
+
+        <h3>What to Make Interactive</h3>
+
+        <div class="demo-section">
+          <p><strong>High Priority (Always prototype these):</strong></p>
+          <ul>
+            <li>✅ Primary user flows (signup, checkout, core tasks)</li>
+            <li>✅ Navigation between main screens</li>
+            <li>✅ Form interactions (input focus, validation, submission)</li>
+            <li>✅ Critical CTAs (buttons, links users must find)</li>
+          </ul>
+
+          <p><strong>Medium Priority (If time allows):</strong></p>
+          <ul>
+            <li>○ Hover states</li>
+            <li>○ Dropdown menus</li>
+            <li>○ Tab switching</li>
+            <li>○ Modal dialogs</li>
+          </ul>
+
+          <p><strong>Low Priority (Usually skip):</strong></p>
+          <ul>
+            <li>✗ Every single hover effect</li>
+            <li>✗ Complex animations</li>
+            <li>✗ Loading states</li>
+            <li>✗ Edge cases</li>
+          </ul>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Avoid Over-Prototyping</div>
+          <p>A prototype with 50 screens and 200 interactions takes weeks to build and is hard to test. Focus on the critical paths. Aim for 5-10 key screens.</p>
+        </div>
+
+        <h3>Advanced Prototyping: Using Components & Variants</h3>
+
+        <pre><code class="language-javascript">// Create a button component with states:
+
+1. Design your button
+2. Right-click → Create Component
+3. Click "+" next to component name → Add Variant
+4. Create states: Default, Hover, Pressed, Disabled
+5. Name properties: State=Default, State=Hover, etc.
+
+// In prototype mode:
+- Select button instance
+- Add interaction: While hovering → Change to → State=Hover
+- Add interaction: While pressing → Change to → State=Pressed
+
+// Now your button responds realistically in prototype!
+
+// Component benefits:
+✓ Change once, updates everywhere
+✓ Maintains consistency
+✓ Speeds up design process</code></pre>
+
+        <h2>Testing Your Prototype</h2>
+
+        <h3>How to Run a Prototype Test</h3>
+
+        <div class="demo-section">
+          <div class="demo-title">Testing Script</div>
+          <pre><code><strong>Before Testing:</strong>
+1. Define 3-5 key tasks users should complete
+2. Write task descriptions (don't say where to click!)
+3. Prepare to record screen and audio
+4. Have a note-taking system ready
+
+<strong>During Testing (45-60 min):</strong>
+
+<strong>Introduction (5 min):</strong>
+"I'm testing the design, not you. There are no wrong answers.
+Please think aloud—tell me what you're thinking as you use it.
+If something is confusing, that helps me improve the design."
+
+<strong>Tasks (30 min):</strong>
+"Imagine you want to [goal]. Show me how you'd do that."
+
+Examples:
+✓ "You want to buy a pair of running shoes size 10. Find them and add to cart."
+✓ "Find customer support contact information."
+✓ "Change your email address in account settings."
+
+<strong>Observe:</strong>
+- Where do they click first?
+- Do they hesitate or look confused?
+- Do they complete the task successfully?
+- How many taps/clicks does it take?
+
+<strong>Follow-Up Questions (10 min):</strong>
+- "What was easy? What was confusing?"
+- "What would you change?"
+- "On a scale of 1-5, how easy was that?"
+
+<strong>After Testing:</strong>
+- Note patterns across 5+ users
+- Prioritize issues by severity & frequency
+- Update prototype and test again</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Remote Testing Tip</div>
+          <p>Share your Figma prototype link with "Can view + comment" permissions. Use Zoom to watch them navigate while sharing their screen. Record the session for later review.</p>
+        </div>
+
+        <h2>From Prototype to Code</h2>
+
+        <h3>Developer Handoff (Figma Inspect Mode)</h3>
+
+        <pre><code class="language-css">/* Figma provides CSS/specifications:
+
+1. In Figma, click "Inspect" tab (developers see this)
+2. Select any element to see:
+   - Width, height, position
+   - Colors (hex, RGB, CSS vars)
+   - Typography (font-family, size, weight, line-height)
+   - Spacing (margins, padding)
+   - Border radius, shadows, etc.
+
+3. Click "Copy as CSS" button
+
+Example output: */
+
+.button-primary {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px;
+  gap: 8px;
+
+  width: 200px;
+  height: 48px;
+
+  background: #2563EB;
+  border-radius: 8px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+/* Figma → CSS is 80% accurate
+   You'll still need to adjust for:
+   - Hover states
+   - Responsive breakpoints
+   - Browser compatibility
+   - Semantic HTML structure */</code></pre>
+
+        <h3>Exporting Assets</h3>
+
+        <pre><code class="language-javascript">// In Figma, select element → Export panel:
+
+1. Choose format:
+   - PNG: photos, complex graphics
+   - SVG: icons, logos (scalable!)
+   - JPG: photos (smaller file size)
+
+2. Choose size:
+   - 1x (standard)
+   - 2x (retina/high-DPI screens)
+   - 3x (extra high-DPI)
+
+3. Click "Export"
+
+// Pro tip: Name your layers properly!
+// "icon-search.svg" exports better than "Rectangle 47"
+
+// Batch export:
+// Select multiple elements → Add to export list
+// Export all at once with proper naming</code></pre>
+
+        <h2>Common Wireframing Mistakes</h2>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Pitfalls to Avoid</div>
+          <ul>
+            <li><strong>❌ Making it too pretty too early</strong> → Focus on structure first, polish later</li>
+            <li><strong>❌ Wireframing in high-fidelity</strong> → You'll waste time on details that might change</li>
+            <li><strong>❌ Skipping user testing</strong> → A beautiful prototype that confuses users is useless</li>
+            <li><strong>❌ Creating every single screen</strong> → Focus on key flows, not every edge case</li>
+            <li><strong>❌ Not using real content</strong> → "Lorem ipsum" hides real problems</li>
+            <li><strong>❌ Designing in isolation</strong> → Share early and often with your team</li>
+            <li><strong>❌ Falling in love with your design</strong> → Be ready to kill your darlings based on feedback</li>
+          </ul>
+        </div>
+
+        <h2>Practical Exercise: Wireframe a Feature</h2>
+
+        <div class="info-box important">
+          <div class="info-box-title">❗ Try This</div>
+          <p>Choose a feature you want to build and wireframe it:</p>
+          <ol>
+            <li><strong>Start Lo-Fi</strong> - Sketch 3 different approaches on paper (15 min)</li>
+            <li><strong>Pick One</strong> - Choose the best concept based on user needs</li>
+            <li><strong>Go Mid-Fi</strong> - Create digital wireframe in Figma (1 hour)</li>
+            <li><strong>Make It Interactive</strong> - Connect 3-5 key screens (30 min)</li>
+            <li><strong>Test It</strong> - Show it to 2 people and watch them try to use it</li>
+            <li><strong>Iterate</strong> - Fix the top 3 issues you discovered</li>
+          </ol>
+        </div>
+
+        <h2>Wireframing Checklist</h2>
+
+        <div class="demo-section">
+          <p><strong>Before You Start:</strong></p>
+          <ul>
+            <li>☐ Have you done user research?</li>
+            <li>☐ Do you know the user goals?</li>
+            <li>☐ Have you sketched on paper first?</li>
+          </ul>
+
+          <p><strong>While Wireframing:</strong></p>
+          <ul>
+            <li>☐ Is the visual hierarchy clear?</li>
+            <li>☐ Can users complete their goal?</li>
+            <li>☐ Is the navigation obvious?</li>
+            <li>☐ Are CTAs prominent and clear?</li>
+            <li>☐ Does it work on mobile?</li>
+            <li>☐ Is it accessible (keyboard nav, screen readers)?</li>
+          </ul>
+
+          <p><strong>Before Development:</strong></p>
+          <ul>
+            <li>☐ Have you tested with real users?</li>
+            <li>☐ Are developers able to access designs?</li>
+            <li>☐ Are all states defined (empty, loading, error)?</li>
+            <li>☐ Are assets exported and ready?</li>
+          </ul>
+        </div>
+
+        <h2>Key Takeaways</h2>
+
+        <div class="demo-section">
+          <ul>
+            <li>✅ <strong>Wireframe before coding</strong> - It's faster to change boxes than code</li>
+            <li>✅ <strong>Start low-fidelity</strong> - Paper sketches for exploration, digital for refinement</li>
+            <li>✅ <strong>Use Figma</strong> - Free, collaborative, industry-standard</li>
+            <li>✅ <strong>Prototype key flows</strong> - Focus on critical user paths, not every interaction</li>
+            <li>✅ <strong>Test early and often</strong> - 5 users find 85% of problems</li>
+            <li>✅ <strong>Real content matters</strong> - Lorem ipsum hides real issues</li>
+            <li>✅ <strong>Components save time</strong> - Build once, reuse everywhere</li>
+            <li>✅ <strong>Iterate based on feedback</strong> - Your first design is never your best</li>
+          </ul>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">💡 Next Steps</div>
+          <p>You now know how to create wireframes and prototypes. Next, we'll dive into <strong>UI/UX Principles</strong> to learn what makes interfaces beautiful, intuitive, and effective.</p>
+        </div>
+
+        <div class="bottom-nav">
+          <a href="user-research.html" class="nav-button prev">← Previous: User Research & Personas</a>
+          <a href="ui-ux-principles.html" class="nav-button next">Next: UI/UX Principles →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
