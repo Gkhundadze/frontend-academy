@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deep Dive: React useContext & Best Practices</title>
+  <style>
+    :root {
+      --primary: #61dafb;
+      --secondary: #282c34;
+      --accent: #ff4081;
+      --bg: #f8f9fa;
+      --text: #212529;
+      --code-bg: #1e1e1e;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: var(--bg);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      background: var(--secondary);
+      color: var(--primary);
+      padding: 60px 20px;
+      text-align: center;
+      border-radius: 15px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    section {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      color: var(--secondary);
+      border-left: 5px solid var(--primary);
+      padding-left: 15px;
+      margin-top: 0;
+    }
+
+    /* კოდის სტილები */
+    pre {
+      background: var(--code-bg);
+      color: #dcdcdc;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      font-size: 0.95rem;
+      position: relative;
+    }
+
+    .keyword { color: #569cd6; }
+    .function { color: #dcdcaa; }
+    .string { color: #ce9178; }
+    .comment { color: #6a9955; font-style: italic; }
+    .tag { color: #e06c75; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .note {
+      background: #fff3cd;
+      border-left: 5px solid #ffc107;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+
+    .comparison {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    .comparison th, .comparison td {
+      border: 1px solid #dee2e6;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .comparison th { background: #e9ecef; }
+
+    .badge {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .badge-error { background: #f8d7da; color: #721c24; }
+    .badge-success { background: #d4edda; color: #155724; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>React Context API: From Zero to Pro 🚀</h1>
+    <p>სტრატეგიული ფიქრი არქიტექტურაზე და ოპტიმიზაცია</p>
+  </header>
+
+  <section>
+    <h2>1. როდის (არ) გამოვიყენოთ Context?</h2>
+    <p>Context არ არის "Global State Magic". ის არის ინსტრუმენტი ლოკალური "ხის" მასშტაბით ინფორმაციის გადასაცემად.</p>
+    
+    <table class="comparison">
+      <tr>
+        <th>გამოიყენე Context</th>
+        <th>არ გამოიყენო Context</th>
+      </tr>
+      <tr>
+        <td>თემები (Light/Dark Mode)</td>
+        <td>მონაცემები, რომლებიც წამში ბევრჯერ იცვლება</td>
+      </tr>
+      <tr>
+        <td>მომხმარებლის ავტორიზაცია</td>
+        <td>ფორმების "Input" სტეიტებისთვის</td>
+      </tr>
+      <tr>
+        <td>ლოკალიზაცია (ენა)</td>
+        <td>თუ Prop Drilling მხოლოდ 2 დონეა</td>
+      </tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>2. რეალური მაგალითი: Multi-Step Theme & Auth</h2>
+    <p>განვიხილოთ რთული შემთხვევა: როდესაც Context-ში გვაქვს ობიექტი.</p>
+    
+    <span class="badge badge-success">საუკეთესო პრაქტიკა: useMemo-ს გამოყენება</span>
+    <pre>
+<span class="keyword">import</span> { createContext, useState, useMemo, useContext } <span class="keyword">from</span> <span class="string">'react'</span>;
+
+<span class="keyword">const</span> AppContext = createContext();
+
+<span class="keyword">export const</span> AppProvider = ({ children }) => {
+  <span class="keyword">const</span> [user, setUser] = useState(<span class="keyword">null</span>);
+  <span class="keyword">const</span> [theme, setTheme] = useState(<span class="string">'light'</span>);
+
+  <span class="comment">// 🚀 ოპტიმიზაცია: მნიშვნელობა იქმნება მხოლოდ მაშინ, როცა user ან theme იცვლება.
+  // ეს თავიდან აგვაცილებს ზედმეტ რერენდერებს.</span>
+  <span class="keyword">const</span> value = useMemo(() => ({
+    user,
+    theme,
+    login: (data) => setUser(data),
+    toggleTheme: () => setTheme(t => t === <span class="string">'light'</span> ? <span class="string">'dark'</span> : <span class="string">'light'</span>)
+  }), [user, theme]);
+
+  <span class="keyword">return</span> (
+    &lt;<span class="function">AppContext.Provider</span> value={value}&gt;
+      {children}
+    &lt;/<span class="function">AppContext.Provider</span>&gt;
+  );
+};</pre>
+  </section>
+
+  <section>
+    <h2>3. "ბინძური" vs "სუფთა" კომპონენტები</h2>
+    <div class="grid">
+      <div>
+        <span class="badge badge-error">ცუდი მიდგომა</span>
+        <pre>
+<span class="keyword">const</span> Button = () => {
+  <span class="keyword">const</span> ctx = useContext(AppContext);
+  <span class="comment">// კომპონენტი პირდაპირ 
+  // არის მიბმული კონტექსტზე</span>
+  <span class="keyword">return</span> (
+    &lt;button onClick={ctx.toggleTheme}&gt;
+      {ctx.theme}
+    &lt;/button&gt;
+  );
+};</pre>
+      </div>
+      <div>
+        <span class="badge badge-success">სუფთა მიდგომა</span>
+        <pre>
+<span class="keyword">const</span> Button = ({ onClick, label }) => (
+  <span class="comment">// კომპონენტი დამოუკიდებელია
+  // და მარტივია ტესტირებისთვის</span>
+  &lt;button onClick={onClick}&gt;
+    {label}
+  &lt;/button&gt;
+);
+
+<span class="keyword">const</span> ThemeBtn = () => {
+  <span class="keyword">const</span> { theme, toggleTheme } = useTheme();
+  <span class="keyword">return</span> &lt;Button onClick={toggleTheme} label={theme} /&gt;;
+};</pre>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. რატომ იყენებენ პროფესიონალები CSS Variables-ს?</h2>
+    <div class="note">
+      <strong>ლექციისთვის:</strong> აუხსენით სტუდენტებს, რომ React-ით ათასობით ელემენტის ინლაინ სტილის შეცვლა ნელია. 
+      ბრაუზერის `data-attribute` და CSS ცვლადები მუშაობს Native დონეზე.
+    </div>
+    <pre>
+<span class="comment">/* Modern & Performant CSS */</span>
+[data-theme='dark'] {
+  --primary: #bb86fc;
+  --surface: #121212;
+}
+
+.card {
+  background: var(--surface);
+  color: var(--primary);
+  <span class="comment">/* React მხოლოდ ატრიბუტს ცვლის, დანარჩენს ბრაუზერი აკეთებს */</span>
+}</pre>
+  </section>
+
+  <section>
+    <h2>5. Performance Pitfalls (ხაფანგები)</h2>
+    <p>თუ კონტექსტის მომხმარებელი კომპონენტი რენდერდება ძალიან ხშირად:</p>
+    <ul>
+      <li>დაყავით კონტექსტი რამდენიმე პატარა კონტექსტად (მაგ: `AuthContext` და `ThemeContext`).</li>
+      <li>გამოიყენეთ `React.memo` შვილობილ კომპონენტებზე.</li>
+      <li>გახსოვდეთ: როცა Context-ის `value` იცვლება, **ყველა** `useContext(MyContext)` გამომძახებელი რენდერდება!</li>
+    </ul>
+  </section>
+
+  <footer style="text-align: center; color: #666; margin-top: 50px;">
+    <p>© 2026 Frontend Development Course | Architecture of Thinking</p>
+  </footer >
+</div>
+
+</body>
+</html>
