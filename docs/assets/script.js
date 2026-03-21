@@ -511,17 +511,23 @@ function highlightHTML(code) {
     return TAG_PLACEHOLDER + (placeholderIndex++) + TAG_PLACEHOLDER;
   });
 
-  // Step 3: Highlight attributes (now safe, comments and tags are placeholders)
-  code = code.replace(/\s([a-zA-Z-]+)=/g, ' <span class="token attr-name">$1</span>=');
+  // Step 3: Highlight attributes (use placeholders to prevent nesting)
+  code = code.replace(/\s([a-zA-Z-]+)=/g, (match, attrName) => {
+    placeholders[placeholderIndex] = '<span class="token attr-name">' + attrName + '</span>';
+    return ' ' + TAG_PLACEHOLDER + (placeholderIndex++) + TAG_PLACEHOLDER + '=';
+  });
 
-  // Step 4: Highlight attribute values
-  code = code.replace(/=(&quot;|")([^"&]*?)(\1)/g, '=<span class="token string">$1$2$3</span>');
+  // Step 4: Highlight attribute values (use placeholders to prevent nesting)
+  code = code.replace(/=(&quot;|")([^"&]*?)(\1)/g, (match, quote, value, closingQuote) => {
+    placeholders[placeholderIndex] = '<span class="token string">' + quote + value + closingQuote + '</span>';
+    return '=' + TAG_PLACEHOLDER + (placeholderIndex++) + TAG_PLACEHOLDER;
+  });
 
   // Step 5: Restore placeholders
   code = code.replace(/\x00COMMENT\x00(\d+)\x00COMMENT\x00/g, (_, index) => placeholders[index]);
   code = code.replace(/\x00TAG\x00(\d+)\x00TAG\x00/g, (_, index) => placeholders[index]);
 
-  return code;
+  return code;  
 }
 
 /**
