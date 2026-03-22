@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Optimization - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="../favicon.ico">
+  <style>
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .metric-card {
+      border-radius: 8px;
+      padding: 16px;
+      border: 2px solid;
+    }
+    .metric-card h4 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+    .metric-card p {
+      margin: 0;
+      font-size: 0.85rem;
+    }
+    .metric-lcp  { border-color: #4a90e2; background: #e3f2fd; }
+    .metric-cls  { border-color: #e67e22; background: #fef3e2; }
+    .metric-inp  { border-color: #27ae60; background: #e8f8f0; }
+    .waterfall {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      border-radius: 6px;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 0.82rem;
+      margin: 12px 0;
+      line-height: 1.8;
+    }
+    .waterfall .block  { color: #f44747; }
+    .waterfall .good   { color: #4ec9b0; }
+    .waterfall .label  { color: #9cdcfe; }
+    .render-steps {
+      counter-reset: step;
+      list-style: none;
+      padding: 0;
+      margin: 12px 0;
+    }
+    .render-steps li {
+      counter-increment: step;
+      padding: 10px 10px 10px 52px;
+      position: relative;
+      border-left: 2px solid #4a90e2;
+      margin-bottom: 8px;
+      background: #f5f9ff;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.9rem;
+    }
+    .render-steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: -18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      background: #4a90e2;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>Performance Optimization</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="css-colors.html">CSS Colors</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="css-units.html">CSS Units</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="responsive-images.html">Responsive Images</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 4: Professional Skills</div>
+        <ul class="nav-list">
+          <li><a href="performance-optimization.html">Performance Optimization</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>⚡ Performance Optimization</h1>
+
+        <p>
+          A fast website isn't just a nice-to-have — it directly affects
+          <strong>user retention</strong>, <strong>conversion rates</strong>, and
+          <strong>SEO rankings</strong>. Studies show that a 1-second delay in load time
+          can reduce conversions by 7% and increase bounce rate by 32%.
+          This page covers the core techniques every frontend developer should know.
+        </p>
+
+        <!-- ========================
+             CORE WEB VITALS
+        ========================= -->
+        <h2>Core Web Vitals</h2>
+
+        <p>
+          Google's <strong>Core Web Vitals</strong> are the three metrics that measure
+          real user experience. They directly influence Google Search rankings,
+          so improving them matters for both users and visibility.
+        </p>
+
+        <div class="metric-grid">
+          <div class="metric-card metric-lcp">
+            <h4>LCP</h4>
+            <p><strong>Largest Contentful Paint</strong></p>
+            <p>Time until the largest visible element loads.<br>
+            <strong>Good: under 2.5s</strong></p>
+          </div>
+          <div class="metric-card metric-cls">
+            <h4>CLS</h4>
+            <p><strong>Cumulative Layout Shift</strong></p>
+            <p>How much the page jumps around during load.<br>
+            <strong>Good: under 0.1</strong></p>
+          </div>
+          <div class="metric-card metric-inp">
+            <h4>INP</h4>
+            <p><strong>Interaction to Next Paint</strong></p>
+            <p>How fast the page responds to clicks/taps.<br>
+            <strong>Good: under 200ms</strong></p>
+          </div>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">🔧 How to measure</div>
+          <ul>
+            <li><strong>Chrome DevTools → Lighthouse</strong> — run an audit in one click, scores all three</li>
+            <li><strong>DevTools → Performance tab</strong> — record and inspect frame-by-frame</li>
+            <li><strong>PageSpeed Insights</strong> — uses real-world data from Chrome users</li>
+            <li><strong>WebPageTest</strong> — detailed waterfall, filmstrip, comparison tests</li>
+          </ul>
+        </div>
+
+        <!-- ========================
+             CRITICAL RENDERING PATH
+        ========================= -->
+        <h2>The Critical Rendering Path</h2>
+
+        <p>
+          Understanding how browsers turn HTML into pixels is the foundation of
+          performance work. Every optimization maps back to shortening one of these steps.
+        </p>
+
+        <ol class="render-steps">
+          <li><strong>Parse HTML</strong> → build the DOM tree. Stops whenever it hits a blocking resource.</li>
+          <li><strong>Parse CSS</strong> → build the CSSOM. Blocks rendering until complete.</li>
+          <li><strong>Combine DOM + CSSOM</strong> → build the Render Tree (only visible elements).</li>
+          <li><strong>Layout</strong> → calculate position and size of every element.</li>
+          <li><strong>Paint</strong> → fill in pixels (colors, images, shadows).</li>
+          <li><strong>Composite</strong> → combine layers and display to the screen.</li>
+        </ol>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 What "render-blocking" means</div>
+          <p>
+            By default, <code>&lt;script&gt;</code> and <code>&lt;link rel="stylesheet"&gt;</code>
+            pause HTML parsing while they download and execute. The browser can't show anything
+            until they finish. Your job is to minimize, defer, or eliminate these blocks.
+          </p>
+        </div>
+
+        <!-- ========================
+             SCRIPT LOADING
+        ========================= -->
+        <h2>Script Loading: async, defer, type="module"</h2>
+
+        <p>
+          How you load JavaScript has a massive impact on page speed.
+          Never put scripts in <code>&lt;head&gt;</code> without a loading strategy.
+        </p>
+
+        <div class="waterfall">
+<span class="label">HTML parsing:</span>   [====<span class="block">BLOCKED</span>========]  script downloads &amp; runs
+&lt;script src="app.js"&gt;&lt;/script&gt;
+
+<span class="label">HTML parsing:</span>   [========<span class="good">CONTINUES</span>======]  [script runs after parse]
+&lt;script <span class="good">defer</span> src="app.js"&gt;&lt;/script&gt;
+
+<span class="label">HTML parsing:</span>   [========<span class="good">CONTINUES</span>======]  [script runs when ready]
+&lt;script <span class="good">async</span> src="analytics.js"&gt;&lt;/script&gt;
+        </div>
+
+        <div class="code-example">
+          <pre><code><span class="comment">&lt;!-- ❌ Blocks HTML parsing — browser stops and waits --&gt;</span>
+&lt;<span class="tag">head</span>&gt;
+  &lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="string">"app.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+&lt;/<span class="tag">head</span>&gt;
+
+<span class="comment">&lt;!-- ✅ defer: downloads in parallel, runs after HTML is parsed
+        preserves execution order between scripts --&gt;</span>
+&lt;<span class="tag">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">"app.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+
+<span class="comment">&lt;!-- ✅ async: downloads in parallel, runs immediately when ready
+        no guaranteed order — best for independent scripts like analytics --&gt;</span>
+&lt;<span class="tag">script</span> <span class="attr">async</span> <span class="attr">src</span>=<span class="string">"analytics.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+
+<span class="comment">&lt;!-- ✅ type="module": always deferred, supports import/export --&gt;</span>
+&lt;<span class="tag">script</span> <span class="attr">type</span>=<span class="string">"module"</span> <span class="attr">src</span>=<span class="string">"app.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;</code></pre>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Attribute</th><th>Downloads</th><th>Executes</th><th>Order preserved</th><th>Use for</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>(none)</td>
+              <td>Blocks parse</td>
+              <td>Immediately</td>
+              <td>Yes</td>
+              <td>Avoid</td>
+            </tr>
+            <tr>
+              <td><code>defer</code></td>
+              <td>Parallel</td>
+              <td>After HTML parsed</td>
+              <td>Yes</td>
+              <td>App scripts</td>
+            </tr>
+            <tr>
+              <td><code>async</code></td>
+              <td>Parallel</td>
+              <td>When ready</td>
+              <td>No</td>
+              <td>Analytics, ads</td>
+            </tr>
+            <tr>
+              <td><code>type="module"</code></td>
+              <td>Parallel</td>
+              <td>After HTML parsed</td>
+              <td>Yes</td>
+              <td>Modern apps</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- ========================
+             RESOURCE HINTS
+        ========================= -->
+        <h2>Resource Hints</h2>
+
+        <p>
+          Resource hints let you tell the browser about resources it will need
+          <em>before it discovers them naturally</em>, giving it a head start.
+        </p>
+
+        <div class="code-example">
+          <pre><code>&lt;<span class="tag">head</span>&gt;
+  <span class="comment">&lt;!-- preload: download this ASAP — use for LCP image, hero font, critical CSS --&gt;</span>
+  &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="string">"preload"</span> <span class="attr">as</span>=<span class="string">"image"</span> <span class="attr">href</span>=<span class="string">"hero.webp"</span>&gt;
+  &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="string">"preload"</span> <span class="attr">as</span>=<span class="string">"font"</span> <span class="attr">href</span>=<span class="string">"font.woff2"</span> <span class="attr">crossorigin</span>&gt;
+
+  <span class="comment">&lt;!-- prefetch: download when browser is idle — use for next-page resources --&gt;</span>
+  &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="string">"prefetch"</span> <span class="attr">href</span>=<span class="string">"dashboard.js"</span>&gt;
+
+  <span class="comment">&lt;!-- preconnect: open a connection early — use for CDNs and third-party origins --&gt;</span>
+  &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="string">"preconnect"</span> <span class="attr">href</span>=<span class="string">"https://fonts.googleapis.com"</span>&gt;
+  &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="string">"preconnect"</span> <span class="attr">href</span>=<span class="string">"https://fonts.gstatic.com"</span> <span class="attr">crossorigin</span>&gt;
+
+  <span class="comment">&lt;!-- dns-prefetch: cheaper than preconnect — resolves DNS early --&gt;</span>
+  &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="string">"dns-prefetch"</span> <span class="attr">href</span>=<span class="string">"https://api.example.com"</span>&gt;
+&lt;/<span class="tag">head</span>&gt;</code></pre>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Hint</th><th>What it does</th><th>Use when</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>preload</code></td>
+              <td>Downloads the resource at high priority</td>
+              <td>LCP image, hero font, critical script</td>
+            </tr>
+            <tr>
+              <td><code>prefetch</code></td>
+              <td>Downloads at low priority when idle</td>
+              <td>Resources needed on the <em>next</em> page</td>
+            </tr>
+            <tr>
+              <td><code>preconnect</code></td>
+              <td>Opens TCP + TLS connection early</td>
+              <td>Any third-party origin (fonts, CDN, API)</td>
+            </tr>
+            <tr>
+              <td><code>dns-prefetch</code></td>
+              <td>Resolves DNS only (lighter than preconnect)</td>
+              <td>Origins you'll connect to later, not immediately</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Don't overuse preload</div>
+          <p>
+            Preloading too many resources defeats the purpose — everything becomes
+            "high priority" which means nothing is. Preload only 2–3 truly critical
+            above-the-fold resources.
+          </p>
+        </div>
+
+        <!-- ========================
+             CSS PERFORMANCE
+        ========================= -->
+        <h2>CSS Performance</h2>
+
+        <h3>Avoid triggering expensive layout operations</h3>
+
+        <p>
+          Some CSS changes force the browser to recalculate layouts for the entire page
+          (<strong>reflow</strong>). Others only require repainting pixels.
+          The cheapest changes happen on the compositor thread and skip both.
+        </p>
+
+        <table>
+          <thead>
+            <tr><th>Cost</th><th>Operations</th><th>Examples</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>🔴 High (reflow)</td>
+              <td>Change geometry</td>
+              <td><code>width</code>, <code>height</code>, <code>margin</code>, <code>padding</code>, <code>font-size</code>, <code>top</code>, <code>left</code></td>
+            </tr>
+            <tr>
+              <td>🟡 Medium (repaint)</td>
+              <td>Change appearance only</td>
+              <td><code>color</code>, <code>background-color</code>, <code>border-color</code>, <code>box-shadow</code></td>
+            </tr>
+            <tr>
+              <td>🟢 Cheap (composite only)</td>
+              <td>Move/fade layers</td>
+              <td><code>transform</code>, <code>opacity</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="code-example">
+          <div class="example-label">Prefer transform over position for animations</div>
+          <pre><code><span class="comment">/* ❌ Triggers reflow on every frame — causes jank */</span>
+<span class="tag">@keyframes</span> slide-bad {
+  <span class="attr">from</span> { <span class="attr">left</span>: <span class="number">0</span>; }
+  <span class="attr">to</span>   { <span class="attr">left</span>: <span class="number">200</span>px; }
+}
+
+<span class="comment">/* ✅ Compositor-only — silky 60fps */</span>
+<span class="tag">@keyframes</span> slide-good {
+  <span class="attr">from</span> { <span class="attr">transform</span>: <span class="string">translateX(0)</span>; }
+  <span class="attr">to</span>   { <span class="attr">transform</span>: <span class="string">translateX(200px)</span>; }
+}
+
+<span class="comment">/* ❌ Animating width causes reflow — janky transitions */</span>
+<span class="tag">.menu</span> { <span class="attr">transition</span>: <span class="string">width 0.3s</span>; }
+
+<span class="comment">/* ✅ Animate transform instead */</span>
+<span class="tag">.menu</span> { <span class="attr">transition</span>: <span class="string">transform 0.3s</span>; }</code></pre>
+        </div>
+
+        <h3>will-change — promote an element to its own layer</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Hints the browser to create a GPU layer before animation starts
+   so it doesn't have to do it on the first frame */</span>
+<span class="tag">.modal</span> {
+  <span class="attr">will-change</span>: <span class="string">transform, opacity</span>;
+}
+
+<span class="comment">/* Remove it after the animation — layers consume GPU memory */</span>
+<span class="tag">.modal.is-hidden</span> {
+  <span class="attr">will-change</span>: <span class="string">auto</span>;
+}</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Don't add will-change everywhere</div>
+          <p>
+            Each <code>will-change</code> layer consumes GPU memory. Only use it on elements
+            that actually animate, and only when you can measure a real improvement.
+            Overuse can make performance <em>worse</em>.
+          </p>
+        </div>
+
+        <h3>Critical CSS — inline above-the-fold styles</h3>
+
+        <p>
+          The browser can't render anything until all CSS is downloaded. For fast first
+          paints, inline the CSS needed for above-the-fold content directly in
+          <code>&lt;head&gt;</code> and load the rest asynchronously.
+        </p>
+
+        <div class="code-example">
+          <pre><code>&lt;<span class="tag">head</span>&gt;
+  <span class="comment">&lt;!-- Critical CSS inlined — no network round-trip needed --&gt;</span>
+  &lt;<span class="tag">style</span>&gt;
+    body { margin: 0; font-family: sans-serif; }
+    .hero { height: 100dvh; display: flex; align-items: center; }
+    .nav  { position: fixed; top: 0; width: 100%; }
+  &lt;/<span class="tag">style</span>&gt;
+
+  <span class="comment">&lt;!-- Non-critical CSS loaded asynchronously --&gt;</span>
+  &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"styles.css"</span> <span class="attr">media</span>=<span class="string">"print"</span>
+        <span class="attr">onload</span>=<span class="string">"this.media='all'"</span>&gt;
+  &lt;<span class="tag">noscript</span>&gt;
+    &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"styles.css"</span>&gt;
+  &lt;/<span class="tag">noscript</span>&gt;
+&lt;/<span class="tag">head</span>&gt;</code></pre>
+        </div>
+
+        <!-- ========================
+             JAVASCRIPT PATTERNS
+        ========================= -->
+        <h2>JavaScript Performance Patterns</h2>
+
+        <h3>Debounce — limit how often a function fires</h3>
+
+        <p>
+          Some events fire dozens of times per second — scroll, resize, keyup.
+          Running heavy logic on every single event causes lag.
+          <strong>Debouncing</strong> waits until the event has stopped firing for a
+          set delay before running the function.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// Debounce: wait until the user stops typing for 300ms</span>
+<span class="keyword">function</span> <span class="string">debounce</span>(fn, delay) {
+  <span class="keyword">let</span> timer;
+  <span class="keyword">return</span> <span class="keyword">function</span>(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(<span class="keyword">this</span>, args), delay);
+  };
+}
+
+<span class="comment">// Without debounce: search fires on every keystroke</span>
+input.addEventListener(<span class="string">'input'</span>, searchAPI); <span class="comment">// ❌ too many requests</span>
+
+<span class="comment">// With debounce: search fires 300ms after the user stops typing</span>
+<span class="keyword">const</span> debouncedSearch = debounce(searchAPI, <span class="number">300</span>);
+input.addEventListener(<span class="string">'input'</span>, debouncedSearch); <span class="comment">// ✅</span></code></pre>
+        </div>
+
+        <h3>Throttle — cap the rate a function can fire</h3>
+
+        <p>
+          <strong>Throttling</strong> guarantees a function runs at most once every N milliseconds,
+          no matter how often the event fires. Use it when you need regular updates
+          (scroll position, mouse tracking) but not on every single frame.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// Throttle: run at most once every 100ms</span>
+<span class="keyword">function</span> <span class="string">throttle</span>(fn, limit) {
+  <span class="keyword">let</span> lastCall = <span class="number">0</span>;
+  <span class="keyword">return</span> <span class="keyword">function</span>(...args) {
+    <span class="keyword">const</span> now = Date.now();
+    <span class="keyword">if</span> (now - lastCall >= limit) {
+      lastCall = now;
+      fn.apply(<span class="keyword">this</span>, args);
+    }
+  };
+}
+
+<span class="comment">// Update progress bar on scroll — throttled to 10 times/sec max</span>
+<span class="keyword">const</span> throttledScroll = throttle(updateProgressBar, <span class="number">100</span>);
+window.addEventListener(<span class="string">'scroll'</span>, throttledScroll);
+
+<span class="comment">// Rule of thumb:
+// Debounce → "after it stops" (search, resize, form validation)
+// Throttle → "while it's happening, but slower" (scroll, mousemove)</span></code></pre>
+        </div>
+
+        <h3>Avoid layout thrashing</h3>
+
+        <p>
+          <strong>Layout thrashing</strong> happens when JavaScript alternates between
+          reading and writing DOM geometry, forcing the browser to recalculate layout
+          repeatedly inside the same frame.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// ❌ Layout thrashing — read/write/read/write alternating</span>
+elements.forEach(el => {
+  <span class="keyword">const</span> width = el.offsetWidth;   <span class="comment">// READ  → forces layout</span>
+  el.style.width = width + <span class="number">10</span> + <span class="string">'px'</span>; <span class="comment">// WRITE → invalidates layout</span>
+  <span class="keyword">const</span> height = el.offsetHeight; <span class="comment">// READ  → forces layout again!</span>
+  el.style.height = height + <span class="number">10</span> + <span class="string">'px'</span>;
+});
+
+<span class="comment">// ✅ Batch reads first, then writes</span>
+<span class="keyword">const</span> measurements = elements.map(el => ({
+  width:  el.offsetWidth,   <span class="comment">// READ all</span>
+  height: el.offsetHeight
+}));
+
+elements.forEach((el, i) => {
+  el.style.width  = measurements[i].width  + <span class="number">10</span> + <span class="string">'px'</span>; <span class="comment">// WRITE all</span>
+  el.style.height = measurements[i].height + <span class="number">10</span> + <span class="string">'px'</span>;
+});</code></pre>
+        </div>
+
+        <h3>requestAnimationFrame for visual updates</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// ❌ setTimeout for animation — doesn't sync with the screen refresh</span>
+setTimeout(animate, <span class="number">16</span>); <span class="comment">// might fire at the wrong moment</span>
+
+<span class="comment">// ✅ requestAnimationFrame — syncs with the browser's repaint cycle
+//    runs at 60fps (or whatever the screen supports), pauses when tab is hidden</span>
+<span class="keyword">function</span> animate(timestamp) {
+  <span class="comment">// update positions using timestamp for smooth, time-based motion</span>
+  element.style.transform = <span class="string">`translateX(${timestamp * 0.1 % 400}px)`</span>;
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);</code></pre>
+        </div>
+
+        <h3>Memoization — cache expensive results</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// ❌ Recalculates every time, even with the same input</span>
+<span class="keyword">function</span> <span class="string">expensiveCalc</span>(n) {
+  <span class="comment">/* complex logic */</span>
+  <span class="keyword">return</span> result;
+}
+
+<span class="comment">// ✅ Returns cached result for repeated inputs</span>
+<span class="keyword">function</span> <span class="string">memoize</span>(fn) {
+  <span class="keyword">const</span> cache = <span class="keyword">new</span> Map();
+  <span class="keyword">return</span> <span class="keyword">function</span>(n) {
+    <span class="keyword">if</span> (cache.has(n)) <span class="keyword">return</span> cache.get(n);
+    <span class="keyword">const</span> result = fn(n);
+    cache.set(n, result);
+    <span class="keyword">return</span> result;
+  };
+}
+
+<span class="keyword">const</span> fastCalc = memoize(expensiveCalc);
+fastCalc(<span class="number">42</span>); <span class="comment">// calculated</span>
+fastCalc(<span class="number">42</span>); <span class="comment">// returned from cache instantly</span></code></pre>
+        </div>
+
+        <h3>Event delegation — one listener instead of many</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// ❌ One listener per item — slow for large lists, breaks on dynamic items</span>
+document.querySelectorAll(<span class="string">'.item'</span>).forEach(item => {
+  item.addEventListener(<span class="string">'click'</span>, handleClick);
+});
+
+<span class="comment">// ✅ One listener on the parent — handles all current AND future children</span>
+document.querySelector(<span class="string">'.list'</span>).addEventListener(<span class="string">'click'</span>, (e) => {
+  <span class="keyword">if</span> (e.target.closest(<span class="string">'.item'</span>)) {
+    handleClick(e);
+  }
+});</code></pre>
+        </div>
+
+        <!-- ========================
+             NETWORK & ASSETS
+        ========================= -->
+        <h2>Network and Asset Optimization</h2>
+
+        <h3>Minification and bundling</h3>
+
+        <p>
+          Minification removes whitespace, comments, and shortens variable names.
+          Bundling combines many files into fewer requests.
+          Modern build tools (Vite, webpack, esbuild) do both automatically.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Before minification — 312 bytes */</span>
+<span class="tag">.navigation</span> {
+  <span class="attr">display</span>: <span class="string">flex</span>;
+  <span class="attr">align-items</span>: <span class="string">center</span>;
+  <span class="attr">background-color</span>: <span class="string">#ffffff</span>;
+}
+
+<span class="comment">/* After minification — 60 bytes */</span>
+<span class="tag">.navigation</span>{<span class="attr">display</span>:<span class="string">flex</span>;<span class="attr">align-items</span>:<span class="string">center</span>;<span class="attr">background-color</span>:<span class="string">#fff</span>}</code></pre>
+        </div>
+
+        <h3>HTTP caching</h3>
+
+        <p>
+          The browser can store assets locally and reuse them on repeat visits,
+          eliminating network requests entirely.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Server response headers — set by your server/CDN config */</span>
+
+<span class="comment">/* HTML: short cache — content changes frequently */</span>
+Cache-Control: no-cache, must-revalidate
+
+<span class="comment">/* CSS/JS with content hash in filename: cache forever
+   When code changes, the filename changes → new URL → new download */</span>
+Cache-Control: public, max-age=31536000, immutable
+
+<span class="comment">/* Images: cache for a week */</span>
+Cache-Control: public, max-age=604800</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Content hashing</div>
+          <p>
+            Build tools like Vite output files named <code>app.3f8a2c1d.js</code>
+            where the hash changes whenever the code changes.
+            This lets you serve those files with a <strong>permanent cache</strong>
+            while still getting instant updates when you deploy.
+          </p>
+        </div>
+
+        <h3>Tree shaking — eliminate dead code</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// ❌ Imports entire library — all 70kb included in bundle</span>
+<span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span>;
+_.debounce(fn, <span class="number">300</span>);
+
+<span class="comment">// ✅ Named import — bundler includes ONLY debounce (~2kb)</span>
+<span class="keyword">import</span> { debounce } <span class="keyword">from</span> <span class="string">'lodash-es'</span>;
+debounce(fn, <span class="number">300</span>);
+
+<span class="comment">// ✅ Even better — write it yourself (zero dependencies)</span>
+<span class="keyword">const</span> debouncedFn = debounce(fn, <span class="number">300</span>); <span class="comment">// your own implementation</span></code></pre>
+        </div>
+
+        <h3>Lazy loading routes and components</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// ❌ Everything loads upfront — large initial bundle</span>
+<span class="keyword">import</span> Dashboard <span class="keyword">from</span> <span class="string">'./Dashboard'</span>;
+<span class="keyword">import</span> Settings  <span class="keyword">from</span> <span class="string">'./Settings'</span>;
+<span class="keyword">import</span> Profile   <span class="keyword">from</span> <span class="string">'./Profile'</span>;
+
+<span class="comment">// ✅ Dynamic import — each route loads only when navigated to</span>
+<span class="keyword">const</span> Dashboard = () => <span class="keyword">import</span>(<span class="string">'./Dashboard'</span>);
+<span class="keyword">const</span> Settings  = () => <span class="keyword">import</span>(<span class="string">'./Settings'</span>);
+<span class="keyword">const</span> Profile   = () => <span class="keyword">import</span>(<span class="string">'./Profile'</span>);</code></pre>
+        </div>
+
+        <!-- ========================
+             FONTS
+        ========================= -->
+        <h2>Font Optimization</h2>
+
+        <p>
+          Web fonts are a common performance culprit — they block text rendering
+          until downloaded.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* 1. Preconnect to the font origin */</span>
+&lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="string">"preconnect"</span> <span class="attr">href</span>=<span class="string">"https://fonts.gstatic.com"</span> <span class="attr">crossorigin</span>&gt;
+
+<span class="comment">/* 2. font-display: swap — show fallback font immediately,
+      swap in the web font when it arrives */</span>
+<span class="tag">@font-face</span> {
+  <span class="attr">font-family</span>: <span class="string">'Inter'</span>;
+  <span class="attr">src</span>: <span class="string">url('inter.woff2') format('woff2')</span>;
+  <span class="attr">font-display</span>: <span class="string">swap</span>; <span class="comment">/* prevents invisible text during load */</span>
+}
+
+<span class="comment">/* 3. Only load the weights and styles you actually use */</span>
+<span class="comment">/* ❌ Loads all 9 weights */</span>
+@<span class="tag">import url</span>(<span class="string">'https://fonts.googleapis.com/css2?family=Inter'</span>);
+
+<span class="comment">/* ✅ Loads only weight 400 and 700 */</span>
+@<span class="tag">import url</span>(<span class="string">'https://fonts.googleapis.com/css2?family=Inter:wght@400;700'</span>);
+
+<span class="comment">/* 4. Self-host fonts for the best performance — no third-party request */</span>
+<span class="tag">@font-face</span> {
+  <span class="attr">font-family</span>: <span class="string">'Inter'</span>;
+  <span class="attr">src</span>: <span class="string">url('/fonts/inter-400.woff2') format('woff2')</span>;
+  <span class="attr">font-weight</span>: <span class="number">400</span>;
+  <span class="attr">font-display</span>: <span class="string">swap</span>;
+}</code></pre>
+        </div>
+
+        <!-- ========================
+             IMAGES SUMMARY
+        ========================= -->
+        <h2>Images — Quick Checklist</h2>
+
+        <p>See the <a href="responsive-images.html">Responsive Images</a> page for full detail. Key points:</p>
+
+        <div class="info-box note">
+          <div class="info-box-title">📋 Image performance checklist</div>
+          <ul>
+            <li>Always set <code>width</code> and <code>height</code> attributes to prevent layout shift</li>
+            <li>Serve <strong>AVIF → WebP → JPEG</strong> via <code>&lt;picture&gt;</code></li>
+            <li>Use <code>srcset</code> + <code>sizes</code> to serve appropriately-sized images</li>
+            <li>Add <code>loading="lazy"</code> to all below-the-fold images</li>
+            <li>Add <code>fetchpriority="high"</code> to your LCP image (hero)</li>
+            <li>Compress images before uploading — tools: Squoosh, ImageOptim, Sharp</li>
+            <li>Use SVG for icons and logos — infinitely scalable, tiny file size</li>
+          </ul>
+        </div>
+
+        <!-- ========================
+             MEASURING
+        ========================= -->
+        <h2>Measuring and Diagnosing Performance</h2>
+
+        <h3>Lighthouse audit</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">// In Chrome DevTools:
+// 1. Open DevTools (F12)
+// 2. Go to "Lighthouse" tab
+// 3. Select "Performance" category
+// 4. Click "Analyze page load"
+
+// Scores to aim for:
+// Performance:    90+
+// Accessibility:  90+
+// Best Practices: 90+
+// SEO:            90+</span></code></pre>
+        </div>
+
+        <h3>Performance tab — find the bottleneck</h3>
+
+        <div class="info-box tip">
+          <div class="info-box-title">🔧 How to use the Performance tab</div>
+          <ol>
+            <li>Open DevTools → Performance tab</li>
+            <li>Click the record button, interact with the page, stop recording</li>
+            <li>Look for <strong>long tasks</strong> (red bars) — these block the main thread</li>
+            <li>Check the <strong>Frames</strong> row — drops below 60fps cause visual jank</li>
+            <li>Inspect the flame chart to find exactly which function is slow</li>
+          </ol>
+        </div>
+
+        <h3>Network tab — spot heavy resources</h3>
+
+        <div class="info-box tip">
+          <div class="info-box-title">🔧 Network tab workflow</div>
+          <ol>
+            <li>Open DevTools → Network tab, reload the page</li>
+            <li>Sort by <strong>Size</strong> — find unexpectedly large files</li>
+            <li>Sort by <strong>Time</strong> — find slow requests</li>
+            <li>Use the <strong>Waterfall</strong> column — long bars = slow, gaps = waiting</li>
+            <li>Enable <strong>throttling</strong> (Fast 3G) to simulate mobile network conditions</li>
+          </ol>
+        </div>
+
+        <!-- ========================
+             CHECKLIST
+        ========================= -->
+        <h2>Optimization Checklist</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📋 Before you ship — performance checklist</div>
+          <p><strong>HTML</strong></p>
+          <ul>
+            <li>All <code>&lt;script&gt;</code> tags use <code>defer</code> or <code>async</code></li>
+            <li>Hero image has <code>fetchpriority="high"</code>, all others have <code>loading="lazy"</code></li>
+            <li>LCP image is preloaded with <code>&lt;link rel="preload"&gt;</code></li>
+            <li><code>preconnect</code> added for all third-party origins (fonts, CDN, APIs)</li>
+            <li>All images have <code>width</code>, <code>height</code>, and meaningful <code>alt</code></li>
+          </ul>
+          <p><strong>CSS</strong></p>
+          <ul>
+            <li>Animations use only <code>transform</code> and <code>opacity</code></li>
+            <li>Critical above-the-fold CSS is inlined or loaded with high priority</li>
+            <li>Unused CSS is removed (PurgeCSS, manual audit)</li>
+            <li>Font faces use <code>font-display: swap</code></li>
+            <li>Only the font weights/styles actually used are loaded</li>
+          </ul>
+          <p><strong>JavaScript</strong></p>
+          <ul>
+            <li>Event listeners on frequently-firing events are debounced or throttled</li>
+            <li>DOM reads and writes are batched separately (no layout thrashing)</li>
+            <li>Animations use <code>requestAnimationFrame</code></li>
+            <li>Named imports used instead of full library imports (tree shaking)</li>
+            <li>Large routes/components loaded with dynamic <code>import()</code></li>
+          </ul>
+          <p><strong>Assets</strong></p>
+          <ul>
+            <li>Images served as AVIF/WebP with JPEG fallback</li>
+            <li>All images compressed before upload</li>
+            <li>CSS and JS minified (handled by build tool)</li>
+            <li>Static assets cached with long <code>max-age</code> + content hashes in filenames</li>
+            <li>Lighthouse score above 90 for Performance</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="../index.html" class="nav-button">← Home</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

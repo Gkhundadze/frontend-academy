@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Colors - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .color-swatch {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.15);
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    .swatch-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+    }
+    .swatch-row code {
+      font-size: 0.9rem;
+    }
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .color-tile {
+      border-radius: 8px;
+      padding: 24px 8px 8px;
+      font-size: 0.78rem;
+      font-family: monospace;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    .hsl-wheel {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+    .hsl-wheel .hue-cell {
+      width: 36px;
+      height: 36px;
+      border-radius: 4px;
+      font-size: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.85);
+      font-weight: bold;
+    }
+    .contrast-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+    .contrast-box {
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+  </style>
+  <link rel="icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>CSS Colors</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="css-colors.html">CSS Colors</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="css-units.html">CSS Units</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="responsive-images.html">Responsive Images</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 4: Professional Skills</div>
+        <ul class="nav-list">
+          <li><a href="performance-optimization.html">Performance Optimization</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>🎨 CSS Colors</h1>
+
+        <p>
+          Color is one of the most powerful tools in design. CSS gives you several ways
+          to express color — each with different strengths. Choosing the right format
+          affects readability, maintainability, theming, and even accessibility.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 Where colors are used</div>
+          <p>Color values appear in many CSS properties:</p>
+          <pre><code><span class="tag">.element</span> {
+  <span class="attr">color</span>: <span class="string">red</span>;               <span class="comment">/* text color */</span>
+  <span class="attr">background-color</span>: <span class="string">blue</span>;   <span class="comment">/* background */</span>
+  <span class="attr">border-color</span>: <span class="string">green</span>;      <span class="comment">/* border */</span>
+  <span class="attr">outline-color</span>: <span class="string">orange</span>;    <span class="comment">/* outline */</span>
+  <span class="attr">box-shadow</span>: <span class="number">0 2px 8px</span> <span class="string">purple</span>; <span class="comment">/* shadow */</span>
+  <span class="attr">text-decoration-color</span>: <span class="string">pink</span>; <span class="comment">/* underline */</span>
+  <span class="attr">caret-color</span>: <span class="string">teal</span>;         <span class="comment">/* text cursor in inputs */</span>
+}</code></pre>
+        </div>
+
+        <!-- ========================
+             NAMED COLORS
+        ========================= -->
+        <h2>Named Colors (Keywords)</h2>
+
+        <p>
+          CSS defines <strong>148 named color keywords</strong> — human-readable names
+          that map to specific color values.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="tag">h1</span> { <span class="attr">color</span>: <span class="string">tomato</span>; }
+<span class="tag">p</span>  { <span class="attr">color</span>: <span class="string">steelblue</span>; }
+<span class="tag">nav</span> { <span class="attr">background-color</span>: <span class="string">midnightblue</span>; }
+<span class="tag">button</span> { <span class="attr">background-color</span>: <span class="string">coral</span>; }</code></pre>
+        </div>
+
+        <div class="color-grid">
+          <div class="color-tile" style="background:#ff6347;color:white;">tomato</div>
+          <div class="color-tile" style="background:#4682b4;color:white;">steelblue</div>
+          <div class="color-tile" style="background:#191970;color:white;">midnightblue</div>
+          <div class="color-tile" style="background:#ff7f50;color:white;">coral</div>
+          <div class="color-tile" style="background:#20b2aa;color:white;">lightseagreen</div>
+          <div class="color-tile" style="background:#9370db;color:white;">mediumpurple</div>
+          <div class="color-tile" style="background:#3cb371;color:white;">mediumseagreen</div>
+          <div class="color-tile" style="background:#ff69b4;color:white;">hotpink</div>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">✅ When to use named colors</div>
+          <ul>
+            <li><strong>Quick prototyping</strong> — readable and fast to type</li>
+            <li><strong>Learning and demos</strong> — no need to remember hex codes</li>
+            <li><strong>Special keywords</strong> — <code>transparent</code>, <code>currentColor</code>, <code>inherit</code></li>
+          </ul>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Avoid in production design</div>
+          <p>
+            Named colors rarely match a real brand palette. They're hard to adjust
+            (you can't slightly darken <code>tomato</code>) and are inconsistent across
+            designers. Use hex, HSL, or oklch for real projects.
+          </p>
+        </div>
+
+        <!-- ========================
+             HEX
+        ========================= -->
+        <h2>Hexadecimal — #rrggbb</h2>
+
+        <p>
+          Hex is the most common format on the web. It encodes red, green, and blue
+          channels as pairs of hexadecimal digits (00–FF), where <code>00</code> = 0
+          and <code>FF</code> = 255.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Full 6-digit hex */</span>
+<span class="tag">.element</span> {
+  <span class="attr">color</span>: <span class="string">#ff6347</span>;  <span class="comment">/* red=255, green=99, blue=71 → tomato */</span>
+  <span class="attr">color</span>: <span class="string">#4a90e2</span>;  <span class="comment">/* a calm blue */</span>
+  <span class="attr">color</span>: <span class="string">#333333</span>;  <span class="comment">/* dark gray */</span>
+  <span class="attr">color</span>: <span class="string">#ffffff</span>;  <span class="comment">/* white */</span>
+  <span class="attr">color</span>: <span class="string">#000000</span>;  <span class="comment">/* black */</span>
+}
+
+<span class="comment">/* 3-digit shorthand — when each pair is the same digit */</span>
+<span class="tag">.element</span> {
+  <span class="attr">color</span>: <span class="string">#333</span>;   <span class="comment">/* same as #333333 */</span>
+  <span class="attr">color</span>: <span class="string">#fff</span>;   <span class="comment">/* same as #ffffff */</span>
+  <span class="attr">color</span>: <span class="string">#f00</span>;   <span class="comment">/* same as #ff0000 — pure red */</span>
+}
+
+<span class="comment">/* 8-digit hex with alpha transparency */</span>
+<span class="tag">.overlay</span> {
+  <span class="attr">background-color</span>: <span class="string">#00000080</span>; <span class="comment">/* black at 50% opacity */</span>
+  <span class="attr">background-color</span>: <span class="string">#4a90e2cc</span>; <span class="comment">/* blue at ~80% opacity */</span>
+}</code></pre>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 How hex digits map to opacity</div>
+          <p>The alpha channel in 8-digit hex goes from <code>00</code> (transparent) to <code>FF</code> (opaque). Some common values:</p>
+          <table>
+            <thead><tr><th>Hex alpha</th><th>Opacity</th></tr></thead>
+            <tbody>
+              <tr><td><code>FF</code></td><td>100% (fully opaque)</td></tr>
+              <tr><td><code>CC</code></td><td>80%</td></tr>
+              <tr><td><code>99</code></td><td>60%</td></tr>
+              <tr><td><code>66</code></td><td>40%</td></tr>
+              <tr><td><code>33</code></td><td>20%</td></tr>
+              <tr><td><code>00</code></td><td>0% (fully transparent)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">✅ When to use hex</div>
+          <ul>
+            <li>Copying colors from <strong>Figma, design tools, or brand guidelines</strong> — they output hex</li>
+            <li><strong>Static palettes</strong> that don't need programmatic adjustment</li>
+            <li>When working with a designer who provides hex codes</li>
+          </ul>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Hex is hard to reason about</div>
+          <p>
+            Looking at <code>#4a90e2</code> tells you nothing about the color intuitively.
+            You can't tell if it's light or dark, saturated or muted, or how to make it
+            slightly lighter. For that, HSL or oklch are far better.
+          </p>
+        </div>
+
+        <!-- ========================
+             RGB / RGBA
+        ========================= -->
+        <h2>RGB and RGBA</h2>
+
+        <p>
+          RGB expresses the same red–green–blue model as hex, but with decimal numbers
+          (0–255) that are easier to read and modify in code.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* rgb(red, green, blue) — values 0–255 */</span>
+<span class="tag">.element</span> {
+  <span class="attr">color</span>: <span class="string">rgb(255, 99, 71)</span>;    <span class="comment">/* tomato */</span>
+  <span class="attr">color</span>: <span class="string">rgb(74, 144, 226)</span>;   <span class="comment">/* calm blue */</span>
+  <span class="attr">color</span>: <span class="string">rgb(0, 0, 0)</span>;        <span class="comment">/* black */</span>
+  <span class="attr">color</span>: <span class="string">rgb(255, 255, 255)</span>;  <span class="comment">/* white */</span>
+}
+
+<span class="comment">/* rgba adds alpha (opacity) as a 4th value: 0.0–1.0 */</span>
+<span class="tag">.overlay</span> {
+  <span class="attr">background-color</span>: <span class="string">rgba(0, 0, 0, 0.5)</span>;      <span class="comment">/* 50% black */</span>
+  <span class="attr">background-color</span>: <span class="string">rgba(74, 144, 226, 0.2)</span>; <span class="comment">/* light blue tint */</span>
+  <span class="attr">box-shadow</span>: <span class="number">0 4px 16px</span> <span class="string">rgba(0, 0, 0, 0.15)</span>;
+}
+
+<span class="comment">/* Modern syntax: rgb() handles alpha too (no need for rgba) */</span>
+<span class="tag">.element</span> {
+  <span class="attr">color</span>: <span class="string">rgb(74 144 226 / 80%)</span>;  <span class="comment">/* space-separated, % alpha */</span>
+}</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">✅ When to use rgb / rgba</div>
+          <ul>
+            <li><strong>JavaScript color manipulation</strong> — easy to read/write individual channels</li>
+            <li><strong>Transparent overlays and shadows</strong> — <code>rgba(0,0,0,0.5)</code> is the standard pattern</li>
+            <li>When you need to <strong>interpolate channels</strong> with JS (e.g., animated color transitions)</li>
+          </ul>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ RGB still isn't intuitive for design</div>
+          <p>
+            <code>rgb(74, 144, 226)</code> doesn't tell you "this is a medium-light blue".
+            Adjusting lightness means changing all three channels simultaneously.
+            For design decisions, HSL or oklch are much more natural.
+          </p>
+        </div>
+
+        <h3>Practical RGBA patterns</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Modal backdrop */</span>
+<span class="tag">.modal-backdrop</span> {
+  <span class="attr">background-color</span>: <span class="string">rgba(0, 0, 0, 0.6)</span>;
+}
+
+<span class="comment">/* Subtle card shadow */</span>
+<span class="tag">.card</span> {
+  <span class="attr">box-shadow</span>: <span class="number">0 2px 8px</span> <span class="string">rgba(0, 0, 0, 0.12)</span>,
+              <span class="number">0 8px 24px</span> <span class="string">rgba(0, 0, 0, 0.08)</span>;
+}
+
+<span class="comment">/* Highlight on hover without changing the color */</span>
+<span class="tag">.nav-item:hover</span> {
+  <span class="attr">background-color</span>: <span class="string">rgba(255, 255, 255, 0.1)</span>;
+}</code></pre>
+        </div>
+
+        <!-- ========================
+             HSL / HSLA
+        ========================= -->
+        <h2>HSL and HSLA</h2>
+
+        <p>
+          HSL stands for <strong>Hue, Saturation, Lightness</strong> — a model designed
+          to match how humans think about color, making it far more intuitive for design work.
+        </p>
+
+        <table>
+          <thead>
+            <tr><th>Channel</th><th>Range</th><th>Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Hue</strong></td>
+              <td>0–360°</td>
+              <td>The color on the wheel: 0=red, 120=green, 240=blue</td>
+            </tr>
+            <tr>
+              <td><strong>Saturation</strong></td>
+              <td>0%–100%</td>
+              <td>0% = gray, 100% = fully vibrant</td>
+            </tr>
+            <tr>
+              <td><strong>Lightness</strong></td>
+              <td>0%–100%</td>
+              <td>0% = black, 50% = normal, 100% = white</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="hsl-wheel">
+          <div class="hue-cell" style="background:hsl(0,80%,50%)">0°</div>
+          <div class="hue-cell" style="background:hsl(30,80%,50%)">30°</div>
+          <div class="hue-cell" style="background:hsl(60,80%,50%);color:#333">60°</div>
+          <div class="hue-cell" style="background:hsl(90,80%,50%);color:#333">90°</div>
+          <div class="hue-cell" style="background:hsl(120,80%,50%);color:#333">120°</div>
+          <div class="hue-cell" style="background:hsl(150,80%,50%);color:#333">150°</div>
+          <div class="hue-cell" style="background:hsl(180,80%,50%);color:#333">180°</div>
+          <div class="hue-cell" style="background:hsl(210,80%,50%)">210°</div>
+          <div class="hue-cell" style="background:hsl(240,80%,50%)">240°</div>
+          <div class="hue-cell" style="background:hsl(270,80%,50%)">270°</div>
+          <div class="hue-cell" style="background:hsl(300,80%,50%)">300°</div>
+          <div class="hue-cell" style="background:hsl(330,80%,50%)">330°</div>
+        </div>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* hsl(hue, saturation%, lightness%) */</span>
+<span class="tag">.element</span> {
+  <span class="attr">color</span>: <span class="string">hsl(9, 100%, 64%)</span>;    <span class="comment">/* tomato red */</span>
+  <span class="attr">color</span>: <span class="string">hsl(214, 70%, 59%)</span>;  <span class="comment">/* calm blue */</span>
+  <span class="attr">color</span>: <span class="string">hsl(120, 60%, 40%)</span>;  <span class="comment">/* forest green */</span>
+}
+
+<span class="comment">/* hsla adds alpha transparency */</span>
+<span class="tag">.element</span> {
+  <span class="attr">background</span>: <span class="string">hsla(214, 70%, 59%, 0.2)</span>; <span class="comment">/* light blue tint */</span>
+}
+
+<span class="comment">/* Modern syntax (no need for hsla) */</span>
+<span class="tag">.element</span> {
+  <span class="attr">background</span>: <span class="string">hsl(214 70% 59% / 20%)</span>;
+}</code></pre>
+        </div>
+
+        <h3>The real power of HSL: easy adjustments</h3>
+
+        <p>
+          Keep the hue fixed and vary saturation/lightness to build an entire color palette
+          from a single color — something impossible to do intuitively with hex or RGB.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Building a full button palette from one hue</div>
+          <pre><code><span class="comment">/* All the same hue (214° = blue), only lightness changes */</span>
+<span class="tag">:root</span> {
+  <span class="attr">--blue-900</span>: <span class="string">hsl(214, 70%, 15%)</span>; <span class="comment">/* very dark */</span>
+  <span class="attr">--blue-700</span>: <span class="string">hsl(214, 70%, 35%)</span>;
+  <span class="attr">--blue-500</span>: <span class="string">hsl(214, 70%, 55%)</span>; <span class="comment">/* base */</span>
+  <span class="attr">--blue-300</span>: <span class="string">hsl(214, 70%, 75%)</span>;
+  <span class="attr">--blue-100</span>: <span class="string">hsl(214, 70%, 92%)</span>; <span class="comment">/* very light tint */</span>
+}
+
+<span class="tag">.btn</span>        { <span class="attr">background</span>: <span class="string">var(--blue-500)</span>; }
+<span class="tag">.btn:hover</span>  { <span class="attr">background</span>: <span class="string">var(--blue-700)</span>; } <span class="comment">/* darker on hover */</span>
+<span class="tag">.btn:active</span> { <span class="attr">background</span>: <span class="string">var(--blue-900)</span>; } <span class="comment">/* darkest on press */</span>
+<span class="tag">.btn-ghost</span>  { <span class="attr">background</span>: <span class="string">var(--blue-100)</span>; <span class="attr">color</span>: <span class="string">var(--blue-700)</span>; }</code></pre>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">Semantic UI colors from one hue per meaning</div>
+          <pre><code><span class="tag">:root</span> {
+  <span class="comment">/* Same structure, different hues */</span>
+  <span class="attr">--success</span>:     <span class="string">hsl(142, 60%, 45%)</span>; <span class="comment">/* green */</span>
+  <span class="attr">--success-bg</span>:  <span class="string">hsl(142, 60%, 94%)</span>;
+  <span class="attr">--warning</span>:     <span class="string">hsl(38,  95%, 50%)</span>; <span class="comment">/* amber */</span>
+  <span class="attr">--warning-bg</span>:  <span class="string">hsl(38,  95%, 94%)</span>;
+  <span class="attr">--danger</span>:      <span class="string">hsl(4,   86%, 52%)</span>; <span class="comment">/* red */</span>
+  <span class="attr">--danger-bg</span>:   <span class="string">hsl(4,   86%, 95%)</span>;
+  <span class="attr">--info</span>:        <span class="string">hsl(214, 70%, 55%)</span>; <span class="comment">/* blue */</span>
+  <span class="attr">--info-bg</span>:     <span class="string">hsl(214, 70%, 95%)</span>;
+}
+
+<span class="tag">.alert-success</span> {
+  <span class="attr">color</span>: <span class="string">var(--success)</span>;
+  <span class="attr">background</span>: <span class="string">var(--success-bg)</span>;
+  <span class="attr">border-left</span>: <span class="number">4</span>px <span class="string">solid var(--success)</span>;
+}</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">✅ When to use HSL</div>
+          <ul>
+            <li><strong>Building color palettes</strong> — spin the hue, vary the lightness</li>
+            <li><strong>Semantic UI colors</strong> — success, warning, danger, info</li>
+            <li><strong>Dark mode</strong> — flip lightness values, keep hues the same</li>
+            <li><strong>Hover and active states</strong> — just change the lightness</li>
+            <li>When you want to <strong>reason about color</strong> without a color picker</li>
+          </ul>
+        </div>
+
+        <!-- ========================
+             oklch
+        ========================= -->
+        <h2>oklch — The Modern Standard</h2>
+
+        <p>
+          <code>oklch</code> is the newest CSS color format and is increasingly considered
+          the best choice for design systems. It stands for
+          <strong>OK Lightness Chroma Hue</strong> — a perceptually uniform color space.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 What "perceptually uniform" means</div>
+          <p>
+            In HSL, two colors with the same lightness value can <em>look</em> very
+            different in brightness to the human eye — a yellow at <code>hsl(60, 100%, 50%)</code>
+            appears much brighter than a blue at <code>hsl(240, 100%, 50%)</code>, even though
+            both have <code>50%</code> lightness.
+          </p>
+          <p>
+            oklch fixes this: colors at the same <code>L</code> value genuinely look equally
+            bright to humans. This makes it reliable for accessibility and automatic palette generation.
+          </p>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Channel</th><th>Range</th><th>Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>L</strong> (Lightness)</td>
+              <td>0–1 (or 0%–100%)</td>
+              <td>Perceptually uniform brightness: 0=black, 1=white</td>
+            </tr>
+            <tr>
+              <td><strong>C</strong> (Chroma)</td>
+              <td>0–0.4+</td>
+              <td>Color intensity/vividness: 0=gray, higher=more vivid</td>
+            </tr>
+            <tr>
+              <td><strong>H</strong> (Hue)</td>
+              <td>0–360°</td>
+              <td>Same color wheel as HSL</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* oklch(lightness chroma hue) */</span>
+<span class="tag">.element</span> {
+  <span class="attr">color</span>: <span class="string">oklch(0.63 0.26 29)</span>;    <span class="comment">/* vivid red-orange */</span>
+  <span class="attr">color</span>: <span class="string">oklch(0.55 0.22 264)</span>;   <span class="comment">/* medium blue */</span>
+  <span class="attr">color</span>: <span class="string">oklch(0.72 0.17 142)</span>;   <span class="comment">/* fresh green */</span>
+  <span class="attr">color</span>: <span class="string">oklch(0.2 0 0)</span>;         <span class="comment">/* near-black (no chroma = gray) */</span>
+}
+
+<span class="comment">/* With alpha */</span>
+<span class="tag">.overlay</span> {
+  <span class="attr">background</span>: <span class="string">oklch(0 0 0 / 50%)</span>;
+}</code></pre>
+        </div>
+
+        <h3>oklch palette generation</h3>
+
+        <div class="code-example">
+          <div class="example-label">Perceptually consistent shade scale</div>
+          <pre><code><span class="comment">/* Fix hue and chroma, only vary lightness.
+   Every step looks equally different to the eye. */</span>
+<span class="tag">:root</span> {
+  <span class="attr">--brand-900</span>: <span class="string">oklch(0.25 0.20 264)</span>; <span class="comment">/* darkest */</span>
+  <span class="attr">--brand-700</span>: <span class="string">oklch(0.40 0.20 264)</span>;
+  <span class="attr">--brand-500</span>: <span class="string">oklch(0.55 0.20 264)</span>; <span class="comment">/* base */</span>
+  <span class="attr">--brand-300</span>: <span class="string">oklch(0.70 0.20 264)</span>;
+  <span class="attr">--brand-100</span>: <span class="string">oklch(0.92 0.05 264)</span>; <span class="comment">/* near-white tint */</span>
+}</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">✅ When to use oklch</div>
+          <ul>
+            <li><strong>Design systems and component libraries</strong> — predictable, perceptually even palettes</li>
+            <li><strong>Accessible color generation</strong> — lightness value reliably predicts contrast</li>
+            <li><strong>Vibrant colors</strong> — oklch can express colors outside the sRGB gamut on wide-gamut displays (P3)</li>
+            <li>When you want to programmatically generate palettes in CSS or code</li>
+          </ul>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 Browser support</div>
+          <p>
+            oklch is supported in all modern browsers (Chrome, Firefox, Safari, Edge).
+            For older browser support, provide a hex fallback:
+          </p>
+          <pre><code><span class="tag">.button</span> {
+  <span class="attr">background</span>: <span class="string">#4a90e2</span>;                  <span class="comment">/* fallback */</span>
+  <span class="attr">background</span>: <span class="string">oklch(0.55 0.22 264)</span>;    <span class="comment">/* modern */</span>
+}</code></pre>
+        </div>
+
+        <!-- ========================
+             CURRENT COLOR
+        ========================= -->
+        <h2>currentColor — The Inherited Color Keyword</h2>
+
+        <p>
+          <code>currentColor</code> is a special keyword that equals the element's current
+          <code>color</code> property. It lets other properties follow the text color automatically.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Without currentColor — you'd repeat the color */</span>
+<span class="tag">.icon</span> {
+  <span class="attr">color</span>: <span class="string">#4a90e2</span>;
+  <span class="attr">border</span>: <span class="number">2</span>px <span class="string">solid #4a90e2</span>;  <span class="comment">/* duplicated! */</span>
+  <span class="attr">box-shadow</span>: <span class="number">0 0 8px</span> <span class="string">#4a90e2</span>; <span class="comment">/* duplicated! */</span>
+}
+
+<span class="comment">/* With currentColor — stays in sync automatically */</span>
+<span class="tag">.icon</span> {
+  <span class="attr">color</span>: <span class="string">#4a90e2</span>;
+  <span class="attr">border</span>: <span class="number">2</span>px <span class="string">solid currentColor</span>;
+  <span class="attr">box-shadow</span>: <span class="number">0 0 8px</span> <span class="string">currentColor</span>;
+}
+
+<span class="comment">/* Great for SVG icons that should match text color */</span>
+<span class="tag">svg</span> {
+  <span class="attr">fill</span>: <span class="string">currentColor</span>;
+}
+
+<span class="comment">/* Changing the parent color updates everything */</span>
+<span class="tag">.btn:hover .icon</span> {
+  <span class="attr">color</span>: <span class="string">white</span>; <span class="comment">/* border and fill also become white automatically */</span>
+}</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">✅ When to use currentColor</div>
+          <ul>
+            <li><strong>SVG icons</strong> — set <code>fill: currentColor</code> so icons adapt to any text color</li>
+            <li><strong>Borders that match text</strong> — underlines, outlines, decorative lines</li>
+            <li><strong>Themed components</strong> — one color change propagates to all related properties</li>
+          </ul>
+        </div>
+
+        <!-- ========================
+             TRANSPARENCY
+        ========================= -->
+        <h2>Transparency: opacity vs alpha</h2>
+
+        <p>There are two ways to make something transparent in CSS — and they behave differently.</p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* opacity: affects the ENTIRE element including children */</span>
+<span class="tag">.modal</span> {
+  <span class="attr">opacity</span>: <span class="number">0.5</span>; <span class="comment">/* text inside also becomes 50% transparent */</span>
+}
+
+<span class="comment">/* Alpha channel: affects only the COLOR, children unaffected */</span>
+<span class="tag">.overlay</span> {
+  <span class="attr">background-color</span>: <span class="string">rgba(0, 0, 0, 0.5)</span>; <span class="comment">/* background semi-transparent */</span>
+  <span class="attr">color</span>: <span class="string">white</span>; <span class="comment">/* text stays fully opaque */</span>
+}</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ opacity is inherited by children</div>
+          <p>
+            If you set <code>opacity: 0.5</code> on a card, all its child elements —
+            text, images, buttons — also become 50% transparent. Use <strong>alpha on the
+            background color</strong> instead when you only want the background to be see-through.
+          </p>
+        </div>
+
+        <!-- ========================
+             CSS CUSTOM PROPERTIES
+        ========================= -->
+        <h2>CSS Custom Properties for Color Systems</h2>
+
+        <p>
+          Custom properties (CSS variables) are the most powerful way to manage colors
+          in a real project. They let you define your palette once and reference it everywhere —
+          making theming and dark mode trivial.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Complete color system with light + dark mode</div>
+          <pre><code><span class="tag">:root</span> {
+  <span class="comment">/* Brand palette */</span>
+  <span class="attr">--color-brand-500</span>: <span class="string">hsl(214, 70%, 55%)</span>;
+  <span class="attr">--color-brand-600</span>: <span class="string">hsl(214, 70%, 45%)</span>;
+  <span class="attr">--color-brand-100</span>: <span class="string">hsl(214, 70%, 95%)</span>;
+
+  <span class="comment">/* Semantic tokens — these are what components use */</span>
+  <span class="attr">--color-bg</span>:       <span class="string">hsl(0, 0%, 100%)</span>;
+  <span class="attr">--color-surface</span>:  <span class="string">hsl(220, 20%, 97%)</span>;
+  <span class="attr">--color-text</span>:     <span class="string">hsl(220, 15%, 20%)</span>;
+  <span class="attr">--color-text-muted</span>: <span class="string">hsl(220, 10%, 50%)</span>;
+  <span class="attr">--color-border</span>:   <span class="string">hsl(220, 15%, 88%)</span>;
+  <span class="attr">--color-primary</span>:  <span class="string">var(--color-brand-500)</span>;
+  <span class="attr">--color-primary-hover</span>: <span class="string">var(--color-brand-600)</span>;
+}
+
+<span class="comment">/* Dark mode — override only the semantic tokens */</span>
+<span class="tag">@media</span> (<span class="attr">prefers-color-scheme: dark</span>) {
+  <span class="tag">:root</span> {
+    <span class="attr">--color-bg</span>:       <span class="string">hsl(220, 15%, 10%)</span>;
+    <span class="attr">--color-surface</span>:  <span class="string">hsl(220, 15%, 14%)</span>;
+    <span class="attr">--color-text</span>:     <span class="string">hsl(220, 20%, 90%)</span>;
+    <span class="attr">--color-text-muted</span>: <span class="string">hsl(220, 10%, 60%)</span>;
+    <span class="attr">--color-border</span>:   <span class="string">hsl(220, 15%, 25%)</span>;
+    <span class="comment">/* --color-primary stays the same */</span>
+  }
+}
+
+<span class="comment">/* Components use tokens, never raw colors */</span>
+<span class="tag">body</span> {
+  <span class="attr">background-color</span>: <span class="string">var(--color-bg)</span>;
+  <span class="attr">color</span>: <span class="string">var(--color-text)</span>;
+}
+
+<span class="tag">.card</span> {
+  <span class="attr">background</span>: <span class="string">var(--color-surface)</span>;
+  <span class="attr">border</span>: <span class="number">1</span>px <span class="string">solid var(--color-border)</span>;
+}
+
+<span class="tag">.btn-primary</span> {
+  <span class="attr">background</span>: <span class="string">var(--color-primary)</span>;
+}
+<span class="tag">.btn-primary:hover</span> {
+  <span class="attr">background</span>: <span class="string">var(--color-primary-hover)</span>;
+}</code></pre>
+        </div>
+
+        <!-- ========================
+             ACCESSIBILITY
+        ========================= -->
+        <h2>Color and Accessibility</h2>
+
+        <p>
+          Around 8% of men and 0.5% of women have some form of color vision deficiency.
+          Never rely on color alone to convey information — and always ensure sufficient contrast.
+        </p>
+
+        <h3>Contrast ratio</h3>
+
+        <p>
+          WCAG (Web Content Accessibility Guidelines) defines minimum contrast ratios
+          between text and its background:
+        </p>
+
+        <table>
+          <thead>
+            <tr><th>Level</th><th>Normal text</th><th>Large text (18px+ bold)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>AA (minimum)</td><td>4.5:1</td><td>3:1</td></tr>
+            <tr><td>AAA (enhanced)</td><td>7:1</td><td>4.5:1</td></tr>
+          </tbody>
+        </table>
+
+        <div class="contrast-row">
+          <div class="contrast-box" style="background:#ffffff;color:#767676;border:1px solid #ddd;">
+            ❌ Fail — #767676 on white<br><small>Ratio: 4.48:1</small>
+          </div>
+          <div class="contrast-box" style="background:#ffffff;color:#595959;">
+            ✅ AA Pass — #595959 on white<br><small>Ratio: 7.0:1</small>
+          </div>
+          <div class="contrast-box" style="background:#4a90e2;color:#ffffff;">
+            ✅ Pass — white on blue<br><small>Ratio: 3.5:1 (large text)</small>
+          </div>
+        </div>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* ❌ Low contrast — hard to read for many users */</span>
+<span class="tag">p</span> {
+  <span class="attr">color</span>: <span class="string">hsl(0, 0%, 55%)</span>;       <span class="comment">/* light gray on white */</span>
+  <span class="attr">background</span>: <span class="string">hsl(0, 0%, 100%)</span>;  <span class="comment">/* contrast: ~3.5:1 — fails AA */</span>
+}
+
+<span class="comment">/* ✅ Sufficient contrast */</span>
+<span class="tag">p</span> {
+  <span class="attr">color</span>: <span class="string">hsl(0, 0%, 25%)</span>;       <span class="comment">/* dark gray — contrast: ~10:1 */</span>
+  <span class="attr">background</span>: <span class="string">hsl(0, 0%, 100%)</span>;
+}
+
+<span class="comment">/* ✅ Don't rely on color alone — add an icon or label too */</span>
+<span class="tag">.error-message</span> {
+  <span class="attr">color</span>: <span class="string">hsl(4, 86%, 40%)</span>;
+  <span class="comment">/* Also show an icon: ❌ Error: field is required */</span>
+}</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">🔧 Tools to check contrast</div>
+          <ul>
+            <li><strong>Browser DevTools</strong> — hover over a color in the inspector to see contrast ratio</li>
+            <li><strong>oklch lightness as a guide</strong> — L above 0.6 on white starts failing AA for body text</li>
+          </ul>
+        </div>
+
+        <!-- ========================
+             GRADIENTS
+        ========================= -->
+        <h2>Gradients</h2>
+
+        <p>
+          Gradients are generated images that transition between colors.
+          They use the same color values as everything else.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Linear gradient — left to right */</span>
+<span class="tag">.hero</span> {
+  <span class="attr">background</span>: <span class="string">linear-gradient(to right, hsl(214, 70%, 55%), hsl(270, 70%, 55%))</span>;
+}
+
+<span class="comment">/* Linear gradient — diagonal */</span>
+<span class="tag">.card</span> {
+  <span class="attr">background</span>: <span class="string">linear-gradient(135deg, #667eea, #764ba2)</span>;
+}
+
+<span class="comment">/* Radial gradient */</span>
+<span class="tag">.spotlight</span> {
+  <span class="attr">background</span>: <span class="string">radial-gradient(circle, hsl(55, 100%, 70%), hsl(40, 100%, 50%))</span>;
+}
+
+<span class="comment">/* Transparent fade — text readability over images */</span>
+<span class="tag">.image-overlay</span> {
+  <span class="attr">background</span>: <span class="string">linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0) 60%
+  )</span>;
+}
+
+<span class="comment">/* Subtle background texture with stops */</span>
+<span class="tag">.section</span> {
+  <span class="attr">background</span>: <span class="string">linear-gradient(
+    to bottom,
+    hsl(220, 20%, 97%),
+    hsl(220, 20%, 100%)
+  )</span>;
+}</code></pre>
+        </div>
+
+        <!-- ========================
+             QUICK REFERENCE
+        ========================= -->
+        <h2>Quick Reference: Which Format to Use?</h2>
+
+        <table>
+          <thead>
+            <tr><th>Situation</th><th>Best format</th><th>Why</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Copying from a design tool (Figma)</td>
+              <td><code>#hex</code></td>
+              <td>Design tools export hex — use it as-is</td>
+            </tr>
+            <tr>
+              <td>Building a color palette</td>
+              <td><code>hsl()</code> or <code>oklch()</code></td>
+              <td>Easy to adjust lightness and saturation</td>
+            </tr>
+            <tr>
+              <td>Semantic UI colors (success, danger…)</td>
+              <td><code>hsl()</code></td>
+              <td>One hue per meaning, vary lightness for states</td>
+            </tr>
+            <tr>
+              <td>Transparent overlays / shadows</td>
+              <td><code>rgba()</code> or <code>hsl() / %</code></td>
+              <td>Alpha channel is intuitive (0–1 or 0%–100%)</td>
+            </tr>
+            <tr>
+              <td>Design system / component library</td>
+              <td><code>oklch()</code></td>
+              <td>Perceptually uniform, wide-gamut capable</td>
+            </tr>
+            <tr>
+              <td>Dark mode theming</td>
+              <td>CSS custom properties + <code>hsl()</code></td>
+              <td>Override variables in a media query, done</td>
+            </tr>
+            <tr>
+              <td>SVG icons that match text</td>
+              <td><code>currentColor</code></td>
+              <td>Inherits from <code>color</code> automatically</td>
+            </tr>
+            <tr>
+              <td>Quick prototype / learning</td>
+              <td>Named colors</td>
+              <td>Readable, no memorisation needed</td>
+            </tr>
+            <tr>
+              <td>JavaScript color manipulation</td>
+              <td><code>rgb()</code></td>
+              <td>Easy to destructure and recombine channels</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- ========================
+             SUMMARY
+        ========================= -->
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li><strong>Named colors</strong> — 148 keywords; great for prototyping, not production</li>
+            <li><strong>Hex</strong> — <code>#rrggbb</code>; most common, used in design tools; add 2 digits for alpha (<code>#rrggbbaa</code>)</li>
+            <li><strong>RGB / RGBA</strong> — decimal channels; best for shadows, overlays, JS manipulation</li>
+            <li><strong>HSL / HSLA</strong> — Hue / Saturation / Lightness; most intuitive for building palettes and states</li>
+            <li><strong>oklch</strong> — perceptually uniform; the modern standard for design systems and accessible palettes</li>
+            <li><strong>currentColor</strong> — inherits <code>color</code> value; essential for SVG icons and DRY styling</li>
+            <li><strong>opacity vs alpha</strong> — <code>opacity</code> affects children too; alpha on a color property does not</li>
+            <li><strong>CSS custom properties</strong> — define your palette once, theme everywhere including dark mode</li>
+            <li><strong>Contrast ratio</strong> — 4.5:1 minimum for body text (WCAG AA); test with DevTools</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="css-basics.html" class="nav-button">← CSS Basics</a>
+          <a href="box-model.html" class="nav-button">Box Model →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

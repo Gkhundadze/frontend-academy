@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Images - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="../favicon.ico">
+  <style>
+    .img-demo {
+      background: #e3f2fd;
+      border: 2px dashed #4a90e2;
+      border-radius: 6px;
+      padding: 16px;
+      margin: 12px 0;
+    }
+    .img-demo img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 4px;
+    }
+    .aspect-demo {
+      background: #c8e6c9;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2e7d32;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin: 8px 0;
+    }
+    .fit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .fit-box {
+      background: #f5f5f5;
+      border-radius: 6px;
+      overflow: hidden;
+      text-align: center;
+    }
+    .fit-box p {
+      margin: 0;
+      padding: 6px;
+      font-size: 0.8rem;
+      font-family: monospace;
+      background: #333;
+      color: white;
+    }
+    .fit-box .placeholder {
+      width: 100%;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>Responsive Images</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="css-colors.html">CSS Colors</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="css-units.html">CSS Units</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="responsive-images.html">Responsive Images</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 4: Professional Skills</div>
+        <ul class="nav-list">
+          <li><a href="performance-optimization.html">Performance Optimization</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>🖼️ Responsive Images</h1>
+
+        <p>
+          Images are typically the <strong>heaviest assets</strong> on a web page.
+          A 2000px photo loaded on a 400px mobile screen wastes bandwidth, slows the page,
+          and drains the user's battery. Responsive images fix this by serving the
+          <em>right image</em> at the <em>right size</em> for every device.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 What "responsive images" covers</div>
+          <ul>
+            <li><strong>Resolution switching</strong> — serving a smaller file on small screens</li>
+            <li><strong>Art direction</strong> — serving a different crop or composition on small screens</li>
+            <li><strong>Format switching</strong> — serving WebP/AVIF to browsers that support them</li>
+            <li><strong>CSS sizing</strong> — making images scale properly inside layouts</li>
+          </ul>
+        </div>
+
+        <!-- ========================
+             THE BASICS
+        ========================= -->
+        <h2>The Basics: Always Set These</h2>
+
+        <p>
+          Even before touching <code>srcset</code> or <code>&lt;picture&gt;</code>,
+          every image should have these three things.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">&lt;!-- ✅ Always include: alt, width, height --&gt;</span>
+&lt;<span class="tag">img</span>
+  <span class="attr">src</span>=<span class="string">"photo.jpg"</span>
+  <span class="attr">alt</span>=<span class="string">"A brown dog sitting on a green lawn"</span>
+  <span class="attr">width</span>=<span class="string">"800"</span>
+  <span class="attr">height</span>=<span class="string">"600"</span>
+&gt;</code></pre>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Attribute</th><th>Why it matters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>alt</code></td>
+              <td>Screen readers read it aloud; shown when image fails to load; required for accessibility</td>
+            </tr>
+            <tr>
+              <td><code>width</code> + <code>height</code></td>
+              <td>Browser reserves space before the image loads, preventing layout shift (CLS)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 width/height don't lock the size</div>
+          <p>
+            Setting <code>width="800" height="600"</code> in HTML just tells the browser the
+            <strong>aspect ratio</strong> so it can reserve the right space. You still control the
+            actual display size with CSS. Add <code>max-width: 100%; height: auto;</code> and the
+            image will scale freely while keeping its proportions.
+          </p>
+          <pre><code><span class="tag">img</span> {
+  <span class="attr">max-width</span>: <span class="number">100%</span>;
+  <span class="attr">height</span>: <span class="string">auto</span>; <span class="comment">/* maintains aspect ratio */</span>
+}</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Empty alt for decorative images</div>
+          <p>
+            If an image is purely decorative (a background flourish, a divider icon),
+            use <code>alt=""</code>. Screen readers will skip it entirely.
+            Never omit <code>alt</code> — missing it causes screen readers to read the filename.
+          </p>
+          <pre><code>&lt;<span class="tag">img</span> <span class="attr">src</span>=<span class="string">"divider.svg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt; <span class="comment">&lt;!-- decorative: empty alt --&gt;</span>
+&lt;<span class="tag">img</span> <span class="attr">src</span>=<span class="string">"team.jpg"</span>    <span class="attr">alt</span>=<span class="string">"The engineering team at our 2024 offsite"</span>&gt;</code></pre>
+        </div>
+
+        <!-- ========================
+             SRCSET
+        ========================= -->
+        <h2>srcset — Resolution Switching</h2>
+
+        <p>
+          The <code>srcset</code> attribute lets you offer <strong>multiple versions</strong>
+          of the same image at different sizes. The browser picks the best one based on the
+          screen size and device pixel ratio.
+        </p>
+
+        <h3>Width descriptors (w)</h3>
+
+        <div class="code-example">
+          <pre><code>&lt;<span class="tag">img</span>
+  <span class="attr">src</span>=<span class="string">"photo-800.jpg"</span>
+  <span class="attr">srcset</span>=<span class="string">"
+    photo-400.jpg  400w,
+    photo-800.jpg  800w,
+    photo-1200.jpg 1200w
+  "</span>
+  <span class="attr">alt</span>=<span class="string">"Mountain landscape"</span>
+  <span class="attr">width</span>=<span class="string">"800"</span>
+  <span class="attr">height</span>=<span class="string">"533"</span>
+&gt;</code></pre>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 How the browser chooses</div>
+          <p>
+            The <code>w</code> descriptor tells the browser the <strong>intrinsic width</strong>
+            of each image file in pixels. The browser combines this with the display size and
+            the device pixel ratio to pick the most efficient file.
+          </p>
+          <p>
+            On a 400px-wide mobile with a 2× retina screen, it needs a 800px image —
+            so it picks <code>photo-800.jpg</code>, not the 1200px version.
+          </p>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ src is the fallback</div>
+          <p>
+            Always include a <code>src</code> attribute. Browsers that don't support
+            <code>srcset</code> fall back to it. Use a mid-size image as the fallback.
+          </p>
+        </div>
+
+        <h3>Pixel density descriptors (x)</h3>
+
+        <p>
+          When the image always displays at a fixed size but you want to serve a
+          sharper version for retina screens, use <code>x</code> descriptors instead.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">&lt;!-- Logo: always 200px wide, but crisp on retina --&gt;</span>
+&lt;<span class="tag">img</span>
+  <span class="attr">src</span>=<span class="string">"logo.png"</span>
+  <span class="attr">srcset</span>=<span class="string">"logo.png 1x, logo@2x.png 2x, logo@3x.png 3x"</span>
+  <span class="attr">alt</span>=<span class="string">"Company logo"</span>
+  <span class="attr">width</span>=<span class="string">"200"</span>
+  <span class="attr">height</span>=<span class="string">"60"</span>
+&gt;</code></pre>
+        </div>
+
+        <!-- ========================
+             SIZES
+        ========================= -->
+        <h2>sizes — Telling the Browser the Display Width</h2>
+
+        <p>
+          By default the browser doesn't know how wide your image will be displayed
+          (that's determined by CSS, which hasn't been parsed yet). The <code>sizes</code>
+          attribute tells it <strong>before the CSS loads</strong>, so it can start
+          downloading the right file immediately.
+        </p>
+
+        <div class="code-example">
+          <pre><code>&lt;<span class="tag">img</span>
+  <span class="attr">src</span>=<span class="string">"photo-800.jpg"</span>
+  <span class="attr">srcset</span>=<span class="string">"
+    photo-400.jpg  400w,
+    photo-800.jpg  800w,
+    photo-1200.jpg 1200w,
+    photo-1600.jpg 1600w
+  "</span>
+  <span class="attr">sizes</span>=<span class="string">"
+    (max-width: 600px)  100vw,
+    (max-width: 1024px) 50vw,
+    800px
+  "</span>
+  <span class="attr">alt</span>=<span class="string">"Mountain landscape"</span>
+  <span class="attr">width</span>=<span class="string">"800"</span>
+  <span class="attr">height</span>=<span class="string">"533"</span>
+&gt;</code></pre>
+        </div>
+
+        <p>Reading the <code>sizes</code> value above:</p>
+        <ul>
+          <li>On screens <strong>600px or narrower</strong> → image is <code>100vw</code> wide (full width)</li>
+          <li>On screens <strong>601px–1024px</strong> → image is <code>50vw</code> wide (half the viewport)</li>
+          <li>Otherwise (desktop) → image is a fixed <code>800px</code></li>
+        </ul>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 srcset + sizes together</div>
+          <p>
+            <code>srcset</code> lists the available files and their widths.
+            <code>sizes</code> tells the browser how wide the image will actually appear.
+            Together, the browser can calculate which file wastes the least bandwidth.
+            <strong>Always use them together when using <code>w</code> descriptors.</strong>
+          </p>
+        </div>
+
+        <!-- ========================
+             PICTURE
+        ========================= -->
+        <h2>&lt;picture&gt; — Art Direction and Format Switching</h2>
+
+        <p>
+          The <code>&lt;picture&gt;</code> element gives you full control over which
+          image source is used. It wraps multiple <code>&lt;source&gt;</code> elements
+          and one fallback <code>&lt;img&gt;</code>.
+        </p>
+
+        <h3>Art direction — different crops per screen size</h3>
+
+        <p>
+          Sometimes a landscape photo that looks great on desktop needs a tighter,
+          portrait crop to work on mobile. <code>srcset</code> alone can't do this —
+          it only switches resolution, not composition.
+        </p>
+
+        <div class="code-example">
+          <pre><code>&lt;<span class="tag">picture</span>&gt;
+  <span class="comment">&lt;!-- Mobile: tall portrait crop --&gt;</span>
+  &lt;<span class="tag">source</span>
+    <span class="attr">media</span>=<span class="string">"(max-width: 600px)"</span>
+    <span class="attr">srcset</span>=<span class="string">"hero-portrait.jpg"</span>
+  &gt;
+  <span class="comment">&lt;!-- Tablet: square crop --&gt;</span>
+  &lt;<span class="tag">source</span>
+    <span class="attr">media</span>=<span class="string">"(max-width: 1024px)"</span>
+    <span class="attr">srcset</span>=<span class="string">"hero-square.jpg"</span>
+  &gt;
+  <span class="comment">&lt;!-- Desktop: full landscape --&gt;</span>
+  &lt;<span class="tag">img</span>
+    <span class="attr">src</span>=<span class="string">"hero-landscape.jpg"</span>
+    <span class="attr">alt</span>=<span class="string">"A wide mountain panorama"</span>
+    <span class="attr">width</span>=<span class="string">"1200"</span>
+    <span class="attr">height</span>=<span class="string">"600"</span>
+  &gt;
+&lt;/<span class="tag">picture</span>&gt;</code></pre>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 How &lt;picture&gt; works</div>
+          <p>
+            The browser checks each <code>&lt;source&gt;</code> in order and uses the
+            <strong>first one that matches</strong>. The <code>&lt;img&gt;</code> at the end
+            is both the final fallback and the element that carries <code>alt</code>,
+            <code>width</code>, and <code>height</code>.
+          </p>
+        </div>
+
+        <h3>Format switching — WebP and AVIF with fallback</h3>
+
+        <p>
+          Modern image formats like <strong>WebP</strong> and <strong>AVIF</strong> are
+          30–80% smaller than JPEG at the same quality. Not all browsers support them,
+          so you serve the modern format to those that can and fall back to JPEG for the rest.
+        </p>
+
+        <div class="code-example">
+          <pre><code>&lt;<span class="tag">picture</span>&gt;
+  <span class="comment">&lt;!-- AVIF: best compression, newest (Chrome, Firefox, Safari 16+) --&gt;</span>
+  &lt;<span class="tag">source</span>
+    <span class="attr">type</span>=<span class="string">"image/avif"</span>
+    <span class="attr">srcset</span>=<span class="string">"photo-400.avif 400w, photo-800.avif 800w, photo-1200.avif 1200w"</span>
+  &gt;
+  <span class="comment">&lt;!-- WebP: great compression, very wide support --&gt;</span>
+  &lt;<span class="tag">source</span>
+    <span class="attr">type</span>=<span class="string">"image/webp"</span>
+    <span class="attr">srcset</span>=<span class="string">"photo-400.webp 400w, photo-800.webp 800w, photo-1200.webp 1200w"</span>
+  &gt;
+  <span class="comment">&lt;!-- JPEG: universal fallback --&gt;</span>
+  &lt;<span class="tag">img</span>
+    <span class="attr">src</span>=<span class="string">"photo-800.jpg"</span>
+    <span class="attr">srcset</span>=<span class="string">"photo-400.jpg 400w, photo-800.jpg 800w, photo-1200.jpg 1200w"</span>
+    <span class="attr">sizes</span>=<span class="string">"(max-width: 600px) 100vw, 800px"</span>
+    <span class="attr">alt</span>=<span class="string">"Mountain landscape"</span>
+    <span class="attr">width</span>=<span class="string">"800"</span>
+    <span class="attr">height</span>=<span class="string">"533"</span>
+  &gt;
+&lt;/<span class="tag">picture</span>&gt;</code></pre>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>Format</th><th>Compression vs JPEG</th><th>Browser support</th><th>Best for</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>JPEG</strong></td>
+              <td>Baseline</td>
+              <td>Universal</td>
+              <td>Photos, fallback</td>
+            </tr>
+            <tr>
+              <td><strong>PNG</strong></td>
+              <td>Larger (lossless)</td>
+              <td>Universal</td>
+              <td>Logos, screenshots, transparency</td>
+            </tr>
+            <tr>
+              <td><strong>WebP</strong></td>
+              <td>~30% smaller</td>
+              <td>All modern browsers</td>
+              <td>Photos and graphics</td>
+            </tr>
+            <tr>
+              <td><strong>AVIF</strong></td>
+              <td>~50% smaller</td>
+              <td>Chrome, Firefox, Safari 16+</td>
+              <td>Photos where size matters most</td>
+            </tr>
+            <tr>
+              <td><strong>SVG</strong></td>
+              <td>Tiny for vectors</td>
+              <td>Universal</td>
+              <td>Icons, logos, illustrations</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- ========================
+             LAZY LOADING
+        ========================= -->
+        <h2>Lazy Loading</h2>
+
+        <p>
+          By default the browser loads <strong>all</strong> images on the page, even those
+          far below the fold that the user may never scroll to. Lazy loading defers
+          off-screen images until they are about to enter the viewport.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">&lt;!-- Defer loading until the image is near the viewport --&gt;</span>
+&lt;<span class="tag">img</span>
+  <span class="attr">src</span>=<span class="string">"photo.jpg"</span>
+  <span class="attr">alt</span>=<span class="string">"..."</span>
+  <span class="attr">width</span>=<span class="string">"800"</span>
+  <span class="attr">height</span>=<span class="string">"600"</span>
+  <span class="attr">loading</span>=<span class="string">"lazy"</span>
+&gt;
+
+<span class="comment">&lt;!-- Above-the-fold images should load eagerly (default) --&gt;</span>
+&lt;<span class="tag">img</span>
+  <span class="attr">src</span>=<span class="string">"hero.jpg"</span>
+  <span class="attr">alt</span>=<span class="string">"..."</span>
+  <span class="attr">width</span>=<span class="string">"1200"</span>
+  <span class="attr">height</span>=<span class="string">"600"</span>
+  <span class="attr">loading</span>=<span class="string">"eager"</span>  <span class="comment">&lt;!-- default, can be omitted --&gt;</span>
+&gt;</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 loading="lazy" is a one-liner win</div>
+          <p>
+            Adding <code>loading="lazy"</code> to every below-the-fold image is one of the
+            easiest performance improvements you can make. It is natively supported in all
+            modern browsers and requires zero JavaScript.
+          </p>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Don't lazy-load hero images</div>
+          <p>
+            The first visible image (hero, logo, above-the-fold photo) should <strong>never</strong>
+            be lazy-loaded. Delaying it hurts LCP (Largest Contentful Paint), one of Google's
+            Core Web Vitals that affects SEO rankings.
+          </p>
+        </div>
+
+        <!-- ========================
+             DECODING / FETCHPRIORITY
+        ========================= -->
+        <h2>decoding and fetchpriority</h2>
+
+        <p>Two more attributes that give you fine-grained control over image loading:</p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">&lt;!-- decoding="async": decode the image off the main thread
+     so it doesn't block rendering of other content --&gt;</span>
+&lt;<span class="tag">img</span>
+  <span class="attr">src</span>=<span class="string">"photo.jpg"</span>
+  <span class="attr">alt</span>=<span class="string">"..."</span>
+  <span class="attr">decoding</span>=<span class="string">"async"</span>
+  <span class="attr">loading</span>=<span class="string">"lazy"</span>
+&gt;
+
+<span class="comment">&lt;!-- fetchpriority="high": tell the browser to download this
+     image ASAP — use on the hero/LCP image --&gt;</span>
+&lt;<span class="tag">img</span>
+  <span class="attr">src</span>=<span class="string">"hero.jpg"</span>
+  <span class="attr">alt</span>=<span class="string">"..."</span>
+  <span class="attr">fetchpriority</span>=<span class="string">"high"</span>
+&gt;</code></pre>
+        </div>
+
+        <!-- ========================
+             CSS SIZING
+        ========================= -->
+        <h2>CSS: Controlling How Images Fit</h2>
+
+        <h3>object-fit and object-position</h3>
+
+        <p>
+          When you give an image a fixed width and height in CSS, the image may be
+          a different shape than the container. <code>object-fit</code> controls
+          how the image fills that space.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Stretch to fill — may distort the image (default) */</span>
+<span class="tag">img</span> { <span class="attr">object-fit</span>: <span class="string">fill</span>; }
+
+<span class="comment">/* Scale down to fit entirely inside — may leave empty space */</span>
+<span class="tag">img</span> { <span class="attr">object-fit</span>: <span class="string">contain</span>; }
+
+<span class="comment">/* Crop to fill the box — no distortion, most common */</span>
+<span class="tag">img</span> { <span class="attr">object-fit</span>: <span class="string">cover</span>; }
+
+<span class="comment">/* Control where the crop focuses */</span>
+<span class="tag">img</span> {
+  <span class="attr">object-fit</span>: <span class="string">cover</span>;
+  <span class="attr">object-position</span>: <span class="string">center top</span>; <span class="comment">/* keep the top in frame (faces) */</span>
+}
+
+<span class="comment">/* Practical: uniform card thumbnails regardless of image shape */</span>
+<span class="tag">.card-thumbnail</span> {
+  <span class="attr">width</span>: <span class="number">100%</span>;
+  <span class="attr">height</span>: <span class="number">200</span>px;
+  <span class="attr">object-fit</span>: <span class="string">cover</span>;
+  <span class="attr">object-position</span>: <span class="string">center</span>;
+  <span class="attr">border-radius</span>: <span class="number">8px 8px 0 0</span>;
+}</code></pre>
+        </div>
+
+        <div class="fit-grid">
+          <div class="fit-box">
+            <div class="placeholder" style="background:#ffccbc;">fill<br>(distorts)</div>
+            <p>object-fit: fill</p>
+          </div>
+          <div class="fit-box">
+            <div class="placeholder" style="background:#fff9c4;">contains<br>whole image</div>
+            <p>object-fit: contain</p>
+          </div>
+          <div class="fit-box">
+            <div class="placeholder" style="background:#c8e6c9;">cropped<br>to fill</div>
+            <p>object-fit: cover</p>
+          </div>
+        </div>
+
+        <h3>aspect-ratio — reserving space before the image loads</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Reserve 16:9 space while image downloads */</span>
+<span class="tag">.hero-img</span> {
+  <span class="attr">width</span>: <span class="number">100%</span>;
+  <span class="attr">aspect-ratio</span>: <span class="number">16 / 9</span>;
+  <span class="attr">object-fit</span>: <span class="string">cover</span>;
+}
+
+<span class="comment">/* Square avatar */</span>
+<span class="tag">.avatar</span> {
+  <span class="attr">width</span>: <span class="number">64</span>px;
+  <span class="attr">aspect-ratio</span>: <span class="number">1 / 1</span>;
+  <span class="attr">object-fit</span>: <span class="string">cover</span>;
+  <span class="attr">border-radius</span>: <span class="number">50%</span>;
+}
+
+<span class="comment">/* Card thumbnail — 4:3 */</span>
+<span class="tag">.thumbnail</span> {
+  <span class="attr">width</span>: <span class="number">100%</span>;
+  <span class="attr">aspect-ratio</span>: <span class="number">4 / 3</span>;
+  <span class="attr">object-fit</span>: <span class="string">cover</span>;
+}</code></pre>
+        </div>
+
+        <!-- ========================
+             PRACTICAL PATTERNS
+        ========================= -->
+        <h2>Practical Patterns</h2>
+
+        <h3>The complete responsive image</h3>
+
+        <div class="code-example">
+          <div class="example-label">Production-ready image combining all techniques</div>
+          <pre><code>&lt;<span class="tag">picture</span>&gt;
+  &lt;<span class="tag">source</span>
+    <span class="attr">type</span>=<span class="string">"image/avif"</span>
+    <span class="attr">srcset</span>=<span class="string">"img-400.avif 400w, img-800.avif 800w, img-1200.avif 1200w"</span>
+    <span class="attr">sizes</span>=<span class="string">"(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 600px"</span>
+  &gt;
+  &lt;<span class="tag">source</span>
+    <span class="attr">type</span>=<span class="string">"image/webp"</span>
+    <span class="attr">srcset</span>=<span class="string">"img-400.webp 400w, img-800.webp 800w, img-1200.webp 1200w"</span>
+    <span class="attr">sizes</span>=<span class="string">"(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 600px"</span>
+  &gt;
+  &lt;<span class="tag">img</span>
+    <span class="attr">src</span>=<span class="string">"img-800.jpg"</span>
+    <span class="attr">srcset</span>=<span class="string">"img-400.jpg 400w, img-800.jpg 800w, img-1200.jpg 1200w"</span>
+    <span class="attr">sizes</span>=<span class="string">"(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 600px"</span>
+    <span class="attr">alt</span>=<span class="string">"Describe the image content here"</span>
+    <span class="attr">width</span>=<span class="string">"800"</span>
+    <span class="attr">height</span>=<span class="string">"533"</span>
+    <span class="attr">loading</span>=<span class="string">"lazy"</span>
+    <span class="attr">decoding</span>=<span class="string">"async"</span>
+  &gt;
+&lt;/<span class="tag">picture</span>&gt;</code></pre>
+        </div>
+
+        <h3>Hero image (above the fold)</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">&lt;!-- Hero: eager, high priority, no lazy --&gt;</span>
+&lt;<span class="tag">picture</span>&gt;
+  &lt;<span class="tag">source</span> <span class="attr">type</span>=<span class="string">"image/webp"</span>
+    <span class="attr">srcset</span>=<span class="string">"hero-800.webp 800w, hero-1600.webp 1600w"</span>
+    <span class="attr">sizes</span>=<span class="string">"100vw"</span>
+  &gt;
+  &lt;<span class="tag">img</span>
+    <span class="attr">src</span>=<span class="string">"hero-1600.jpg"</span>
+    <span class="attr">alt</span>=<span class="string">"..."</span>
+    <span class="attr">width</span>=<span class="string">"1600"</span>
+    <span class="attr">height</span>=<span class="string">"900"</span>
+    <span class="attr">fetchpriority</span>=<span class="string">"high"</span>
+    <span class="attr">loading</span>=<span class="string">"eager"</span>
+  &gt;
+&lt;/<span class="tag">picture</span>&gt;</code></pre>
+        </div>
+
+        <h3>Photo grid / gallery</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* CSS: consistent grid with cover cropping */</span>
+<span class="tag">.gallery</span> {
+  <span class="attr">display</span>: <span class="string">grid</span>;
+  <span class="attr">grid-template-columns</span>: <span class="string">repeat(auto-fill, minmax(280px, 1fr))</span>;
+  <span class="attr">gap</span>: <span class="number">1rem</span>;
+}
+
+<span class="tag">.gallery img</span> {
+  <span class="attr">width</span>: <span class="number">100%</span>;
+  <span class="attr">aspect-ratio</span>: <span class="number">4 / 3</span>;
+  <span class="attr">object-fit</span>: <span class="string">cover</span>;
+  <span class="attr">border-radius</span>: <span class="number">8</span>px;
+}</code></pre>
+          <pre><code><span class="comment">&lt;!-- HTML: lazy load everything in the grid --&gt;</span>
+&lt;<span class="tag">div</span> <span class="attr">class</span>=<span class="string">"gallery"</span>&gt;
+  &lt;<span class="tag">img</span> <span class="attr">src</span>=<span class="string">"photo1.jpg"</span> <span class="attr">alt</span>=<span class="string">"..."</span> <span class="attr">width</span>=<span class="string">"800"</span> <span class="attr">height</span>=<span class="string">"600"</span> <span class="attr">loading</span>=<span class="string">"lazy"</span>&gt;
+  &lt;<span class="tag">img</span> <span class="attr">src</span>=<span class="string">"photo2.jpg"</span> <span class="attr">alt</span>=<span class="string">"..."</span> <span class="attr">width</span>=<span class="string">"800"</span> <span class="attr">height</span>=<span class="string">"600"</span> <span class="attr">loading</span>=<span class="string">"lazy"</span>&gt;
+  &lt;<span class="tag">img</span> <span class="attr">src</span>=<span class="string">"photo3.jpg"</span> <span class="attr">alt</span>=<span class="string">"..."</span> <span class="attr">width</span>=<span class="string">"800"</span> <span class="attr">height</span>=<span class="string">"600"</span> <span class="attr">loading</span>=<span class="string">"lazy"</span>&gt;
+&lt;/<span class="tag">div</span>&gt;</code></pre>
+        </div>
+
+        <h3>Circular avatar</h3>
+
+        <div class="code-example">
+          <pre><code>&lt;<span class="tag">img</span>
+  <span class="attr">src</span>=<span class="string">"avatar.jpg"</span>
+  <span class="attr">srcset</span>=<span class="string">"avatar.jpg 1x, avatar@2x.jpg 2x"</span>
+  <span class="attr">alt</span>=<span class="string">"Profile photo of Jane Doe"</span>
+  <span class="attr">width</span>=<span class="string">"64"</span>
+  <span class="attr">height</span>=<span class="string">"64"</span>
+  <span class="attr">class</span>=<span class="string">"avatar"</span>
+&gt;
+
+<span class="comment">/* CSS */</span>
+<span class="tag">.avatar</span> {
+  <span class="attr">border-radius</span>: <span class="number">50%</span>;
+  <span class="attr">object-fit</span>: <span class="string">cover</span>;
+  <span class="attr">object-position</span>: <span class="string">center top</span>; <span class="comment">/* keep face in frame */</span>
+}</code></pre>
+        </div>
+
+        <!-- ========================
+             SUMMARY
+        ========================= -->
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li>Always set <code>alt</code>, <code>width</code>, and <code>height</code> on every <code>&lt;img&gt;</code></li>
+            <li><code>max-width: 100%; height: auto;</code> makes images fluid in CSS</li>
+            <li><code>srcset</code> with <code>w</code> descriptors offers multiple resolutions — browser picks the best</li>
+            <li><code>sizes</code> tells the browser how wide the image will display before CSS loads</li>
+            <li><code>&lt;picture&gt;</code> enables art direction (different crops) and format switching (WebP/AVIF)</li>
+            <li>Serve AVIF → WebP → JPEG in order of preference for best compression</li>
+            <li><code>loading="lazy"</code> defers off-screen images — use on everything below the fold</li>
+            <li>Never lazy-load the hero image — use <code>fetchpriority="high"</code> instead</li>
+            <li><code>object-fit: cover</code> crops images to fill a fixed container without distortion</li>
+            <li><code>aspect-ratio</code> reserves the correct space before the image downloads, preventing layout shift</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="responsive-design.html" class="nav-button">← Responsive Design</a>
+          <a href="scss-basics.html" class="nav-button">SCSS Basics →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

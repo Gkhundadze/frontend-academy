@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Units - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .unit-demo {
+      background: #e3f2fd;
+      border: 2px dashed #4a90e2;
+      padding: 16px;
+      margin: 12px 0;
+      border-radius: 6px;
+    }
+    .unit-demo p {
+      margin: 4px 0;
+      font-family: monospace;
+    }
+    .unit-scale {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      padding: 16px;
+      background: #f5f5f5;
+      border-radius: 6px;
+      margin: 12px 0;
+      flex-wrap: wrap;
+    }
+    .unit-scale .bar {
+      background: #4a90e2;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px 4px 0 0;
+      font-size: 0.75rem;
+      font-weight: bold;
+      min-width: 48px;
+      padding: 4px;
+    }
+  </style>
+  <link rel="icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>CSS Units</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="css-colors.html">CSS Colors</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="css-units.html">CSS Units</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="responsive-images.html">Responsive Images</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 4: Professional Skills</div>
+        <ul class="nav-list">
+          <li><a href="performance-optimization.html">Performance Optimization</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>📏 CSS Units</h1>
+
+        <p>
+          Every size in CSS — font sizes, widths, margins, paddings — needs a unit.
+          Choosing the <strong>right unit</strong> makes the difference between a layout that breaks
+          on different screen sizes and one that adapts gracefully.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 Two categories</div>
+          <p><strong>Absolute units</strong> — always the same physical size regardless of context (e.g. <code>px</code>).</p>
+          <p><strong>Relative units</strong> — scale based on something else: a parent element, the root font size, or the viewport (e.g. <code>rem</code>, <code>%</code>, <code>vw</code>).</p>
+        </div>
+
+        <!-- ========================
+             ABSOLUTE UNITS
+        ========================= -->
+        <h2>Absolute Units</h2>
+
+        <p>
+          Absolute units produce a fixed size. They are <strong>not affected</strong> by
+          the user's browser font-size settings or screen size.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Unit</th>
+              <th>Name</th>
+              <th>Equivalent</th>
+              <th>Use when</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>px</code></td>
+              <td>Pixel</td>
+              <td>1/96 of 1 inch</td>
+              <td>Borders, shadows, precise UI details</td>
+            </tr>
+            <tr>
+              <td><code>pt</code></td>
+              <td>Point</td>
+              <td>1/72 of 1 inch</td>
+              <td>Print stylesheets only</td>
+            </tr>
+            <tr>
+              <td><code>cm</code></td>
+              <td>Centimeter</td>
+              <td>96/2.54 px</td>
+              <td>Print stylesheets only</td>
+            </tr>
+            <tr>
+              <td><code>mm</code></td>
+              <td>Millimeter</td>
+              <td>1/10 of 1 cm</td>
+              <td>Print stylesheets only</td>
+            </tr>
+            <tr>
+              <td><code>in</code></td>
+              <td>Inch</td>
+              <td>96 px</td>
+              <td>Print stylesheets only</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Practical tip</div>
+          <p>For screen design, <code>px</code> is the only absolute unit you will realistically use.
+          The others (<code>pt</code>, <code>cm</code>, <code>mm</code>, <code>in</code>) exist mainly for <strong>print CSS</strong>.</p>
+        </div>
+
+        <h3>px — Pixels</h3>
+
+        <p>
+          The pixel is the most familiar CSS unit. On a standard screen, <code>1px</code> equals
+          one device pixel. On high-DPI (retina) screens the browser scales automatically, so your
+          CSS pixels still look sharp.
+        </p>
+
+        <div class="code-example">
+          <div class="example-label">Good uses of px</div>
+          <pre><code><span class="comment">/* ✅ Borders — thin, precise lines */</span>
+<span class="tag">.card</span> {
+  <span class="attr">border</span>: <span class="number">1</span>px <span class="string">solid #ddd</span>;
+  <span class="attr">border-radius</span>: <span class="number">8</span>px;
+}
+
+<span class="comment">/* ✅ Box shadows — precise offsets */</span>
+<span class="tag">.card</span> {
+  <span class="attr">box-shadow</span>: <span class="number">0 2px 8px</span> <span class="string">rgba(0,0,0,0.12)</span>;
+}
+
+<span class="comment">/* ✅ Fixed-size icons or images */</span>
+<span class="tag">.icon</span> {
+  <span class="attr">width</span>: <span class="number">24</span>px;
+  <span class="attr">height</span>: <span class="number">24</span>px;
+}
+
+<span class="comment">/* ❌ Avoid px for font sizes — blocks user zoom preferences */</span>
+<span class="tag">body</span> {
+  <span class="attr">font-size</span>: <span class="number">16</span>px; <span class="comment">/* works, but rem is better here */</span>
+}</code></pre>
+        </div>
+
+        <!-- ========================
+             RELATIVE UNITS
+        ========================= -->
+        <h2>Relative Units</h2>
+
+        <p>
+          Relative units are the foundation of responsive, accessible web design.
+          Instead of being fixed, they scale based on another value.
+        </p>
+
+        <!-- % -->
+        <h3>% — Percentage</h3>
+
+        <p>
+          A percentage is relative to the <strong>parent element's</strong> corresponding property.
+          For width/height it's the parent's width/height; for <code>font-size</code> it's
+          the parent's font size.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.container</span> {
+  <span class="attr">width</span>: <span class="number">800</span>px;
+}
+
+<span class="comment">/* This child will always be exactly half the parent */</span>
+<span class="tag">.half</span> {
+  <span class="attr">width</span>: <span class="number">50%</span>; <span class="comment">/* = 400px */</span>
+}
+
+<span class="comment">/* Common pattern: full-width sections */</span>
+<span class="tag">.section</span> {
+  <span class="attr">width</span>: <span class="number">100%</span>;
+  <span class="attr">padding</span>: <span class="number">5%</span>; <span class="comment">/* padding also relative to parent WIDTH */</span>
+}
+
+<span class="comment">/* Two equal columns side by side */</span>
+<span class="tag">.column</span> {
+  <span class="attr">width</span>: <span class="number">50%</span>;
+  <span class="attr">float</span>: <span class="string">left</span>;
+}</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Percentage height gotcha</div>
+          <p>
+            <code>height: 50%</code> only works if the <strong>parent has a defined height</strong>.
+            If the parent's height is <code>auto</code> (default), the percentage is ignored.
+          </p>
+          <pre><code><span class="comment">/* ❌ Won't work — parent has no fixed height */</span>
+<span class="tag">.parent</span> { <span class="comment">/* height: auto */</span> }
+<span class="tag">.child</span> { <span class="attr">height</span>: <span class="number">50%</span>; } <span class="comment">/* has no effect */</span>
+
+<span class="comment">/* ✅ Works — parent height is defined */</span>
+<span class="tag">.parent</span> { <span class="attr">height</span>: <span class="number">400</span>px; }
+<span class="tag">.child</span> { <span class="attr">height</span>: <span class="number">50%</span>; } <span class="comment">/* = 200px */</span></code></pre>
+        </div>
+
+        <!-- em -->
+        <h3>em — Relative to the element's font size</h3>
+
+        <p>
+          <code>1em</code> equals the <strong>current element's font size</strong>.
+          If no font size is set on the element, it inherits from the parent.
+          This makes <code>em</code> great for component-level spacing that scales with text.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.button</span> {
+  <span class="attr">font-size</span>: <span class="number">16</span>px;
+
+  <span class="comment">/* em is relative to this element's font-size (16px) */</span>
+  <span class="attr">padding</span>: <span class="number">0.75em 1.5em</span>; <span class="comment">/* = 12px 24px */</span>
+  <span class="attr">border-radius</span>: <span class="number">0.25em</span>;  <span class="comment">/* = 4px */</span>
+}
+
+<span class="tag">.button--large</span> {
+  <span class="attr">font-size</span>: <span class="number">20</span>px;
+  <span class="comment">/* Padding now scales automatically: 15px 30px */</span>
+}</code></pre>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 Compounding effect</div>
+          <p>
+            <code>em</code> <strong>compounds</strong> when nested. If a parent is <code>1.2em</code>
+            and a child is also <code>1.2em</code>, the child ends up at <code>1.44em</code>
+            (1.2 × 1.2) relative to the root. This can cause unexpected sizes in deep nesting.
+          </p>
+          <pre><code><span class="tag">body</span>   { <span class="attr">font-size</span>: <span class="number">16</span>px; }
+<span class="tag">.a</span>     { <span class="attr">font-size</span>: <span class="number">1.2</span>em; } <span class="comment">/* 19.2px */</span>
+<span class="tag">.a .b</span>  { <span class="attr">font-size</span>: <span class="number">1.2</span>em; } <span class="comment">/* 23.04px — compounding! */</span></code></pre>
+        </div>
+
+        <!-- rem -->
+        <h3>rem — Relative to the root font size</h3>
+
+        <p>
+          <code>rem</code> stands for <strong>root em</strong>. It is always relative to the
+          <code>&lt;html&gt;</code> element's font size — never the parent. This avoids the
+          compounding problem of <code>em</code> and is the <strong>recommended unit for font
+          sizes and spacing</strong>.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Root font size (browser default is 16px) */</span>
+<span class="tag">html</span> {
+  <span class="attr">font-size</span>: <span class="number">16</span>px; <span class="comment">/* 1rem = 16px everywhere */</span>
+}
+
+<span class="tag">h1</span> { <span class="attr">font-size</span>: <span class="number">2</span>rem; }      <span class="comment">/* 32px */</span>
+<span class="tag">h2</span> { <span class="attr">font-size</span>: <span class="number">1.5</span>rem; }    <span class="comment">/* 24px */</span>
+<span class="tag">h3</span> { <span class="attr">font-size</span>: <span class="number">1.25</span>rem; }   <span class="comment">/* 20px */</span>
+<span class="tag">p</span>  { <span class="attr">font-size</span>: <span class="number">1</span>rem; }       <span class="comment">/* 16px */</span>
+<span class="tag">small</span> { <span class="attr">font-size</span>: <span class="number">0.875</span>rem; } <span class="comment">/* 14px */</span>
+
+<span class="comment">/* Spacing scale using rem */</span>
+<span class="tag">.section</span> {
+  <span class="attr">padding</span>: <span class="number">2</span>rem;        <span class="comment">/* 32px */</span>
+  <span class="attr">margin-bottom</span>: <span class="number">1.5</span>rem; <span class="comment">/* 24px */</span>
+}</code></pre>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Accessibility benefit</div>
+          <p>
+            When a user increases their browser's default font size (e.g., from 16px to 20px),
+            <code>rem</code> values scale with it — so your entire layout grows proportionally.
+            <code>px</code> values stay fixed and ignore the user's preference.
+            This is why <strong>rem is preferred for font sizes and layout spacing</strong>.
+          </p>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">em vs rem comparison</div>
+          <pre><code><span class="tag">html</span> { <span class="attr">font-size</span>: <span class="number">16</span>px; }
+
+<span class="tag">.parent</span> {
+  <span class="attr">font-size</span>: <span class="number">20</span>px;
+}
+
+<span class="tag">.child</span> {
+  <span class="attr">font-size</span>: <span class="number">1.5</span>em;  <span class="comment">/* 30px — relative to parent (20px) */</span>
+  <span class="attr">margin</span>: <span class="number">1.5</span>rem;   <span class="comment">/* 24px — always relative to html (16px) */</span>
+}</code></pre>
+        </div>
+
+        <!-- vw/vh -->
+        <h3>vw / vh — Viewport Width and Height</h3>
+
+        <p>
+          <code>1vw</code> = 1% of the <strong>viewport width</strong>.<br>
+          <code>1vh</code> = 1% of the <strong>viewport height</strong>.<br>
+          <code>100vw</code> = full width of the browser window.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Full-screen hero section */</span>
+<span class="tag">.hero</span> {
+  <span class="attr">width</span>: <span class="number">100</span>vw;
+  <span class="attr">height</span>: <span class="number">100</span>vh;
+  <span class="attr">display</span>: <span class="string">flex</span>;
+  <span class="attr">align-items</span>: <span class="string">center</span>;
+  <span class="attr">justify-content</span>: <span class="string">center</span>;
+}
+
+<span class="comment">/* Responsive heading that scales with viewport */</span>
+<span class="tag">h1</span> {
+  <span class="attr">font-size</span>: <span class="number">5</span>vw; <span class="comment">/* on a 1200px screen = 60px */</span>
+}
+
+<span class="comment">/* Sticky sidebar with full viewport height */</span>
+<span class="tag">.sidebar</span> {
+  <span class="attr">height</span>: <span class="number">100</span>vh;
+  <span class="attr">position</span>: <span class="string">sticky</span>;
+  <span class="attr">top</span>: <span class="number">0</span>;
+  <span class="attr">overflow-y</span>: <span class="string">auto</span>;
+}</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ 100vh on mobile</div>
+          <p>
+            On mobile browsers, <code>100vh</code> includes the browser's address bar,
+            which can cause content to be hidden behind it. Modern browsers added
+            <code>svh</code> (small viewport height) and <code>dvh</code> (dynamic viewport height)
+            to solve this:
+          </p>
+          <pre><code><span class="tag">.hero</span> {
+  <span class="attr">height</span>: <span class="number">100</span>vh;   <span class="comment">/* classic — may overlap address bar */</span>
+  <span class="attr">height</span>: <span class="number">100</span>svh;  <span class="comment">/* small viewport — excludes browser chrome */</span>
+  <span class="attr">height</span>: <span class="number">100</span>dvh;  <span class="comment">/* dynamic — updates when address bar hides */</span>
+}</code></pre>
+        </div>
+
+        <!-- vmin/vmax -->
+        <h3>vmin / vmax</h3>
+
+        <p>
+          <code>vmin</code> is 1% of the <strong>smaller</strong> dimension (width or height).<br>
+          <code>vmax</code> is 1% of the <strong>larger</strong> dimension.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* A square that fits inside any screen orientation */</span>
+<span class="tag">.square</span> {
+  <span class="attr">width</span>: <span class="number">80</span>vmin;
+  <span class="attr">height</span>: <span class="number">80</span>vmin;
+  <span class="comment">/* Portrait 390×844: 80 × 3.9px = 312px */</span>
+  <span class="comment">/* Landscape 844×390: 80 × 3.9px = 312px — same! */</span>
+}
+
+<span class="comment">/* Responsive font that avoids getting too big on wide screens */</span>
+<span class="tag">h1</span> {
+  <span class="attr">font-size</span>: <span class="number">8</span>vmin;
+}</code></pre>
+        </div>
+
+        <!-- ch -->
+        <h3>ch — Character width</h3>
+
+        <p>
+          <code>1ch</code> equals the width of the <strong>"0" (zero) character</strong>
+          in the current font. It's ideal for sizing text inputs and readable line lengths.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Readable text width — 45–75 characters per line */</span>
+<span class="tag">article</span> {
+  <span class="attr">max-width</span>: <span class="number">65</span>ch;
+}
+
+<span class="comment">/* Form input sized to fit exactly a phone number */</span>
+<span class="tag">input[type="tel"]</span> {
+  <span class="attr">width</span>: <span class="number">12</span>ch;
+}
+
+<span class="comment">/* ZIP code field */</span>
+<span class="tag">input[name="zip"]</span> {
+  <span class="attr">width</span>: <span class="number">5</span>ch;
+}</code></pre>
+        </div>
+
+        <!-- ex -->
+        <h3>ex — x-height</h3>
+
+        <p>
+          <code>1ex</code> equals the height of the lowercase letter "x" in the current font.
+          Rarely used in practice, but useful for fine-tuning icon alignment with text.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Vertically center a small inline icon with text */</span>
+<span class="tag">.icon</span> {
+  <span class="attr">vertical-align</span>: <span class="number">-0.15</span>ex;
+}</code></pre>
+        </div>
+
+        <!-- ========================
+             QUICK REFERENCE
+        ========================= -->
+        <h2>Quick Reference: Which Unit to Use?</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Recommended unit</th>
+              <th>Why</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Font size (body)</td>
+              <td><code>rem</code></td>
+              <td>Respects user preferences, no compounding</td>
+            </tr>
+            <tr>
+              <td>Font size (component)</td>
+              <td><code>rem</code> or <code>em</code></td>
+              <td><code>em</code> if you want it to scale with parent text</td>
+            </tr>
+            <tr>
+              <td>Padding / margin</td>
+              <td><code>rem</code></td>
+              <td>Consistent spacing scale across the site</td>
+            </tr>
+            <tr>
+              <td>Component spacing</td>
+              <td><code>em</code></td>
+              <td>Scales with the component's own font size</td>
+            </tr>
+            <tr>
+              <td>Layout widths</td>
+              <td><code>%</code> or <code>rem</code></td>
+              <td><code>%</code> for fluid, <code>rem</code> for max-width</td>
+            </tr>
+            <tr>
+              <td>Full-screen sections</td>
+              <td><code>vw</code> / <code>dvh</code></td>
+              <td>Fills the viewport regardless of content</td>
+            </tr>
+            <tr>
+              <td>Borders, shadows</td>
+              <td><code>px</code></td>
+              <td>Should stay sharp and thin at all sizes</td>
+            </tr>
+            <tr>
+              <td>Border radius</td>
+              <td><code>px</code> or <code>rem</code></td>
+              <td><code>px</code> for fixed roundness, <code>rem</code> to scale</td>
+            </tr>
+            <tr>
+              <td>Text input widths</td>
+              <td><code>ch</code></td>
+              <td>Directly matches the expected character count</td>
+            </tr>
+            <tr>
+              <td>Readable text column</td>
+              <td><code>ch</code> or <code>rem</code></td>
+              <td><code>max-width: 65ch</code> is a proven reading width</td>
+            </tr>
+            <tr>
+              <td>Square that fits screen</td>
+              <td><code>vmin</code></td>
+              <td>Works in both portrait and landscape</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- ========================
+             PRACTICAL PATTERNS
+        ========================= -->
+        <h2>Practical Patterns</h2>
+
+        <h3>Responsive Typography Scale</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Set the base size once on html */</span>
+<span class="tag">html</span> {
+  <span class="attr">font-size</span>: <span class="number">16</span>px; <span class="comment">/* 1rem = 16px */</span>
+}
+
+<span class="comment">/* Scale up for large screens */</span>
+<span class="tag">@media</span> (<span class="attr">min-width</span>: <span class="number">1200</span>px) {
+  <span class="tag">html</span> { <span class="attr">font-size</span>: <span class="number">18</span>px; } <span class="comment">/* All rem values grow automatically */</span>
+}
+
+<span class="tag">h1</span> { <span class="attr">font-size</span>: <span class="number">2.5</span>rem; }
+<span class="tag">h2</span> { <span class="attr">font-size</span>: <span class="number">2</span>rem; }
+<span class="tag">h3</span> { <span class="attr">font-size</span>: <span class="number">1.5</span>rem; }
+<span class="tag">p</span>  { <span class="attr">font-size</span>: <span class="number">1</span>rem; }</code></pre>
+        </div>
+
+        <h3>Fluid Viewport Font Size with clamp()</h3>
+
+        <p>
+          The <code>clamp(min, preferred, max)</code> function lets a value grow with
+          the viewport but stay within limits.
+        </p>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Font grows from 1rem (mobile) to 1.5rem (desktop),
+   scaling smoothly based on viewport width */</span>
+<span class="tag">h1</span> {
+  <span class="attr">font-size</span>: <span class="string">clamp</span>(<span class="number">1.5rem, 4vw, 3rem</span>);
+  <span class="comment">/*            min  preferred  max */</span>
+}
+
+<span class="tag">p</span> {
+  <span class="attr">font-size</span>: <span class="string">clamp</span>(<span class="number">1rem, 1.5vw, 1.25rem</span>);
+}</code></pre>
+        </div>
+
+        <h3>Full-Height Hero Section</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">.hero</span> {
+  <span class="comment">/* Fallback for older browsers */</span>
+  <span class="attr">height</span>: <span class="number">100</span>vh;
+
+  <span class="comment">/* Modern: avoids the mobile address-bar overlap */</span>
+  <span class="attr">height</span>: <span class="number">100</span>dvh;
+
+  <span class="attr">display</span>: <span class="string">flex</span>;
+  <span class="attr">flex-direction</span>: <span class="string">column</span>;
+  <span class="attr">align-items</span>: <span class="string">center</span>;
+  <span class="attr">justify-content</span>: <span class="string">center</span>;
+  <span class="attr">padding</span>: <span class="number">2</span>rem;
+}</code></pre>
+        </div>
+
+        <h3>Self-Contained Button Component</h3>
+
+        <div class="code-example">
+          <pre><code><span class="comment">/* Using em for padding — scales with the button's own font-size */</span>
+<span class="tag">.btn</span> {
+  <span class="attr">font-size</span>: <span class="number">1</span>rem;
+  <span class="attr">padding</span>: <span class="number">0.6em 1.4em</span>;   <span class="comment">/* 9.6px 22.4px */</span>
+  <span class="attr">border</span>: <span class="number">2</span>px <span class="string">solid currentColor</span>;
+  <span class="attr">border-radius</span>: <span class="number">0.3em</span>;
+}
+
+<span class="tag">.btn--small</span> {
+  <span class="attr">font-size</span>: <span class="number">0.875</span>rem;
+  <span class="comment">/* padding/radius scale down automatically — no extra rules needed */</span>
+}
+
+<span class="tag">.btn--large</span> {
+  <span class="attr">font-size</span>: <span class="number">1.25</span>rem;
+  <span class="comment">/* padding/radius scale up automatically */</span>
+}</code></pre>
+        </div>
+
+        <h3>Readable Article Layout</h3>
+
+        <div class="code-example">
+          <pre><code><span class="tag">article</span> {
+  <span class="comment">/* ~65 characters wide — proven comfortable reading line length */</span>
+  <span class="attr">max-width</span>: <span class="number">65</span>ch;
+
+  <span class="comment">/* Centered with breathing room */</span>
+  <span class="attr">margin</span>: <span class="number">0 auto</span>;
+  <span class="attr">padding</span>: <span class="number">2rem 1rem</span>;
+
+  <span class="comment">/* Comfortable line height */</span>
+  <span class="attr">line-height</span>: <span class="number">1.6</span>;
+  <span class="attr">font-size</span>: <span class="number">1.125</span>rem;
+}</code></pre>
+        </div>
+
+        <!-- ========================
+             SUMMARY
+        ========================= -->
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li><strong>px</strong> — fixed pixel; use for borders, shadows, icons</li>
+            <li><strong>%</strong> — relative to parent; use for fluid layout widths</li>
+            <li><strong>em</strong> — relative to element's font size; use for component-level spacing</li>
+            <li><strong>rem</strong> — relative to root font size; use for font sizes and global spacing</li>
+            <li><strong>vw / vh</strong> — relative to viewport; use for full-screen sections</li>
+            <li><strong>dvh / svh</strong> — viewport height that handles mobile browser bars</li>
+            <li><strong>vmin / vmax</strong> — relative to the smaller/larger viewport dimension</li>
+            <li><strong>ch</strong> — width of "0"; use for input widths and readable text columns</li>
+            <li><code>clamp(min, fluid, max)</code> combines units for smooth responsive scaling</li>
+            <li>Default to <strong>rem for fonts</strong> and <strong>px for thin decorative lines</strong></li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="box-model.html" class="nav-button">← Box Model</a>
+          <a href="flexbox.html" class="nav-button">Flexbox →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
