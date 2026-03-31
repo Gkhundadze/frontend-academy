@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Pseudo-Classes - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="../favicon.ico">
+  <style>
+    /* ── Demo shared ── */
+    .demo-area {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0 1.5rem;
+    }
+    .demo-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+    }
+    .pseudo-tag {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      background: var(--primary-color);
+      color: white;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-family: monospace;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .pseudo-row {
+      margin-bottom: 3rem;
+    }
+    .pseudo-row h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .section-intro {
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Pseudo-class vs element compare ── */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .compare-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+    }
+    .compare-card h4 {
+      margin: 0 0 0.5rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+    }
+    .compare-card .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .badge-pseudo-class { background: rgba(74,144,226,0.15); color: var(--primary-color); }
+    .badge-pseudo-elem  { background: rgba(80,200,120,0.15); color: var(--accent-color); }
+
+    /* ── :hover ── */
+    .demo-hover-btn {
+      padding: 0.6rem 1.4rem;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .demo-hover-btn:hover {
+      background: #2e6db5;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(74,144,226,0.35);
+    }
+    .demo-hover-card {
+      padding: 1rem 1.5rem;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      cursor: default;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      font-size: 0.95rem;
+    }
+    .demo-hover-card:hover {
+      border-color: var(--primary-color);
+      box-shadow: 0 4px 14px rgba(74,144,226,0.18);
+      background: rgba(74,144,226,0.05);
+    }
+    .demo-hover-nav {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .demo-hover-nav a {
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      border-right: 1px solid var(--border-color);
+      transition: background 0.15s, color 0.15s;
+    }
+    .demo-hover-nav a:last-child { border-right: none; }
+    .demo-hover-nav a:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    /* ── :active ── */
+    .demo-active-btn {
+      padding: 0.6rem 1.4rem;
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.08s, box-shadow 0.08s;
+      box-shadow: 0 4px 0 #2e8a50;
+    }
+    .demo-active-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #2e8a50;
+    }
+
+    /* ── :focus ── */
+    .demo-focus-input {
+      padding: 0.5rem 0.9rem;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 230px;
+    }
+    .demo-focus-input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 4px rgba(74,144,226,0.2);
+    }
+
+    /* ── :focus-visible ── */
+    .demo-fv-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .demo-fv-btn {
+      padding: 0.6rem 1.4rem;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      outline: none;
+      transition: background 0.15s;
+    }
+    .demo-fv-btn:hover { background: var(--bg-secondary); }
+    .demo-fv-btn:focus-visible {
+      outline: 3px solid var(--primary-color);
+      outline-offset: 3px;
+    }
+    .demo-fv-link {
+      color: var(--primary-color);
+      text-decoration: underline;
+      cursor: pointer;
+      outline: none;
+    }
+    .demo-fv-link:focus-visible {
+      outline: 3px solid var(--primary-color);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    /* ── :checked ── */
+    .demo-check-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .demo-check-label {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      font-size: 1rem;
+      user-select: none;
+    }
+    .demo-check-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--primary-color);
+    }
+    .demo-toggle-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .demo-toggle-label input { display: none; }
+    .demo-toggle-track {
+      width: 46px;
+      height: 26px;
+      background: var(--border-color);
+      border-radius: 13px;
+      position: relative;
+      transition: background 0.25s;
+    }
+    .demo-toggle-track::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.25s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    }
+    .demo-toggle-label input:checked ~ .demo-toggle-track {
+      background: var(--primary-color);
+    }
+    .demo-toggle-label input:checked ~ .demo-toggle-track::after {
+      transform: translateX(20px);
+    }
+
+    /* ── :disabled / :enabled ── */
+    .demo-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      max-width: 320px;
+    }
+    .demo-field-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 0.2rem;
+    }
+    .demo-dis-input {
+      padding: 0.5rem 0.9rem;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s, opacity 0.2s;
+    }
+    .demo-dis-input:focus { border-color: var(--primary-color); }
+    .demo-dis-input:disabled {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+    .demo-dis-btn {
+      padding: 0.55rem 1.2rem;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .demo-dis-btn:disabled {
+      background: var(--border-color);
+      color: var(--text-secondary);
+      cursor: not-allowed;
+    }
+
+    /* ── :required / :valid / :invalid ── */
+    .demo-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 340px;
+    }
+    .demo-form-field { display: flex; flex-direction: column; gap: 0.25rem; }
+    .demo-form-field label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .demo-val-input {
+      padding: 0.5rem 0.9rem;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .demo-val-input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(74,144,226,0.15); }
+    .demo-val-input:required { border-left: 3px solid #e0922b; }
+    .demo-val-input:valid:not(:placeholder-shown) {
+      border-color: #50c878;
+      box-shadow: 0 0 0 3px rgba(80,200,120,0.15);
+    }
+    .demo-val-input:invalid:not(:placeholder-shown) {
+      border-color: #e06c75;
+      box-shadow: 0 0 0 3px rgba(224,108,117,0.15);
+    }
+    .field-hint {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    /* ── Structural demos ── */
+    .demo-styled-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      max-width: 320px;
+    }
+    .demo-styled-list li {
+      padding: 0.55rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
+      transition: background 0.12s;
+    }
+    .demo-styled-list li:last-child { border-bottom: none; }
+    .demo-styled-list li:first-child {
+      background: rgba(74,144,226,0.12);
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    .demo-styled-list li:last-child {
+      background: rgba(80,200,120,0.12);
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+    .demo-styled-list li:nth-child(even):not(:first-child):not(:last-child) {
+      background: var(--bg-secondary);
+    }
+
+    .demo-nth-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+    .demo-nth-item {
+      padding: 0.6rem 0.3rem;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: var(--bg-primary);
+      border: 2px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+    .demo-nth-item.highlight {
+      background: rgba(74,144,226,0.15);
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+    .demo-nth-item.highlight-3n {
+      background: rgba(80,200,120,0.15);
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .demo-not-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .demo-not-pills li {
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      border: 2px solid var(--border-color);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: opacity 0.2s;
+    }
+    .demo-not-pills li:not(.is-active) { opacity: 0.35; }
+    .demo-not-pills li.is-active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+      opacity: 1;
+    }
+
+    /* ── Link pseudo-classes ── */
+    .lvha-demo {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .lvha-demo a {
+      display: inline-block;
+      width: fit-content;
+      font-size: 1rem;
+      padding: 0.2rem 0;
+    }
+    .lvha-order {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1rem 0;
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
+    .lvha-order .lvha-step {
+      flex: 1;
+      padding: 0.7rem 0.5rem;
+      text-align: center;
+      border-right: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+    }
+    .lvha-order .lvha-step:last-child { border-right: none; }
+    .lvha-order .lvha-step .letter {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+    .lvha-order .lvha-step .word {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .lvha-l { color: #4a90e2; }
+    .lvha-v { color: #9b6bc8; }
+    .lvha-h { color: #50c878; }
+    .lvha-a { color: #e06c75; }
+
+    /* ── :is() / :where() / :has() ── */
+    .demo-is-box {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      background: var(--bg-primary);
+    }
+    .demo-is-box :is(h3, h4, h5) {
+      color: var(--primary-color);
+      margin: 0 0 0.4rem;
+    }
+    .demo-is-box p { margin: 0; font-size: 0.9rem; color: var(--text-secondary); }
+
+    /* ── Common Mistakes ── */
+    .mistake-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .mistake-card {
+      padding: 1.2rem;
+      border-radius: 8px;
+      border-left: 4px solid #e06c75;
+      background: var(--bg-secondary);
+    }
+    .mistake-card h4 {
+      margin: 0 0 0.5rem;
+      color: #e06c75;
+      font-size: 0.95rem;
+    }
+    .mistake-card p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    .mistake-card code {
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 640px) {
+      .compare-grid { grid-template-columns: 1fr; }
+      .demo-nth-grid { grid-template-columns: repeat(5, 1fr); }
+      .lvha-order .lvha-step .letter { font-size: 1.1rem; }
+      .mistake-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-container">
+
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>CSS Pseudo-Classes</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="css-colors.html">CSS Colors</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="css-units.html">CSS Units</a></li>
+          <li><a href="css-pseudo-classes.html">CSS Pseudo-Classes</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="responsive-images.html">Responsive Images</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 4: Professional Skills</div>
+        <ul class="nav-list">
+          <li><a href="performance-optimization.html">Performance Optimization</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Quick Links</div>
+        <ul class="nav-list">
+          <li><a href="../index.html">← Back to Home</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <h1>🎯 CSS Pseudo-Classes</h1>
+
+        <p>
+          Pseudo-classes let you style elements based on their <strong>state</strong>,
+          <strong>position</strong>, or <strong>relationship</strong> to other elements —
+          without adding extra classes or JavaScript. They're one of the most powerful
+          tools in CSS for building interactive, accessible UIs.
+        </p>
+
+        <!-- ========================
+             INTRODUCTION
+        ========================= -->
+        <h2>What is a pseudo-class?</h2>
+
+        <p class="section-intro">
+          A pseudo-class is a keyword added to a selector with a single colon
+          (<code>:</code>) that targets an element in a specific <em>state</em>.
+          For example, <code>:hover</code> matches an element only while the cursor
+          is over it.
+        </p>
+
+        <div class="code-example">
+          <pre><code>/* Syntax */
+selector:pseudo-class { property: value; }
+
+/* Examples */
+a:hover        { color: blue; }
+input:focus    { border-color: blue; }
+li:first-child { font-weight: bold; }
+button:disabled { opacity: 0.5; }</code></pre>
+        </div>
+
+        <h3>Pseudo-class vs pseudo-element</h3>
+        <p>Easy rule: <strong>one colon</strong> = pseudo-class (state). <strong>Two colons</strong> = pseudo-element (creates virtual content).</p>
+
+        <div class="compare-grid">
+          <div class="compare-card">
+            <h4>Pseudo-class</h4>
+            <div class="badge badge-pseudo-class">:hover&nbsp;&nbsp;:focus&nbsp;&nbsp;:nth-child()</div>
+            <p>Selects an element in a particular <strong>state</strong>. The element already exists in the DOM.</p>
+          </div>
+          <div class="compare-card">
+            <h4>Pseudo-element</h4>
+            <div class="badge badge-pseudo-elem">::before&nbsp;&nbsp;::after&nbsp;&nbsp;::placeholder</div>
+            <p>Targets a <strong>virtual part</strong> of an element, or inserts content that isn't in the HTML.</p>
+          </div>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📝 Both syntaxes work — mostly</div>
+          <p>
+            Older CSS allowed a single colon for pseudo-elements too (<code>:before</code>, <code>:after</code>).
+            Browsers still accept it, but always use <code>::</code> for pseudo-elements in new code
+            — it's the standard and makes intent clear.
+          </p>
+        </div>
+
+
+        <!-- ============================================================
+             SECTION 1 — USER INTERACTION
+        ============================================================= -->
+        <h2>1. User Interaction Pseudo-Classes</h2>
+        <p class="section-intro">
+          These fire based on what the user is physically doing — moving a cursor,
+          clicking, or navigating with the keyboard.
+        </p>
+
+        <!-- :hover -->
+        <div class="pseudo-row">
+          <h3><span class="pseudo-tag">:hover</span> Cursor over an element</h3>
+          <p>
+            Matches any element while the pointer is positioned over it.
+            Used for buttons, links, cards, nav items — almost everything interactive.
+          </p>
+
+          <div class="code-example">
+            <pre><code>/* Button lift effect */
+.btn:hover {
+  background: #2e6db5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(74, 144, 226, 0.35);
+}
+
+/* Card highlight */
+.card:hover {
+  border-color: #4a90e2;
+  box-shadow: 0 4px 14px rgba(74, 144, 226, 0.18);
+}
+
+/* Nav item */
+nav a:hover {
+  background: #4a90e2;
+  color: white;
+}</code></pre>
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-label">✦ Try it — hover each element</div>
+            <div class="demo-row">
+              <button class="demo-hover-btn">Hover me</button>
+              <div class="demo-hover-card">Hover this card</div>
+              <nav class="demo-hover-nav">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Work</a>
+              </nav>
+            </div>
+          </div>
+
+          <div class="info-box tip">
+            <div class="info-box-title">✅ Real project use</div>
+            <p>
+              Always pair <code>:hover</code> with <code>transition</code> so state changes
+              animate smoothly. A 150–200 ms ease is the sweet spot — fast enough to feel
+              instant, slow enough to be noticeable.
+            </p>
+          </div>
+        </div>
+
+        <!-- :active -->
+        <div class="pseudo-row">
+          <h3><span class="pseudo-tag">:active</span> Element is being clicked</h3>
+          <p>
+            Matches between the moment the mouse button is pressed and when it's released.
+            Use it to give physical "press" feedback on buttons.
+          </p>
+
+          <div class="code-example">
+            <pre><code>/* 3D press illusion */
+.btn {
+  box-shadow: 0 4px 0 #2e8a50;
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+.btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #2e8a50;
+}</code></pre>
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-label">✦ Try it — click and hold the button</div>
+            <button class="demo-active-btn">Press me</button>
+          </div>
+
+          <div class="info-box note">
+            <div class="info-box-title">📝 :active vs :hover order</div>
+            <p>
+              When writing both, put <code>:hover</code> before <code>:active</code>.
+              <code>:active</code> is more specific in time, so it should come last
+              to win the cascade.
+            </p>
+          </div>
+        </div>
+
+        <!-- :focus -->
+        <div class="pseudo-row">
+          <h3><span class="pseudo-tag">:focus</span> Element has keyboard/click focus</h3>
+          <p>
+            Fires when an element receives focus — either by clicking it or tabbing to it
+            with the keyboard. Critical for form inputs and interactive controls.
+          </p>
+
+          <div class="code-example">
+            <pre><code>input:focus {
+  outline: none;                            /* remove default ring */
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.2); /* custom ring */
+}</code></pre>
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-label">✦ Try it — click the input or Tab to it</div>
+            <div class="demo-row">
+              <input class="demo-focus-input" type="text" placeholder="Click or Tab to focus…">
+              <input class="demo-focus-input" type="email" placeholder="Email address…">
+            </div>
+          </div>
+
+          <div class="info-box warning">
+            <div class="info-box-title">⚠️ Never remove focus without a replacement</div>
+            <p>
+              <code>outline: none</code> without a replacement focus style breaks keyboard
+              navigation for users who can't use a mouse. Always provide a visible focus
+              indicator — a custom ring with <code>box-shadow</code> works great.
+            </p>
+          </div>
+        </div>
+
+        <!-- :focus-visible -->
+        <div class="pseudo-row">
+          <h3><span class="pseudo-tag">:focus-visible</span> Keyboard focus only</h3>
+          <p>
+            Like <code>:focus</code>, but it only applies when the browser determines
+            the user is navigating by keyboard (Tab, arrow keys). Mouse clicks on buttons
+            don't trigger it. This is the modern best practice for focus rings.
+          </p>
+
+          <div class="code-example">
+            <pre><code>/* Remove focus ring for mouse users */
+.btn:focus {
+  outline: none;
+}
+
+/* Show focus ring for keyboard users only */
+.btn:focus-visible {
+  outline: 3px solid #4a90e2;
+  outline-offset: 3px;
+}</code></pre>
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-label">✦ Try it — click with mouse vs Tab with keyboard</div>
+            <div class="demo-fv-row">
+              <button class="demo-fv-btn">Button (Tab to focus)</button>
+              <button class="demo-fv-btn">Button 2</button>
+              <a class="demo-fv-link" href="#" onclick="return false;">Link</a>
+            </div>
+            <p style="margin-top:0.8rem; font-size:0.85rem; color:var(--text-secondary);">
+              Clicking with a mouse shows no ring. Press Tab to see the outline appear.
+            </p>
+          </div>
+
+          <div class="info-box tip">
+            <div class="info-box-title">✅ :focus-visible is the modern standard</div>
+            <p>
+              Use <code>:focus-visible</code> for interactive controls (buttons, links, custom inputs).
+              Use plain <code>:focus</code> for actual text inputs — those should always show
+              a ring since users need to know where they're typing.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- ============================================================
+             SECTION 2 — FORM & INPUT STATE
+        ============================================================= -->
+        <h2>2. Form & Input State Pseudo-Classes</h2>
+        <p class="section-intro">
+          CSS can read the state of form elements directly — no JavaScript needed
+          for basic visual feedback on validation, required fields, and disabled states.
+        </p>
+
+        <!-- :checked -->
+        <div class="pseudo-row">
+          <h3><span class="pseudo-tag">:checked</span> Checkbox, radio, or option is selected</h3>
+          <p>
+            Matches a checkbox or radio button that is currently checked.
+            Combine it with a sibling selector (<code>+</code> or <code>~</code>)
+            to style adjacent elements — this is how pure-CSS toggles and custom
+            checkboxes work.
+          </p>
+
+          <div class="code-example">
+            <pre><code>/* Style the label when its checkbox is checked */
+input[type="checkbox"]:checked + label {
+  color: #4a90e2;
+  font-weight: 600;
+}
+
+/* Custom CSS toggle switch */
+input:checked + .track {
+  background: #4a90e2;   /* turn track blue */
+}
+input:checked + .track::after {
+  transform: translateX(20px);  /* slide the thumb */
+}</code></pre>
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-label">✦ Try it — check the boxes, flip the toggle</div>
+            <div class="demo-row" style="align-items: flex-start; gap: 2rem;">
+              <div class="demo-check-list">
+                <label class="demo-check-label">
+                  <input type="checkbox"> Buy groceries
+                </label>
+                <label class="demo-check-label">
+                  <input type="checkbox" checked> Write CSS
+                </label>
+                <label class="demo-check-label">
+                  <input type="checkbox"> Ship feature
+                </label>
+              </div>
+              <label class="demo-toggle-label">
+                <input type="checkbox">
+                <span class="demo-toggle-track"></span>
+                <span>Dark mode</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- :disabled / :enabled -->
+        <div class="pseudo-row">
+          <h3>
+            <span class="pseudo-tag">:disabled</span>
+            <span class="pseudo-tag">:enabled</span>
+            Form control availability
+          </h3>
+          <p>
+            <code>:disabled</code> matches form elements with the <code>disabled</code>
+            HTML attribute. Use it to visually communicate that an action isn't available
+            yet — muted colors and <code>cursor: not-allowed</code> are the standard pattern.
+            <code>:enabled</code> matches the opposite: controls that can be interacted with.
+          </p>
+
+          <div class="code-example">
+            <pre><code>input:disabled {
+  background: #f0f0f0;
+  color: #aaa;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Target only enabled inputs for hover effects */
+input:enabled:hover {
+  border-color: #4a90e2;
+}</code></pre>
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-label">✦ Try it — notice the disabled vs enabled states</div>
+            <div class="demo-field-group">
+              <div>
+                <div class="demo-field-label">Enabled input</div>
+                <input class="demo-dis-input" type="text" placeholder="You can type here">
+              </div>
+              <div>
+                <div class="demo-field-label">Disabled input</div>
+                <input class="demo-dis-input" type="text" placeholder="Not available" disabled>
+              </div>
+              <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+                <button class="demo-dis-btn">Submit</button>
+                <button class="demo-dis-btn" disabled>Disabled</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- :required / :valid / :invalid -->
+        <div class="pseudo-row">
+          <h3>
+            <span class="pseudo-tag">:required</span>
+            <span class="pseudo-tag">:valid</span>
+            <span class="pseudo-tag">:invalid</span>
+            Validation states
+          </h3>
+          <p>
+            <code>:required</code> matches inputs with the <code>required</code> attribute.
+            <code>:valid</code> and <code>:invalid</code> match based on the browser's
+            built-in constraint validation (email format, min/max, pattern, required).
+          </p>
+
+          <div class="code-example">
+            <pre><code>/* Mark required fields with an orange left border */
+input:required {
+  border-left: 3px solid #e0922b;
+}
+
+/* Green when content is valid */
+input:valid:not(:placeholder-shown) {
+  border-color: #50c878;
+  box-shadow: 0 0 0 3px rgba(80, 200, 120, 0.15);
+}
+
+/* Red when content is invalid (hide on empty fields) */
+input:invalid:not(:placeholder-shown) {
+  border-color: #e06c75;
+  box-shadow: 0 0 0 3px rgba(224, 108, 117, 0.15);
+}</code></pre>
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-label">✦ Try it — type in each field and watch the borders</div>
+            <form class="demo-form" onsubmit="return false;">
+              <div class="demo-form-field">
+                <label>Name (required)</label>
+                <input class="demo-val-input" type="text" required placeholder="Your name" minlength="2">
+                <span class="field-hint">Must be at least 2 characters</span>
+              </div>
+              <div class="demo-form-field">
+                <label>Email (required)</label>
+                <input class="demo-val-input" type="email" required placeholder="you@example.com">
+                <span class="field-hint">Must be a valid email address</span>
+              </div>
+              <div class="demo-form-field">
+                <label>Website (optional)</label>
+                <input class="demo-val-input" type="url" placeholder="https://example.com">
+                <span class="field-hint">Optional — but must be a valid URL if provided</span>
+              </div>
+            </form>
+          </div>
+
+          <div class="info-box tip">
+            <div class="info-box-title">✅ The :not(:placeholder-shown) trick</div>
+            <p>
+              Without <code>:not(:placeholder-shown)</code>, empty required inputs show
+              as invalid on page load before the user touches them — terrible UX.
+              The trick means "only style when the placeholder is hidden" (i.e. the
+              user has typed something).
+            </p>
+          </div>
+        </div>
+
+
+        <!-- ============================================================
+             SECTION 3 — STRUCTURAL
+        ============================================================= -->
+        <h2>3. Structural Pseudo-Classes</h2>
+        <p class="section-intro">
+          Target elements based on their position in the document tree —
+          no extra classes needed. Great for lists, tables, and grids.
+        </p>
+
+        <!-- :first-child / :last-child -->
+        <div class="pseudo-row">
+          <h3>
+            <span class="pseudo-tag">:first-child</span>
+            <span class="pseudo-tag">:last-child</span>
+          </h3>
+          <p>
+            Match an element that is the first (or last) child of its parent.
+            Use these to remove borders/margins on edge items without needing
+            extra classes.
+          </p>
+
+          <div class="code-example">
+            <pre><code>/* Remove top border on the first item */
+li:first-child { border-top: none; }
+
+/* No bottom margin on the last paragraph */
+p:last-child { margin-bottom: 0; }
+
+/* Round the corners of a bordered list */
+li:first-child { border-radius: 8px 8px 0 0; }
+li:last-child  { border-radius: 0 0 8px 8px; }</code></pre>
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-label">✦ First child is blue, last child is green, even rows are tinted</div>
+            <ul class="demo-styled-list">
+              <li>First item (first-child)</li>
+              <li>Second item</li>
+              <li>Third item</li>
+              <li>Fourth item</li>
+              <li>Fifth item (last-child)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- :nth-child -->
+        <div class="pseudo-row">
+          <h3><span class="pseudo-tag">:nth-child()</span> Pick items by formula</h3>
+          <p>
+            Selects elements using a formula <code>An+B</code> where
+            <code>A</code> is the cycle size and <code>B</code> is the offset.
+            The keywords <code>odd</code> and <code>even</code> are the most
+            common shorthand.
+          </p>
+
+          <div class="code-example">
+            <pre><code>tr:nth-child(even) { background: #f5f5f5; } /* zebra table */
+
+li:nth-child(odd)  { background: #eaf2ff; } /* alternating list */
+
+li:nth-child(3n)   { color: green; }  /* every 3rd: 3, 6, 9... */
+li:nth-child(3n+1) { color: blue;  }  /* 1, 4, 7, 10...         */
+
+li:nth-child(-n+3) { font-weight: bold; } /* first 3 only */</code></pre>
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-label">✦ Blue = odd items &nbsp;|&nbsp; Green = every 3rd item</div>
+            <div class="demo-nth-grid" id="nth-demo">
+              <div class="demo-nth-item highlight">1</div>
+              <div class="demo-nth-item">2</div>
+              <div class="demo-nth-item highlight highlight-3n">3</div>
+              <div class="demo-nth-item highlight">4</div>
+              <div class="demo-nth-item">5</div>
+              <div class="demo-nth-item highlight highlight-3n">6</div>
+              <div class="demo-nth-item highlight">7</div>
+              <div class="demo-nth-item">8</div>
+              <div class="demo-nth-item highlight highlight-3n">9</div>
+              <div class="demo-nth-item highlight">10</div>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Formula</th>
+                <th>Selects</th>
+                <th>Use case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>:nth-child(odd)</code></td><td>1, 3, 5, 7…</td><td>Zebra striping</td></tr>
+              <tr><td><code>:nth-child(even)</code></td><td>2, 4, 6, 8…</td><td>Zebra striping</td></tr>
+              <tr><td><code>:nth-child(3n)</code></td><td>3, 6, 9, 12…</td><td>Grid column end</td></tr>
+              <tr><td><code>:nth-child(-n+3)</code></td><td>1, 2, 3</td><td>First 3 items</td></tr>
+              <tr><td><code>:nth-child(n+4)</code></td><td>4, 5, 6…</td><td>Skip first 3</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- :nth-of-type -->
+        <div class="pseudo-row">
+          <h3><span class="pseudo-tag">:nth-of-type()</span> Position among same-type siblings</h3>
+          <p>
+            Like <code>:nth-child()</code> but counts only siblings of the <em>same element type</em>.
+            Useful when a parent mixes element types (e.g. <code>&lt;p&gt;</code> and <code>&lt;h3&gt;</code>)
+            and you only want to count one kind.
+          </p>
+
+          <div class="code-example">
+            <pre><code>/* Style every other paragraph, ignoring h3 siblings */
+p:nth-of-type(even) { background: #f0f7ff; }
+
+/* Target the 2nd image in an article */
+article img:nth-of-type(2) { float: right; }
+
+/* Alternate card background colors */
+.card:nth-of-type(odd)  { background: white; }
+.card:nth-of-type(even) { background: #f9f9f9; }</code></pre>
+          </div>
+
+          <div class="info-box note">
+            <div class="info-box-title">📝 :nth-child vs :nth-of-type</div>
+            <p>
+              <code>:nth-child(2)</code> — "the element that is the 2nd child of its parent"<br>
+              <code>:nth-of-type(2)</code> — "the 2nd element of this tag type inside its parent"<br><br>
+              If your markup is homogeneous (all <code>li</code> inside a <code>ul</code>), they behave
+              identically. They differ only when siblings are of mixed types.
+            </p>
+          </div>
+        </div>
+
+        <!-- :not() -->
+        <div class="pseudo-row">
+          <h3><span class="pseudo-tag">:not()</span> Exclude elements</h3>
+          <p>
+            Matches elements that do <em>not</em> match the selector inside.
+            A much cleaner alternative to writing a rule and then overriding it.
+          </p>
+
+          <div class="code-example">
+            <pre><code>/* Add divider between items — but not after the last one */
+li:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+
+/* Style all buttons except the cancel/ghost ones */
+button:not(.btn-ghost) {
+  background: #4a90e2;
+  color: white;
+}
+
+/* All inputs except disabled ones */
+input:not(:disabled):hover {
+  border-color: #4a90e2;
+}
+
+/* Multiple exclusions (modern CSS) */
+p:not(.intro):not(.note) {
+  color: #555;
+}</code></pre>
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-label">✦ Only the "active" pill is fully visible — others use :not(.is-active) to fade</div>
+            <ul class="demo-not-pills">
+              <li>All</li>
+              <li class="is-active">Design</li>
+              <li>Code</li>
+              <li>UX</li>
+              <li>React</li>
+            </ul>
+          </div>
+        </div>
+
+
+        <!-- ============================================================
+             SECTION 4 — LINK PSEUDO-CLASSES
+        ============================================================= -->
+        <h2>4. Link Pseudo-Classes</h2>
+        <p class="section-intro">
+          These four pseudo-classes target the lifecycle states of
+          <code>&lt;a&gt;</code> elements. The order you write them matters.
+        </p>
+
+        <div class="lvha-order">
+          <div class="lvha-step">
+            <span class="letter lvha-l">L</span>
+            <span class="word">:link</span>
+          </div>
+          <div class="lvha-step">
+            <span class="letter lvha-v">V</span>
+            <span class="word">:visited</span>
+          </div>
+          <div class="lvha-step">
+            <span class="letter lvha-h">H</span>
+            <span class="word">:hover</span>
+          </div>
+          <div class="lvha-step">
+            <span class="letter lvha-a">A</span>
+            <span class="word">:active</span>
+          </div>
+        </div>
+
+        <p>
+          The mnemonic is <strong>LoVe HAte</strong>. Because of the cascade, writing
+          them in any other order can cause later states to be silently overridden.
+        </p>
+
+        <div class="code-example">
+          <pre><code>/* Always write in LVHA order */
+a:link    { color: #4a90e2; }             /* unvisited */
+a:visited { color: #9b6bc8; }             /* already visited */
+a:hover   { color: #2e6db5; text-decoration: underline; }
+a:active  { color: #e06c75; }             /* during click */</code></pre>
+        </div>
+
+        <div class="demo-area">
+          <div class="demo-label">✦ Hover and click the links below</div>
+          <div class="lvha-demo">
+            <a href="#lvha" style="color:#4a90e2;">Unvisited link — blue</a>
+            <a href="css-colors.html" style="color:#9b6bc8;">Previously visited link — purple (if you opened CSS Colors)</a>
+          </div>
+          <p style="margin-top:0.8rem; font-size:0.85rem; color:var(--text-secondary);">
+            Hover any link to see hover color. Click and hold to see active color.
+          </p>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">✅ :visited privacy limits</div>
+          <p>
+            For security reasons, browsers limit which CSS properties can be set
+            in <code>:visited</code> — only color, background-color, border-color,
+            outline-color, and a few others. You can't read the computed style via
+            JavaScript either.
+          </p>
+        </div>
+
+
+        <!-- ============================================================
+             SECTION 5 — ADVANCED
+        ============================================================= -->
+        <h2>5. Advanced: :is(), :where(), :has()</h2>
+        <p class="section-intro">
+          Modern CSS additions that make selectors cleaner, reduce repetition,
+          and unlock patterns that were previously impossible.
+        </p>
+
+        <!-- :is() -->
+        <div class="pseudo-row">
+          <h3><span class="pseudo-tag">:is()</span> Group selectors, reduce repetition</h3>
+          <p>
+            <code>:is()</code> takes a selector list and matches any of them.
+            It's shorthand for writing the same declaration block for many selectors.
+            Its <strong>specificity</strong> is the specificity of the most specific
+            item in the list.
+          </p>
+
+          <div class="code-example">
+            <pre><code>/* Without :is() — repetitive */
+header h1, header h2, header h3,
+main h1,   main h2,   main h3 {
+  color: #4a90e2;
+}
+
+/* With :is() — clean */
+:is(header, main) :is(h1, h2, h3) {
+  color: #4a90e2;
+}
+
+/* Hover on multiple elements */
+:is(a, button, .link):hover {
+  text-decoration: underline;
+}</code></pre>
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-label">✦ All headings below are styled with a single :is() rule</div>
+            <div class="demo-is-box">
+              <h3>H3 heading inside the box</h3>
+              <p>This paragraph is a sibling but not matched.</p>
+              <h4>H4 heading — also matched by :is(h3, h4, h5)</h4>
+              <p>Both headings got their color from one rule.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- :where() -->
+        <div class="pseudo-row">
+          <h3><span class="pseudo-tag">:where()</span> Zero-specificity grouping</h3>
+          <p>
+            Exactly like <code>:is()</code> — but its specificity is always
+            <strong>zero</strong>. This makes it ideal for base/reset styles that
+            should be easy to override anywhere.
+          </p>
+
+          <div class="code-example">
+            <pre><code>/* Base resets — specificity 0, easy to override */
+:where(h1, h2, h3, h4) {
+  margin-top: 1.5em;
+  line-height: 1.25;
+}
+
+/* A component lib using :where() won't fight your styles */
+:where(.card) {
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* This wins because specificity > 0 */
+.card { padding: 0.5rem; }</code></pre>
+          </div>
+
+          <div class="info-box note">
+            <div class="info-box-title">📝 :is() vs :where()</div>
+            <p>
+              Use <code>:is()</code> when you want the selector to have normal specificity.
+              Use <code>:where()</code> for resets and default styles where you need
+              downstream code to easily override without fighting the cascade.
+            </p>
+          </div>
+        </div>
+
+        <!-- :has() -->
+        <div class="pseudo-row">
+          <h3><span class="pseudo-tag">:has()</span> The parent selector</h3>
+          <p>
+            <code>:has()</code> is a game-changer — it lets you select a parent
+            based on what's inside it. Previously impossible without JavaScript.
+            Browser support is now excellent (Chrome 105+, Safari 15.4+, Firefox 121+).
+          </p>
+
+          <div class="code-example">
+            <pre><code>/* Style a card that contains an image */
+.card:has(img) {
+  padding-top: 0;
+}
+
+/* Form that has an invalid input */
+form:has(input:invalid) .submit-btn {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Nav item that contains the current page link */
+nav li:has(a[aria-current="page"]) {
+  background: rgba(74, 144, 226, 0.1);
+  border-radius: 6px;
+}
+
+/* Heading followed immediately by a paragraph */
+h2:has(+ p) {
+  margin-bottom: 0.25rem;
+}</code></pre>
+          </div>
+
+          <div class="info-box tip">
+            <div class="info-box-title">✅ When to reach for :has()</div>
+            <ul>
+              <li>Styling a container based on its children's state</li>
+              <li>Disabling UI based on form validity</li>
+              <li>Layout tweaks when optional elements (images, badges) are present</li>
+            </ul>
+          </div>
+        </div>
+
+
+        <!-- ============================================================
+             SECTION 6 — COMMON MISTAKES
+        ============================================================= -->
+        <h2>6. Common Mistakes</h2>
+
+        <div class="mistake-grid">
+          <div class="mistake-card">
+            <h4>:hover on touch devices</h4>
+            <p>
+              Touch screens have no cursor, so <code>:hover</code> either fires on
+              tap (and stays stuck) or doesn't fire at all. Never rely on hover to
+              reveal content — it must also be accessible without hovering.
+              Use <code>@media (hover: hover)</code> to limit hover effects to
+              pointer devices.
+            </p>
+          </div>
+
+          <div class="mistake-card">
+            <h4>Removing :focus without a replacement</h4>
+            <p>
+              <code>outline: none</code> alone breaks keyboard navigation for users
+              who rely on it. Always replace with a custom ring using
+              <code>box-shadow</code> or <code>outline</code> with a different style.
+              Use <code>:focus-visible</code> to avoid rings on mouse clicks.
+            </p>
+          </div>
+
+          <div class="mistake-card">
+            <h4>:nth-child() counting wrong</h4>
+            <p>
+              <code>:nth-child()</code> counts <em>all</em> children of the parent,
+              not just ones matching the tag. If a <code>ul</code> has an
+              <code>h3</code> as its first child, then
+              <code>li:nth-child(1)</code> won't match anything —
+              the first <code>li</code> is actually child 2.
+              Switch to <code>:nth-of-type()</code> in mixed-element parents.
+            </p>
+          </div>
+
+          <div class="mistake-card">
+            <h4>Writing LVHA in the wrong order</h4>
+            <p>
+              If you write <code>a:hover</code> before <code>a:visited</code>,
+              the hover state will never show on visited links because
+              <code>:visited</code> comes later in the cascade and wins.
+              Always use: <code>:link</code> → <code>:visited</code> →
+              <code>:hover</code> → <code>:active</code>.
+            </p>
+          </div>
+
+          <div class="mistake-card">
+            <h4>:valid/:invalid firing on page load</h4>
+            <p>
+              Empty required inputs are technically <code>:invalid</code> as soon
+              as the page loads. This means your error styles will show before the
+              user has typed anything. Always use
+              <code>:invalid:not(:placeholder-shown)</code> or
+              <code>:invalid:not(:focus)</code> to wait for user interaction.
+            </p>
+          </div>
+
+          <div class="mistake-card">
+            <h4>Over-using :not() for cascade hacks</h4>
+            <p>
+              Writing <code>button:not(.special)</code> to undo a rule is often
+              a sign you should restructure your CSS. Prefer defining your
+              base styles broadly and adding modifier classes, rather than
+              excluding specific elements after the fact.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- ========================
+             SUMMARY
+        ========================= -->
+        <h2>Summary</h2>
+
+        <div class="info-box note">
+          <div class="info-box-title">📚 What you learned</div>
+          <ul>
+            <li><strong>Pseudo-class</strong> — single colon, targets element <em>state</em>; <strong>pseudo-element</strong> — double colon, creates virtual content</li>
+            <li><strong>:hover / :active</strong> — cursor interaction; always add <code>transition</code> for smooth animations</li>
+            <li><strong>:focus</strong> — never remove without replacement; use <strong>:focus-visible</strong> for keyboard-only rings</li>
+            <li><strong>:checked</strong> — pure CSS toggles via adjacent sibling combinator (<code>+</code> / <code>~</code>)</li>
+            <li><strong>:disabled / :enabled</strong> — style form states; set <code>cursor: not-allowed</code> on disabled</li>
+            <li><strong>:valid / :invalid</strong> — add <code>:not(:placeholder-shown)</code> to avoid premature error states</li>
+            <li><strong>:first-child / :last-child</strong> — remove edge margins/borders without extra classes</li>
+            <li><strong>:nth-child()</strong> — <code>odd</code>/<code>even</code> for zebra striping; <code>An+B</code> formula for more control</li>
+            <li><strong>:not()</strong> — cleaner than writing overrides; avoid using it as a cascade hack</li>
+            <li><strong>LVHA rule</strong> — link, visited, hover, active — always in this order</li>
+            <li><strong>:is() / :where()</strong> — group selectors; <code>:where()</code> has zero specificity for easy overrides</li>
+            <li><strong>:has()</strong> — the parent selector; style containers based on their children's state</li>
+          </ul>
+        </div>
+
+        <div class="page-navigation">
+          <a href="css-units.html" class="nav-button">← CSS Units</a>
+          <a href="flexbox.html" class="nav-button">Flexbox →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
