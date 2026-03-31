@@ -17,7 +17,7 @@ This comprehensive course covers:
 ## 🗂️ Repository Structure
 
 ```
-frontend-course-docs/
+frontend-academy/
 ├── index.html                 # Main course dashboard
 ├── docs/                      # Documentation pages
 │   ├── assets/               # Shared CSS and JavaScript
@@ -61,8 +61,8 @@ frontend-course-docs/
 
 1. **Clone or download this repository**:
    ```bash
-   git clone https://github.com/yourusername/frontend-course-docs.git
-   cd frontend-course-docs
+   git clone https://github.com/Gkhundadze/frontend-academy.git
+   cd frontend-academy
    ```
 
 2. **Open in browser**:
