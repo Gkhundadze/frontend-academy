@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Architecture & Modern Techniques - Frontend Course</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="../favicon.ico">
+  <style>
+    /* ── Page-specific layout ── */
+    .section-intro {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Specificity calculator visual ── */
+    .specificity-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .specificity-selector {
+      font-family: var(--font-code);
+      font-size: 0.95rem;
+      color: var(--code-inline-color);
+      background: var(--code-inline-bg);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      min-width: 200px;
+    }
+    .specificity-score {
+      display: flex;
+      gap: 4px;
+    }
+    .score-box {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .score-box small {
+      font-size: 0.6rem;
+      font-weight: 400;
+      opacity: 0.75;
+      text-transform: uppercase;
+    }
+    .score-id   { background: rgba(231,76,60,0.15);  color: #e74c3c; border: 1px solid rgba(231,76,60,0.3); }
+    .score-cls  { background: rgba(52,152,219,0.15); color: #3498db; border: 1px solid rgba(52,152,219,0.3); }
+    .score-elem { background: rgba(46,204,113,0.15); color: #27ae60; border: 1px solid rgba(46,204,113,0.3); }
+    .specificity-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    /* ── BEM visual diagram ── */
+    .bem-diagram {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1.25rem 0;
+    }
+    .bem-part {
+      flex: 1;
+      min-width: 160px;
+      border-radius: 8px;
+      padding: 1.1rem 1.25rem;
+      border: 2px solid;
+    }
+    .bem-block   { border-color: #3498db; background: rgba(52,152,219,0.08); }
+    .bem-element { border-color: #9b59b6; background: rgba(155,89,182,0.08); }
+    .bem-modifier{ border-color: #e67e22; background: rgba(230,126,34,0.08); }
+    .bem-part h4 {
+      margin: 0 0 0.4rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .bem-block h4   { color: #3498db; }
+    .bem-element h4 { color: #9b59b6; }
+    .bem-modifier h4{ color: #e67e22; }
+    .bem-part .bem-syntax {
+      font-family: var(--font-code);
+      font-size: 0.88rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-primary);
+    }
+    .bem-part p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ── File structure tree ── */
+    .file-tree {
+      font-family: var(--font-code);
+      font-size: 0.9rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      line-height: 2;
+      color: var(--text-primary);
+    }
+    .file-tree .dir  { color: var(--syntax-function); font-weight: 600; }
+    .file-tree .file { color: var(--syntax-string); }
+    .file-tree .note { color: var(--syntax-comment); font-style: italic; font-size: 0.82rem; }
+
+    /* ── Good vs Bad comparison ── */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1rem 0 1.5rem;
+    }
+    .compare-card {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    .compare-card-header {
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .compare-bad  .compare-card-header { background: rgba(231,76,60,0.15);  color: #c0392b; }
+    .compare-good .compare-card-header { background: rgba(46,204,113,0.15); color: #1e8449; }
+
+    /* ── Layer / cascade visual ── */
+    .cascade-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 1rem 0 1.5rem;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    .cascade-layer {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1.1rem;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
+    }
+    .cascade-layer:last-child { border-bottom: none; }
+    .cascade-layer .layer-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.82rem;
+      flex-shrink: 0;
+      background: var(--primary-color);
+      color: white;
+    }
+    .cascade-layer .layer-name { font-weight: 600; min-width: 120px; }
+    .cascade-layer .layer-desc { color: var(--text-secondary); font-size: 0.85rem; }
+
+    /* ── Challenge card ── */
+    .challenge-card {
+      background: linear-gradient(135deg, rgba(74,144,226,0.08), rgba(80,200,120,0.08));
+      border: 2px dashed var(--primary-color);
+      border-radius: 10px;
+      padding: 1.75rem;
+      margin: 1.5rem 0;
+    }
+    .challenge-card h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+    .challenge-requirements {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .challenge-req {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      display: flex;
+      gap: 0.5rem;
+    }
+    .challenge-req::before {
+      content: "□";
+      color: var(--primary-color);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── Utility class demo ── */
+    .utility-demo {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0 1.5rem;
+    }
+    .utility-demo .demo-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Pros/cons table ── */
+    .pros-cons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1rem 0 1.5rem;
+    }
+    .pros-cons-box {
+      border-radius: 8px;
+      padding: 1.1rem 1.25rem;
+      border: 1px solid;
+    }
+    .pros-box  { border-color: rgba(46,204,113,0.35); background: rgba(46,204,113,0.06); }
+    .cons-box  { border-color: rgba(231,76,60,0.35);  background: rgba(231,76,60,0.06);  }
+    .pros-cons-box h4 {
+      margin: 0 0 0.6rem;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .pros-box h4 { color: #1e8449; }
+    .cons-box h4 { color: #c0392b; }
+    .pros-cons-box ul {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+    .pros-cons-box li {
+      font-size: 0.88rem;
+      margin-bottom: 0.3rem;
+      color: var(--text-primary);
+    }
+
+    /* ── Refactor step labels ── */
+    .step-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--primary-color);
+      color: white;
+      border-radius: 20px;
+      padding: 0.25rem 0.9rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ── CSS var demo ── */
+    .var-demo {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    .var-swatch {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      display: flex;
+      align-items: flex-end;
+      padding: 0.4rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      font-family: var(--font-code);
+    }
+
+    @media (max-width: 700px) {
+      .compare-grid  { grid-template-columns: 1fr; }
+      .pros-cons     { grid-template-columns: 1fr; }
+      .bem-diagram   { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-container">
+
+    <!-- ══════════════════════════════
+         SIDEBAR NAVIGATION
+    ══════════════════════════════ -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Frontend Course</h1>
+        <p>CSS Architecture</p>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 1: HTML & CSS</div>
+        <ul class="nav-list">
+          <li><a href="web-fundamentals.html">Web Fundamentals</a></li>
+          <li><a href="html-basics.html">HTML Basics</a></li>
+          <li><a href="semantic-html.html">Semantic HTML</a></li>
+          <li><a href="html-forms.html">HTML Forms</a></li>
+          <li><a href="css-basics.html">CSS Basics</a></li>
+          <li><a href="css-colors.html">CSS Colors</a></li>
+          <li><a href="box-model.html">Box Model</a></li>
+          <li><a href="css-units.html">CSS Units</a></li>
+          <li><a href="css-pseudo-classes.html">CSS Pseudo-Classes</a></li>
+          <li><a href="flexbox.html">Flexbox</a></li>
+          <li><a href="css-grid.html">CSS Grid</a></li>
+          <li><a href="responsive-design.html">Responsive Design</a></li>
+          <li><a href="responsive-images.html">Responsive Images</a></li>
+          <li><a href="scss-basics.html">SCSS Basics</a></li>
+          <li><a href="css-architecture.html">CSS Architecture</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 2: JavaScript</div>
+        <ul class="nav-list">
+          <li><a href="javascript-basics.html">JavaScript Basics</a></li>
+          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
+          <li><a href="array-methods.html">Array Methods</a></li>
+          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
+          <li><a href="event-handling.html">Event Handling</a></li>
+          <li><a href="async-javascript.html">Async JavaScript</a></li>
+          <li><a href="fetch-api.html">Fetch API & AJAX</a></li>
+          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 3: Design Thinking</div>
+        <ul class="nav-list">
+          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
+          <li><a href="user-research.html">User Research & Personas</a></li>
+          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Part 4: Professional Skills</div>
+        <ul class="nav-list">
+          <li><a href="performance-optimization.html">Performance Optimization</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- ══════════════════════════════
+         MAIN CONTENT
+    ══════════════════════════════ -->
+    <main class="main-content">
+      <div class="content-wrapper">
+
+        <!-- ── Page title ── -->
+        <h1>CSS Architecture &amp; Modern Techniques</h1>
+        <p class="section-intro">
+          Writing CSS that works is easy. Writing CSS that <em>scales</em> — CSS that a team can maintain,
+          extend, and debug six months later — is a different skill entirely. This lesson teaches you how
+          to think about CSS structurally, name things consistently, and use modern native features that
+          make your stylesheets easier to manage without any build tools or preprocessors.
+        </p>
+
+        <div class="info-box note">
+          <div class="info-box-title">📌 What you'll learn</div>
+          <ul>
+            <li>What CSS architecture is and why it matters</li>
+            <li>How to use BEM naming conventions</li>
+            <li>How to organize CSS files logically (pure CSS)</li>
+            <li>How specificity and the cascade really work</li>
+            <li>CSS custom properties, utility classes, and component-based thinking</li>
+            <li>Modern features: <code>@layer</code> and logical properties</li>
+          </ul>
+        </div>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 1 — WHAT IS CSS ARCHITECTURE?
+        ══════════════════════════════════════ -->
+        <h2 id="what-is-architecture">1. What is CSS Architecture?</h2>
+
+        <p>
+          <strong>CSS architecture</strong> is the practice of organizing, naming, and structuring your CSS
+          so that it stays predictable and maintainable as your project grows. It is not a single tool or
+          framework — it is a set of decisions about how you write your styles.
+        </p>
+
+        <p>Think of it like building a house. You could pile bricks randomly and eventually have four walls,
+          or you could follow a plan that makes the house safe, extensible, and readable by any contractor
+          who comes after you.</p>
+
+        <h3>Problems with unstructured CSS</h3>
+        <p>When CSS has no architecture these problems appear quickly:</p>
+
+        <div class="compare-grid">
+          <div class="compare-card compare-bad">
+            <div class="compare-card-header">✗ What goes wrong</div>
+            <ul style="padding: 1rem 1rem 1rem 2rem; margin:0;">
+              <li><strong>Specificity wars</strong> — selectors keep getting more specific to override each other</li>
+              <li><strong>Duplication</strong> — the same color value is written 40 times across 10 files</li>
+              <li><strong>Fragile overrides</strong> — changing one rule breaks three unrelated pages</li>
+              <li><strong>No clear ownership</strong> — nobody knows where a style lives or who wrote it</li>
+              <li><strong>Dead code</strong> — styles for components that no longer exist pile up</li>
+            </ul>
+          </div>
+          <div class="compare-card compare-good">
+            <div class="compare-card-header">✓ What architecture solves</div>
+            <ul style="padding: 1rem 1rem 1rem 2rem; margin:0;">
+              <li>Consistent naming makes selectors predictable and low-specificity</li>
+              <li>CSS variables centralize repeated values in one place</li>
+              <li>Component isolation means changes stay local</li>
+              <li>File structure tells everyone exactly where to look</li>
+              <li>Unused styles are easy to spot and delete</li>
+            </ul>
+          </div>
+        </div>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 2 — BEM NAMING CONVENTION
+        ══════════════════════════════════════ -->
+        <h2 id="bem">2. Naming Conventions — BEM</h2>
+
+        <p class="section-intro">
+          <strong>BEM</strong> stands for <em>Block, Element, Modifier</em>. It is a naming system that
+          makes CSS class names self-documenting — you can read a class name and immediately understand
+          what it styles and how it relates to the rest of the UI.
+        </p>
+
+        <div class="bem-diagram">
+          <div class="bem-part bem-block">
+            <h4>Block</h4>
+            <div class="bem-syntax">.card</div>
+            <p>A standalone UI component. The top-level "thing". Can exist on its own.</p>
+          </div>
+          <div class="bem-part bem-element">
+            <h4>Element</h4>
+            <div class="bem-syntax">.card__title</div>
+            <p>A part <em>inside</em> a block. Uses double underscore. Cannot exist outside its block.</p>
+          </div>
+          <div class="bem-part bem-modifier">
+            <h4>Modifier</h4>
+            <div class="bem-syntax">.card--active</div>
+            <p>A variation or state of a block or element. Uses double hyphen.</p>
+          </div>
+        </div>
+
+        <h3>BEM in practice</h3>
+
+<pre><code class="language-css">/* ── Block ── */
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* ── Elements (parts inside the block) ── */
+.card__image {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+}
+
+.card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.card__body {
+  color: #5a6c7d;
+  line-height: 1.6;
+}
+
+.card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+/* ── Modifiers (variants of the block) ── */
+.card--featured {
+  border: 2px solid #3498db;
+}
+
+.card--compact {
+  padding: 0.75rem;
+}
+
+/* ── Element modifier ── */
+.card__title--large {
+  font-size: 1.75rem;
+}</code></pre>
+
+        <p>And the matching HTML:</p>
+
+<pre><code class="language-html">&lt;!-- Default card --&gt;
+&lt;article class="card"&gt;
+  &lt;img class="card__image" src="photo.jpg" alt="Product"&gt;
+  &lt;h2 class="card__title"&gt;Product Name&lt;/h2&gt;
+  &lt;p class="card__body"&gt;Short description here.&lt;/p&gt;
+  &lt;div class="card__footer"&gt;
+    &lt;span&gt;$29&lt;/span&gt;
+    &lt;button class="btn btn--primary"&gt;Buy&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/article&gt;
+
+&lt;!-- Featured variant — just add the modifier class --&gt;
+&lt;article class="card card--featured"&gt;
+  &lt;h2 class="card__title card__title--large"&gt;Special Offer&lt;/h2&gt;
+  &lt;p class="card__body"&gt;...&lt;/p&gt;
+  &lt;div class="card__footer"&gt;...&lt;/div&gt;
+&lt;/article&gt;</code></pre>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 BEM rules to remember</div>
+          <ul>
+            <li>Block names should describe <em>what</em> the component is: <code>.navbar</code>, <code>.modal</code>, <code>.avatar</code></li>
+            <li>Elements describe their role inside the block: <code>.navbar__link</code>, <code>.modal__close</code></li>
+            <li>Modifiers describe a <em>state</em> or <em>variant</em>: <code>--active</code>, <code>--disabled</code>, <code>--large</code></li>
+            <li>Never go more than two levels deep: <code>.card__body__text</code> is a sign you need a new block</li>
+          </ul>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Common BEM mistakes</div>
+          <ul>
+            <li><strong>Nesting BEM in CSS</strong> — BEM class names are already flat. Never write <code>.card .card__title</code>; just use <code>.card__title</code> alone.</li>
+            <li><strong>Three-level elements</strong> — <code>.card__body__paragraph</code> is wrong. Create a new block or re-think the structure.</li>
+            <li><strong>Using BEM for layout</strong> — Grid containers and page-level wrappers don't need BEM. BEM is for reusable components.</li>
+          </ul>
+        </div>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 3 — FILE ORGANIZATION
+        ══════════════════════════════════════ -->
+        <h2 id="file-organization">3. File &amp; Style Organization</h2>
+
+        <p class="section-intro">
+          Even without SCSS or a build tool you can split your CSS across multiple files linked in order
+          from <code>&lt;head&gt;</code>. Each file has a single responsibility — the same principle
+          good code always follows.
+        </p>
+
+        <div class="file-tree">
+          <div><span class="dir">css/</span></div>
+          <div>&nbsp;&nbsp;<span class="file">base.css</span> &nbsp;<span class="note">— resets, body font, :root variables</span></div>
+          <div>&nbsp;&nbsp;<span class="file">layout.css</span> &nbsp;<span class="note">— grid, containers, page sections</span></div>
+          <div>&nbsp;&nbsp;<span class="file">components.css</span> &nbsp;<span class="note">— buttons, cards, navbar, modals…</span></div>
+          <div>&nbsp;&nbsp;<span class="file">utilities.css</span> &nbsp;<span class="note">— .mt-1, .text-center, .hidden…</span></div>
+          <div>&nbsp;&nbsp;<span class="file">pages.css</span> &nbsp;<span class="note">— (optional) page-specific overrides</span></div>
+        </div>
+
+        <p>Link them in your HTML in this exact order — it matters for the cascade:</p>
+
+<pre><code class="language-html">&lt;head&gt;
+  &lt;link rel="stylesheet" href="css/base.css"&gt;
+  &lt;link rel="stylesheet" href="css/layout.css"&gt;
+  &lt;link rel="stylesheet" href="css/components.css"&gt;
+  &lt;link rel="stylesheet" href="css/utilities.css"&gt;
+&lt;/head&gt;</code></pre>
+
+        <h3>What goes in each file</h3>
+
+        <h4>base.css — the foundation</h4>
+<pre><code class="language-css">/* base.css */
+:root {
+  --color-primary:  #3498db;
+  --color-accent:   #2ecc71;
+  --color-text:     #2c3e50;
+  --color-bg:       #ffffff;
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  --font-body: system-ui, sans-serif;
+  --font-code: 'Consolas', monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+}</code></pre>
+
+        <h4>layout.css — page structure</h4>
+<pre><code class="language-css">/* layout.css */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+.page-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .page-grid { grid-template-columns: 1fr 3fr; }
+}</code></pre>
+
+        <h4>components.css — reusable UI</h4>
+<pre><code class="language-css">/* components.css */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6em 1.4em;
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s, transform 0.15s;
+}
+.btn:hover { transform: translateY(-1px); }
+
+.btn--primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+.btn--primary:hover { background-color: #2980b9; }
+
+.btn--outline {
+  background-color: transparent;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}</code></pre>
+
+        <h4>utilities.css — one-job helper classes</h4>
+<pre><code class="language-css">/* utilities.css */
+.mt-1 { margin-top: var(--space-xs); }
+.mt-2 { margin-top: var(--space-sm); }
+.mt-3 { margin-top: var(--space-md); }
+
+.text-center  { text-align: center; }
+.text-right   { text-align: right; }
+
+.font-bold    { font-weight: 700; }
+
+.hidden       { display: none; }
+.sr-only {            /* visible to screen readers only */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}</code></pre>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 4 — SPECIFICITY & CASCADE
+        ══════════════════════════════════════ -->
+        <h2 id="specificity">4. CSS Specificity &amp; the Cascade</h2>
+
+        <p class="section-intro">
+          When two rules target the same element, the browser uses <strong>specificity</strong> to decide
+          which wins. Understanding specificity stops you from reaching for <code>!important</code>
+          every time something doesn't apply.
+        </p>
+
+        <h3>Specificity scoring</h3>
+        <p>Every selector has a three-number score: <strong>(IDs, Classes, Elements)</strong>. Higher score wins.</p>
+
+        <div class="utility-demo">
+          <div class="demo-label">Live specificity breakdown</div>
+
+          <div class="specificity-row">
+            <span class="specificity-selector">p</span>
+            <div class="specificity-score">
+              <div class="score-box score-id">0<small>ID</small></div>
+              <div class="score-box score-cls">0<small>cls</small></div>
+              <div class="score-box score-elem">1<small>elm</small></div>
+            </div>
+            <span class="specificity-label">= (0, 0, 1) — lowest</span>
+          </div>
+
+          <div class="specificity-row">
+            <span class="specificity-selector">.card</span>
+            <div class="specificity-score">
+              <div class="score-box score-id">0<small>ID</small></div>
+              <div class="score-box score-cls">1<small>cls</small></div>
+              <div class="score-box score-elem">0<small>elm</small></div>
+            </div>
+            <span class="specificity-label">= (0, 1, 0)</span>
+          </div>
+
+          <div class="specificity-row">
+            <span class="specificity-selector">.card .card__title</span>
+            <div class="specificity-score">
+              <div class="score-box score-id">0<small>ID</small></div>
+              <div class="score-box score-cls">2<small>cls</small></div>
+              <div class="score-box score-elem">0<small>elm</small></div>
+            </div>
+            <span class="specificity-label">= (0, 2, 0)</span>
+          </div>
+
+          <div class="specificity-row">
+            <span class="specificity-selector">#header .nav a</span>
+            <div class="specificity-score">
+              <div class="score-box score-id">1<small>ID</small></div>
+              <div class="score-box score-cls">1<small>cls</small></div>
+              <div class="score-box score-elem">1<small>elm</small></div>
+            </div>
+            <span class="specificity-label">= (1, 1, 1) — very high</span>
+          </div>
+
+          <div class="specificity-row">
+            <span class="specificity-selector">color: red !important</span>
+            <div class="specificity-score">
+              <div class="score-box score-id" style="font-size:0.75rem;">∞<small>ID</small></div>
+              <div class="score-box score-id" style="font-size:0.75rem;">∞<small>cls</small></div>
+              <div class="score-box score-id" style="font-size:0.75rem;">∞<small>elm</small></div>
+            </div>
+            <span class="specificity-label">= beats everything — avoid</span>
+          </div>
+        </div>
+
+        <h3>The cascade order</h3>
+        <p>When specificity is equal, the rule that appears <strong>later</strong> in the file wins.</p>
+
+        <div class="cascade-stack">
+          <div class="cascade-layer">
+            <div class="layer-num">1</div>
+            <div class="layer-name">Browser defaults</div>
+            <div class="layer-desc">Every browser ships with a built-in stylesheet (user agent styles)</div>
+          </div>
+          <div class="cascade-layer">
+            <div class="layer-num">2</div>
+            <div class="layer-name">Your base.css</div>
+            <div class="layer-desc">Resets and root variables override the browser defaults</div>
+          </div>
+          <div class="cascade-layer">
+            <div class="layer-num">3</div>
+            <div class="layer-name">Components / layout</div>
+            <div class="layer-desc">Component styles come next in the link order</div>
+          </div>
+          <div class="cascade-layer">
+            <div class="layer-num">4</div>
+            <div class="layer-name">Utilities</div>
+            <div class="layer-desc">Utility classes are last — they win on equal specificity, which is intentional</div>
+          </div>
+          <div class="cascade-layer" style="background: rgba(231,76,60,0.05);">
+            <div class="layer-num" style="background:#e74c3c;">!</div>
+            <div class="layer-name" style="color:#c0392b;">!important</div>
+            <div class="layer-desc">Overrides everything. Hard to debug. Almost always a sign of an architecture problem.</div>
+          </div>
+        </div>
+
+        <h3>Strategies for managing specificity</h3>
+        <ul>
+          <li><strong>Stay flat.</strong> Use single class selectors (<code>.card</code>) not chains (<code>section div .card</code>).</li>
+          <li><strong>Avoid ID selectors in CSS.</strong> IDs have a specificity of (1,0,0) which is very hard to override without escalating.</li>
+          <li><strong>Never use <code>!important</code> in component or layout CSS.</strong> It is occasionally acceptable in utilities (e.g. <code>.hidden { display: none !important; }</code>) where you genuinely want it to always win.</li>
+          <li><strong>Use <code>:where()</code> to write zero-specificity selectors</strong> in resets: <code>:where(h1, h2, h3) { margin: 0; }</code></li>
+        </ul>
+
+<pre><code class="language-css">/* ✗ Bad — high specificity chains */
+#page-header nav ul li a { color: blue; }
+
+/* ✓ Good — single class, easy to override */
+.nav__link { color: blue; }
+
+/* ✓ Zero-specificity reset using :where() */
+:where(h1, h2, h3, h4) {
+  margin: 0;
+  line-height: 1.3;
+}</code></pre>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 5 — CSS VARIABLES
+        ══════════════════════════════════════ -->
+        <h2 id="css-variables">5. CSS Custom Properties (Variables)</h2>
+
+        <p class="section-intro">
+          CSS custom properties let you define values once and reuse them everywhere. They are live —
+          changing a variable instantly updates every place it is used. They cascade and inherit like
+          regular CSS properties, and they work natively in every modern browser.
+        </p>
+
+        <h3>Defining and using variables</h3>
+
+<pre><code class="language-css">/* Define on :root to make globally available */
+:root {
+  /* Colors */
+  --color-primary:    #3498db;
+  --color-primary-dk: #2471a3;
+  --color-success:    #2ecc71;
+  --color-danger:     #e74c3c;
+  --color-text:       #2c3e50;
+  --color-bg:         #ffffff;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;   /*  4px */
+  --space-2: 0.5rem;    /*  8px */
+  --space-3: 1rem;      /* 16px */
+  --space-4: 1.5rem;    /* 24px */
+  --space-5: 2rem;      /* 32px */
+  --space-6: 3rem;      /* 48px */
+
+  /* Typography */
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+
+  /* Border radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Use them with var() */
+.btn--primary {
+  background-color: var(--color-primary);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-primary-dk);
+}</code></pre>
+
+        <h3>Dark mode with one variable swap</h3>
+        <p>The real power of CSS variables shows when implementing themes. You redefine the variables, and every component updates automatically:</p>
+
+<pre><code class="language-css">:root {
+  --color-bg:      #ffffff;
+  --color-text:    #2c3e50;
+  --color-surface: #f8f9fa;
+  --color-border:  #e1e4e8;
+}
+
+/* Dark mode — swap the values, not the rules */
+[data-theme="dark"] {
+  --color-bg:      #1a1a1a;
+  --color-text:    #e8e8e8;
+  --color-surface: #2d2d2d;
+  --color-border:  #404040;
+}
+
+/* Components use variables — automatically themed */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}</code></pre>
+
+        <div class="var-demo">
+          <div class="var-swatch" style="background:#3498db;">--primary</div>
+          <div class="var-swatch" style="background:#2ecc71;">--success</div>
+          <div class="var-swatch" style="background:#e74c3c;">--danger</div>
+          <div class="var-swatch" style="background:#f39c12;">--warning</div>
+          <div class="var-swatch" style="background:#9b59b6;">--purple</div>
+          <div class="var-swatch" style="background:#2c3e50;">--text</div>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 var() fallback values</div>
+          <p>You can provide a fallback in case the variable is not set:</p>
+          <pre style="margin:0;"><code class="language-css">color: var(--color-text, #333);</code></pre>
+        </div>
+
+        <div class="info-box warning">
+          <div class="info-box-title">⚠️ Common mistakes with variables</div>
+          <ul>
+            <li>Defining variables inside a component selector instead of <code>:root</code> — they won't be available globally.</li>
+            <li>Naming variables by their value (<code>--blue</code>) instead of purpose (<code>--color-primary</code>). When you change the primary color to green, <code>--blue</code> becomes confusing.</li>
+          </ul>
+        </div>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 6 — UTILITY CLASSES
+        ══════════════════════════════════════ -->
+        <h2 id="utilities">6. Utility Classes</h2>
+
+        <p class="section-intro">
+          A utility class does exactly <em>one thing</em>. Instead of writing custom CSS for every small
+          tweak, you compose existing utility classes directly in HTML. This approach is popularized by
+          Tailwind CSS, but you can implement a useful subset in plain CSS.
+        </p>
+
+<pre><code class="language-css">/* utilities.css */
+
+/* Spacing */
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--space-2); }    /* 8px  */
+.mt-2 { margin-top: var(--space-3); }    /* 16px */
+.mt-3 { margin-top: var(--space-4); }    /* 24px */
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--space-2); }
+.mb-2 { margin-bottom: var(--space-3); }
+
+.p-1  { padding: var(--space-2); }
+.p-2  { padding: var(--space-3); }
+.p-3  { padding: var(--space-4); }
+
+/* Text */
+.text-center  { text-align: center; }
+.text-right   { text-align: right; }
+.text-sm      { font-size: var(--font-size-sm); }
+.text-lg      { font-size: var(--font-size-lg); }
+.font-bold    { font-weight: 700; }
+
+/* Display */
+.flex         { display: flex; }
+.flex-col     { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-1        { gap: var(--space-2); }
+.gap-2        { gap: var(--space-3); }
+
+/* Colors */
+.text-primary { color: var(--color-primary); }
+.text-muted   { color: var(--text-secondary, #6c757d); }
+
+/* Visibility */
+.hidden       { display: none !important; }
+.invisible    { visibility: hidden; }</code></pre>
+
+        <p>Using utilities alongside component classes:</p>
+
+<pre><code class="language-html">&lt;!-- The card component provides structure,
+     utilities handle spacing tweaks without touching the CSS --&gt;
+&lt;article class="card mt-3"&gt;
+  &lt;h2 class="card__title text-lg font-bold"&gt;Hello&lt;/h2&gt;
+  &lt;p class="card__body text-muted"&gt;Some text.&lt;/p&gt;
+  &lt;div class="card__footer flex justify-between items-center"&gt;
+    &lt;span class="text-sm"&gt;Posted today&lt;/span&gt;
+    &lt;a href="#" class="btn btn--primary"&gt;Read more&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/article&gt;</code></pre>
+
+        <div class="pros-cons">
+          <div class="pros-cons-box pros-box">
+            <h4>Pros</h4>
+            <ul>
+              <li>You rarely need to write new CSS for layout tweaks</li>
+              <li>HTML is self-documenting — styles are visible right there</li>
+              <li>Small, predictable changes with no side effects</li>
+              <li>CSS file size stabilises as the project grows</li>
+            </ul>
+          </div>
+          <div class="pros-cons-box cons-box">
+            <h4>Cons</h4>
+            <ul>
+              <li>HTML can get verbose with many classes</li>
+              <li>Duplication moves to HTML instead of CSS</li>
+              <li>Not a substitute for proper component structure</li>
+              <li>Can be misused to avoid thinking about design</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-box note">
+          <div class="info-box-title">📌 Rule of thumb</div>
+          <p>
+            Use <strong>component classes</strong> for the core structure and appearance of a UI element.
+            Use <strong>utilities</strong> for spacing, typography, and alignment tweaks that vary from
+            context to context. Never build a whole component out of utilities alone — that leads to
+            the duplication problem in HTML.
+          </p>
+        </div>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 7 — COMPONENT-BASED THINKING
+        ══════════════════════════════════════ -->
+        <h2 id="components">7. Component-Based Thinking</h2>
+
+        <p class="section-intro">
+          A component is a self-contained, reusable piece of UI. Component-based CSS means each component
+          owns its own styles and does not depend on where it appears on the page.
+        </p>
+
+        <h3>Rules for component CSS</h3>
+        <ul>
+          <li>A component should look the same whether it appears in a sidebar or a modal</li>
+          <li>Style with classes, never with tag selectors inside a component</li>
+          <li>Do not reference page-level IDs or ancestor selectors inside a component</li>
+          <li>Responsive behaviour belongs inside the component, not outside it</li>
+        </ul>
+
+<pre><code class="language-css">/* ✗ Bad — styles depend on page location */
+.sidebar .card { padding: 0.5rem; }
+#dashboard .card h2 { font-size: 1rem; }
+
+/* ✓ Good — component is self-contained */
+.card { padding: var(--space-4); }
+.card--compact { padding: var(--space-2); }   /* modifier for tight contexts */
+.card__title { font-size: var(--font-size-lg); }</code></pre>
+
+        <h3>Thinking in components — a checklist</h3>
+        <ul>
+          <li>Can I drop this HTML + CSS into a different page and have it work? (It should.)</li>
+          <li>Is the component styling free of parent selectors?</li>
+          <li>Do variants use modifier classes rather than duplicate rules?</li>
+          <li>Are all magic numbers replaced with CSS variables?</li>
+        </ul>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 8 — LAYOUT BEST PRACTICES
+        ══════════════════════════════════════ -->
+        <h2 id="layout">8. Layout &amp; Structure Best Practices</h2>
+
+        <h3>Avoid deeply nested selectors</h3>
+
+<pre><code class="language-css">/* ✗ Bad — brittle and hard to maintain */
+body main section.articles div.wrapper article.post h2.title a {
+  color: blue;
+}
+
+/* ✓ Good — one predictable class */
+.post__title-link { color: var(--color-primary); }</code></pre>
+
+        <h3>Prefer class-based styling</h3>
+        <p>Styling with element type selectors causes unintended side effects. Use classes for everything that needs custom styles.</p>
+
+<pre><code class="language-css">/* ✗ Risky — affects every h2 on the page */
+h2 { font-size: 2rem; color: navy; }
+
+/* ✓ Safe — only affects cards */
+.card__title { font-size: 1.25rem; color: var(--color-text); }
+
+/* ✓ Acceptable — in base.css as a reset */
+h1, h2, h3 { line-height: 1.3; margin-bottom: 0.5em; }</code></pre>
+
+        <h3>Keep styles predictable</h3>
+        <ul>
+          <li>One class should always produce the same visual result, regardless of context</li>
+          <li>Avoid relying on sibling or child combinators (<code>+</code>, <code>~</code>, <code>&gt;</code>) outside of base resets</li>
+          <li>Group related rules together — don't scatter a component's styles across the file</li>
+        </ul>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 9 — RESPONSIVE & SCALABLE
+        ══════════════════════════════════════ -->
+        <h2 id="responsive">9. Responsive &amp; Scalable CSS</h2>
+
+        <p class="section-intro">
+          CSS that hardcodes pixel values breaks on different screens and at different font sizes.
+          Writing flexible CSS from the start avoids the painful retrofitting of responsive styles later.
+        </p>
+
+        <h3>Use flexible units</h3>
+
+<pre><code class="language-css">/* ✗ Hardcoded — breaks at different font sizes and screens */
+.card {
+  width: 320px;
+  padding: 24px;
+  font-size: 16px;
+}
+
+/* ✓ Flexible — scales naturally */
+.card {
+  width: 100%;            /* fills its container */
+  max-width: 40rem;       /* caps at reasonable size */
+  padding: var(--space-4);
+  font-size: var(--font-size-md);
+}</code></pre>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Unit</th>
+              <th>Relative to</th>
+              <th>Best used for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>rem</code></td><td>Root font size (16px default)</td><td>Spacing, font sizes, component sizing</td></tr>
+            <tr><td><code>em</code></td><td>Parent element font size</td><td>Padding/margin that should scale with the component's own text</td></tr>
+            <tr><td><code>%</code></td><td>Parent container size</td><td>Widths and heights relative to parent</td></tr>
+            <tr><td><code>vw / vh</code></td><td>Viewport width/height</td><td>Full-screen sections, hero images, viewport-relative type</td></tr>
+            <tr><td><code>ch</code></td><td>Width of "0" character</td><td>Readable line lengths (<code>max-width: 65ch</code>)</td></tr>
+            <tr><td><code>clamp()</code></td><td>Viewport + min/max bounds</td><td>Fluid typography and spacing</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Fluid typography with clamp()</h3>
+<pre><code class="language-css">/* Font grows from 1rem at narrow screens to 1.5rem at wide */
+h1 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+/* Padding grows with the viewport */
+.section {
+  padding-block: clamp(var(--space-4), 6vw, var(--space-6));
+}</code></pre>
+
+        <h3>Mobile-first media queries</h3>
+<pre><code class="language-css">/* Start with mobile — add complexity upward */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;          /* 1 column on mobile */
+  gap: var(--space-3);
+}
+
+@media (min-width: 600px) {
+  .card-grid { grid-template-columns: 1fr 1fr; }     /* 2 columns */
+}
+
+@media (min-width: 960px) {
+  .card-grid { grid-template-columns: repeat(3, 1fr); } /* 3 columns */
+}</code></pre>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 10 — MODERN FEATURES
+        ══════════════════════════════════════ -->
+        <h2 id="modern">10. Optional Modern Features</h2>
+
+        <h3>CSS @layer — explicit cascade control</h3>
+        <p>
+          <code>@layer</code> lets you declare a cascade layer order. Styles in a later layer win,
+          regardless of specificity within that layer. This makes specificity battles almost disappear.
+        </p>
+
+<pre><code class="language-css">/* Declare layer order first */
+@layer base, components, utilities;
+
+@layer base {
+  /* low-priority foundational styles */
+  body { font-family: system-ui, sans-serif; }
+  a { color: inherit; }
+}
+
+@layer components {
+  /* component styles — override base */
+  .btn { padding: 0.5em 1em; background: var(--color-primary); }
+}
+
+@layer utilities {
+  /* utilities always win over components */
+  .hidden { display: none; }
+  .text-center { text-align: center; }
+}</code></pre>
+
+        <div class="info-box note">
+          <div class="info-box-title">📌 Browser support</div>
+          <p>
+            <code>@layer</code> is supported in all modern browsers (Chrome 99+, Firefox 97+, Safari 15.4+).
+            It is safe to use in new projects today.
+          </p>
+        </div>
+
+        <h3>Logical properties — writing direction agnostic CSS</h3>
+        <p>
+          Physical properties like <code>margin-left</code> and <code>padding-top</code> are tied to
+          screen direction. Logical properties adapt automatically for right-to-left languages and
+          vertical writing modes.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Physical property</th>
+              <th>Logical equivalent</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>margin-left / right</code></td><td><code>margin-inline</code></td><td>Both inline (horizontal) sides</td></tr>
+            <tr><td><code>margin-top / bottom</code></td><td><code>margin-block</code></td><td>Both block (vertical) sides</td></tr>
+            <tr><td><code>padding-left</code></td><td><code>padding-inline-start</code></td><td>Start of inline axis</td></tr>
+            <tr><td><code>padding-right</code></td><td><code>padding-inline-end</code></td><td>End of inline axis</td></tr>
+            <tr><td><code>width</code></td><td><code>inline-size</code></td><td>Size along the inline axis</td></tr>
+            <tr><td><code>height</code></td><td><code>block-size</code></td><td>Size along the block axis</td></tr>
+          </tbody>
+        </table>
+
+<pre><code class="language-css">/* Old way — direction-specific */
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Logical way — works for LTR and RTL */
+.container {
+  margin-inline: auto;
+  padding-block: 2rem;
+  padding-inline: 1.5rem;
+}</code></pre>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 11 — BAD vs GOOD EXAMPLE
+        ══════════════════════════════════════ -->
+        <h2 id="bad-vs-good">11. Bad vs Good: Side-by-Side</h2>
+
+        <p>Here is the same card component written two ways. Both produce the same visual output, but only one is maintainable.</p>
+
+        <div class="compare-grid">
+          <div class="compare-card compare-bad">
+            <div class="compare-card-header">✗ Messy CSS</div>
+            <pre style="padding:1rem; margin:0; background:var(--bg-code); overflow-x:auto;"><code class="language-css">div div.card h2 {
+  font-size: 20px;
+  color: #2c3e50 !important;
+  font-weight: bold;
+}
+
+.card p {
+  color: #5a6c7d;
+  font-size: 14px;
+}
+
+div.card {
+  background: white;
+  padding: 24px;
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card a.btn {
+  background: #3498db;
+  color: white !important;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 4px;
+  display: inline-block;
+}</code></pre>
+          </div>
+          <div class="compare-card compare-good">
+            <div class="compare-card-header">✓ Structured CSS</div>
+            <pre style="padding:1rem; margin:0; background:var(--bg-code); overflow-x:auto;"><code class="language-css">/* In components.css */
+.card {
+  background: var(--color-bg);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.card__title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.card__body {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+/* In components.css — shared button */
+.btn--primary {
+  background: var(--color-primary);
+  color: #fff;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  display: inline-block;
+}</code></pre>
+          </div>
+        </div>
+
+        <p>Key differences in the structured version:</p>
+        <ul>
+          <li>No <code>!important</code> — specificity is managed through flat class selectors</li>
+          <li>No hardcoded values — everything references a CSS variable</li>
+          <li>No tag-based selectors inside components — only BEM class names</li>
+          <li>The <code>.btn--primary</code> class is reusable anywhere, not locked to cards</li>
+        </ul>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 12 — REFACTORING EXAMPLE
+        ══════════════════════════════════════ -->
+        <h2 id="refactoring">12. Refactoring Example</h2>
+
+        <p>Let's walk through converting a poorly written navbar into structured CSS step by step.</p>
+
+        <div class="step-label">Step 1 — Start: the messy original</div>
+<pre><code class="language-css">/* ✗ Original — tangled, hardcoded, hard to maintain */
+#main-nav {
+  background: #1a1a2e;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+#main-nav .logo {
+  color: white;
+  font-size: 22px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+#main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+#main-nav ul li a {
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  padding: 6px 12px;
+  font-size: 15px;
+}
+
+#main-nav ul li a:hover {
+  color: white !important;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+}</code></pre>
+
+        <div class="step-label">Step 2 — Identify the components</div>
+        <p>We have: a <strong>navbar</strong> block, with a <strong>logo</strong> element, a <strong>links list</strong> element, and each <strong>link</strong> element. The hover state is a modifier/state.</p>
+
+        <div class="step-label">Step 3 — Apply BEM + variables</div>
+<pre><code class="language-css">/* base.css — add nav-specific variables */
+:root {
+  --nav-bg:        #1a1a2e;
+  --nav-height:    60px;
+  --nav-link-color:       rgba(255,255,255,0.75);
+  --nav-link-hover-color: #ffffff;
+  --nav-link-hover-bg:    rgba(255,255,255,0.1);
+}
+
+/* components.css — navbar component */
+.navbar {
+  background-color: var(--nav-bg);
+  padding-inline: var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  block-size: var(--nav-height);
+}
+
+.navbar__logo {
+  color: #fff;
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.navbar__links {
+  list-style: none;
+  display: flex;
+  gap: var(--space-2);
+}
+
+.navbar__link {
+  color: var(--nav-link-color);
+  text-decoration: none;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--nav-link-hover-color);
+  background-color: var(--nav-link-hover-bg);
+}</code></pre>
+
+        <div class="step-label">Step 4 — Updated HTML</div>
+<pre><code class="language-html">&lt;nav class="navbar"&gt;
+  &lt;a href="/" class="navbar__logo"&gt;MySite&lt;/a&gt;
+  &lt;ul class="navbar__links"&gt;
+    &lt;li&gt;&lt;a href="/" class="navbar__link navbar__link--active"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/about" class="navbar__link"&gt;About&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/contact" class="navbar__link"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+
+        <p>What we gained:</p>
+        <ul>
+          <li>No ID selector — the navbar can now be used multiple times or in any context</li>
+          <li>No <code>!important</code> — hover works naturally via flat specificity</li>
+          <li>Active state is a modifier class (<code>--active</code>) not an JS-injected inline style</li>
+          <li>All values come from variables — theming is one variable change away</li>
+          <li>Logical properties (<code>padding-inline</code>, <code>block-size</code>) used for better RTL support</li>
+        </ul>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 13 — MINI CHALLENGE
+        ══════════════════════════════════════ -->
+        <h2 id="challenge">13. Mini Challenge</h2>
+
+        <div class="challenge-card">
+          <h3>Challenge: Style a Profile Card</h3>
+          <p>
+            Given the HTML below, write CSS following all the principles from this lesson:
+            BEM naming, CSS variables, flat selectors, and no <code>!important</code>.
+          </p>
+
+<pre><code class="language-html">&lt;!-- Starter HTML — do not change this --&gt;
+&lt;article class="profile-card"&gt;
+  &lt;div class="profile-card__avatar"&gt;
+    &lt;img src="avatar.jpg" alt="Jane Doe"&gt;
+  &lt;/div&gt;
+  &lt;div class="profile-card__info"&gt;
+    &lt;h2 class="profile-card__name"&gt;Jane Doe&lt;/h2&gt;
+    &lt;p class="profile-card__role"&gt;Frontend Developer&lt;/p&gt;
+    &lt;p class="profile-card__bio"&gt;Building clean, accessible UIs one component at a time.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="profile-card__actions"&gt;
+    &lt;a href="#" class="btn btn--primary"&gt;Follow&lt;/a&gt;
+    &lt;a href="#" class="btn btn--outline"&gt;Message&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/article&gt;</code></pre>
+
+          <div class="challenge-requirements">
+            <div class="challenge-req">Define all colors and sizes as CSS variables in <code>:root</code></div>
+            <div class="challenge-req">Use BEM class names for every element (already done in HTML)</div>
+            <div class="challenge-req">Make the avatar a circle using <code>border-radius</code></div>
+            <div class="challenge-req">No <code>!important</code>, no ID selectors, no tag selectors in component rules</div>
+            <div class="challenge-req">Add a hover state to the card (lift it with <code>box-shadow</code>)</div>
+            <div class="challenge-req">Add a modifier <code>.profile-card--compact</code> with reduced padding</div>
+            <div class="challenge-req">Make it responsive — stack to a single column below 480px</div>
+          </div>
+        </div>
+
+        <div class="info-box tip">
+          <div class="info-box-title">💡 Starter CSS skeleton</div>
+<pre><code class="language-css">:root {
+  /* your variables here */
+}
+
+.profile-card { /* ... */ }
+.profile-card:hover { /* ... */ }
+.profile-card--compact { /* ... */ }
+
+.profile-card__avatar { /* ... */ }
+.profile-card__avatar img { /* ... */ }
+
+.profile-card__name { /* ... */ }
+.profile-card__role { /* ... */ }
+.profile-card__bio  { /* ... */ }
+
+.profile-card__actions { /* ... */ }
+
+/* Responsive */
+@media (max-width: 480px) {
+  .profile-card { /* ... */ }
+}</code></pre>
+        </div>
+
+
+        <!-- ══════════════════════════════════════
+             SECTION 14 — QUICK REFERENCE
+        ══════════════════════════════════════ -->
+        <h2 id="summary">14. Quick Reference Summary</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Principle</th>
+              <th>Rule</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Naming</td><td>Use BEM: <code>.block__element--modifier</code></td></tr>
+            <tr><td>Specificity</td><td>Keep selectors flat — one class per rule whenever possible</td></tr>
+            <tr><td>!important</td><td>Avoid in components; acceptable only in utilities</td></tr>
+            <tr><td>IDs in CSS</td><td>Never use for styling — only for JS hooks</td></tr>
+            <tr><td>Values</td><td>All colors, spacing, radii → CSS variables in <code>:root</code></td></tr>
+            <tr><td>File structure</td><td>base → layout → components → utilities (in link order)</td></tr>
+            <tr><td>Components</td><td>Self-contained; no parent selectors; variants via modifiers</td></tr>
+            <tr><td>Responsive</td><td>Mobile-first; use <code>rem</code>, <code>%</code>, <code>clamp()</code>; avoid px for sizes</td></tr>
+            <tr><td>Nesting</td><td>Never more than 2 levels deep in CSS</td></tr>
+            <tr><td>Modern</td><td>Use <code>@layer</code> and logical properties in new projects</td></tr>
+          </tbody>
+        </table>
+
+        <div class="info-box important">
+          <div class="info-box-title">Key takeaway</div>
+          <p>
+            Good CSS architecture is not about following rules for their own sake. It is about
+            making your code readable and changeable. If a teammate (or future you) can open your
+            stylesheet, find the right rule in under 30 seconds, and change it without fear —
+            you have succeeded.
+          </p>
+        </div>
+
+
+        <!-- ══════════════════════════════════════
+             PAGE NAVIGATION
+        ══════════════════════════════════════ -->
+        <div class="page-navigation">
+          <a href="scss-basics.html" class="nav-button">← SCSS Basics</a>
+          <a href="../index.html" class="nav-button">Back to Course →</a>
+        </div>
+
+      </div><!-- /.content-wrapper -->
+    </main><!-- /.main-content -->
+
+  </div><!-- /.docs-container -->
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
