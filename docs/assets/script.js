@@ -21,12 +21,50 @@ document.addEventListener('DOMContentLoaded', function() {
   // Transform code blocks into code editor style
   initCodeEditor();
 
-  // Add copy button to code blocks
-  initCodeCopyButtons();
+  // Initialize unified editor events (Copy, Run, Clear)
+  initEditorEvents();
 
   // Initialize any demo interactions
   initDemoInteractions();
 });
+
+/**
+ * Safely saves and restores the caret position inside a contentEditable node natively over DOM re-renders.
+ */
+function saveCaretPosition(context) {
+  const selection = window.getSelection();
+  if (selection.rangeCount === 0) return null;
+  const range = selection.getRangeAt(0);
+  const preCaretRange = range.cloneRange();
+  preCaretRange.selectNodeContents(context);
+  preCaretRange.setEnd(range.endContainer, range.endOffset);
+  const caretOffset = preCaretRange.toString().length;
+
+  return function restore() {
+    let charIndex = 0;
+    const range = document.createRange();
+    range.setStart(context, 0);
+    range.collapse(true);
+    let nodeStack = [context], node, foundStart = false, stop = false;
+
+    while (!stop && (node = nodeStack.pop())) {
+      if (node.nodeType === 3) {
+        let nextCharIndex = charIndex + node.length;
+        if (!foundStart && caretOffset >= charIndex && caretOffset <= nextCharIndex) {
+          range.setStart(node, caretOffset - charIndex);
+          range.setEnd(node, caretOffset - charIndex);
+          stop = true;
+        }
+        charIndex = nextCharIndex;
+      } else {
+        let i = node.childNodes.length;
+        while (i--) { nodeStack.push(node.childNodes[i]); }
+      }
+    }
+    selection.removeAllRanges();
+    selection.addRange(range);
+  };
+}
 
 /**
  * Initialize dark mode toggle
@@ -179,16 +217,16 @@ function initSmoothScroll() {
  * Transforms simple <pre><code> blocks into styled code editor with line numbers
  */
 function initCodeEditor() {
-  const codeBlocks = document.querySelectorAll('pre code');
+  const codeBlocks = document.querySelectorAll("pre code");
 
-  codeBlocks.forEach(codeBlock => {
+  codeBlocks.forEach((codeBlock) => {
     const pre = codeBlock.parentElement;
 
     // Skip if already transformed or no parent
-    if (!pre || pre.closest('.code-editor')) return;
+    if (!pre || pre.closest(".code-editor")) return;
 
     // Skip code blocks inside demo sections (they have special formatting)
-    if (pre.closest('.demo-section')) return;
+    if (pre.closest(".demo-section")) return;
 
     // Get code content
     const codeText = codeBlock.textContent;
@@ -198,29 +236,32 @@ function initCodeEditor() {
 
     // Detect language from class name (e.g., language-javascript)
     const languageClass = codeBlock.className.match(/language-(\w+)/);
-    const language = languageClass ? languageClass[1] : detectLanguage(codeText);
+    const language = languageClass
+      ? languageClass[1]
+      : detectLanguage(codeText);
 
     // Get line count
-    const lines = codeText.trim().split('\n');
+    const lines = codeText.trim().split("\n");
     const lineCount = lines.length;
 
     // Create code editor wrapper
-    const editorWrapper = document.createElement('div');
-    editorWrapper.className = 'code-editor';
+    const editorWrapper = document.createElement("div");
+    editorWrapper.className = "code-editor";
+    editorWrapper.dataset.language = language;
 
     // Create header with filename and controls
-    const header = document.createElement('div');
-    header.className = 'code-editor-header';
+    const header = document.createElement("div");
+    header.className = "code-editor-header";
 
     // Left side: dots and filename
-    const headerLeft = document.createElement('div');
-    headerLeft.style.display = 'flex';
-    headerLeft.style.alignItems = 'center';
-    headerLeft.style.gap = '1rem';
+    const headerLeft = document.createElement("div");
+    headerLeft.style.display = "flex";
+    headerLeft.style.alignItems = "center";
+    headerLeft.style.gap = "1rem";
 
     // macOS-style dots
-    const dots = document.createElement('div');
-    dots.className = 'code-editor-dots';
+    const dots = document.createElement("div");
+    dots.className = "code-editor-dots";
     dots.innerHTML = `
       <span class="code-editor-dot red"></span>
       <span class="code-editor-dot yellow"></span>
@@ -228,58 +269,95 @@ function initCodeEditor() {
     `;
 
     // File title
-    const title = document.createElement('div');
-    title.className = 'code-editor-title';
+    const title = document.createElement("div");
+    title.className = "code-editor-title";
     title.innerHTML = `<span>📄</span> <span>${getFileName(language)}</span>`;
 
     headerLeft.appendChild(dots);
     headerLeft.appendChild(title);
 
     // Right side: copy button
-    const actions = document.createElement('div');
-    actions.className = 'code-editor-actions';
+    const actions = document.createElement("div");
+    actions.className = "code-editor-actions";
 
-    const copyBtn = document.createElement('button');
-    copyBtn.className = 'code-copy-btn';
-    copyBtn.innerHTML = '📋 Copy';
-    copyBtn.setAttribute('data-code', codeText);
+    const copyBtn = document.createElement("button");
+    copyBtn.className = "code-copy-btn";
+    copyBtn.innerHTML = "📋 Copy";
+    copyBtn.setAttribute("data-code", codeText);
+
+    const runCode = document.createElement("button");
+    runCode.className = "run-code-btn";
+    runCode.innerHTML = "▶ Run";
+    if (language !== "javascript" && language !== "html" && language !== "markup") {
+      runCode.style.display = "none";
+    }
 
     actions.appendChild(copyBtn);
+    actions.appendChild(runCode);
 
     header.appendChild(headerLeft);
     header.appendChild(actions);
 
     // Create body with line numbers and code
-    const body = document.createElement('div');
-    body.className = 'code-editor-body';
+    const body = document.createElement("div");
+    body.className = "code-editor-body";
 
-    const codeWithLines = document.createElement('div');
-    codeWithLines.className = 'code-with-lines';
+    const codeWithLines = document.createElement("div");
+    codeWithLines.className = "code-with-lines";
 
-    // Create line numbers
-    const lineNumbers = document.createElement('div');
-    lineNumbers.className = 'line-numbers';
-    for (let i = 1; i <= lineCount; i++) {
-      const lineNum = document.createElement('span');
-      lineNum.textContent = i;
-      lineNumbers.appendChild(lineNum);
-    }
+    // Create line numbers container
+    const lineNumbers = document.createElement("div");
+    lineNumbers.className = "line-numbers";
+    
+    // Function to reliably update line numbers
+    const updateLineNumbers = (text) => {
+      const count = (text.match(/\n/g) || []).length + 1;
+      lineNumbers.innerHTML = "";
+      for (let i = 1; i <= count; i++) {
+        const lineNum = document.createElement("span");
+        lineNum.textContent = i;
+        lineNumbers.appendChild(lineNum);
+      }
+    };
+    updateLineNumbers(codeText);
 
-    // Create new pre and code elements
-    const newPre = document.createElement('pre');
-    const newCode = document.createElement('code');
+    // Visual Engine: Direct plain environment
+    const newPre = document.createElement("pre");
+    newPre.className = `language-${language}`; // Explicit binding guaranteeing Prism DOM overlays
+    const newCode = document.createElement("code");
     newCode.className = `language-${language}`;
+    newCode.contentEditable = "true";
+    newCode.spellcheck = false;
 
-    // Check if code already has syntax highlighting (contains spans)
-    const hasExistingHighlighting = codeBlock.querySelector('span.keyword, span.string, span.comment, span.function, span.number');
+    // Apply keydown/paste overrides to ensure only pure text enters the environment
+    newCode.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        document.execCommand('insertText', false, '\n');
+      } else if (e.key === 'Tab') {
+        e.preventDefault();
+        document.execCommand('insertText', false, '  ');
+      }
+    });
 
-    if (hasExistingHighlighting) {
-      // Preserve existing highlighting
-      newCode.innerHTML = codeBlock.innerHTML;
-    } else {
-      // Will apply syntax highlighting later
-      newCode.textContent = codeText;
-    }
+    newCode.addEventListener('paste', function(e) {
+      e.preventDefault();
+      const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+      document.execCommand('insertText', false, text);
+    });
+
+    // Update line numbers and force real-time Prism rendering natively
+    newCode.addEventListener('input', function() {
+      updateLineNumbers(this.textContent);
+      
+      const restoreCaret = saveCaretPosition(this);
+      Prism.highlightElement(this);
+      if (restoreCaret) restoreCaret();
+    });
+
+    // Initial highlight deployment
+    newCode.textContent = codeText;
+    Prism.highlightElement(newCode);
 
     newPre.appendChild(newCode);
 
@@ -288,65 +366,297 @@ function initCodeEditor() {
 
     body.appendChild(codeWithLines);
 
-    // Assemble editor
+    // Create inline console
+    const consoleDiv = document.createElement("div");
+    consoleDiv.className = "inline-console";
+    consoleDiv.style.display = "none";
+    
+    const consoleHeader = document.createElement("div");
+    consoleHeader.className = "inline-console-header";
+    const outputLabel = (language === "html" || language === "markup") ? "🖥️ HTML Preview" : "🖥️ Console Output";
+    consoleHeader.innerHTML = `
+      <span class="console-output-label">${outputLabel}</span>
+      <button class="clear-console-btn" title="Clear Output">⊘ Clear</button>
+    `;
+    
+    const consoleBody = document.createElement("div");
+    consoleBody.className = "inline-console-body";
+    
+    const previewBody = document.createElement("div");
+    previewBody.className = "inline-preview-body";
+    previewBody.style.display = "none";
+    
+    consoleDiv.appendChild(consoleHeader);
+    consoleDiv.appendChild(previewBody);
+    consoleDiv.appendChild(consoleBody);
+
+    // Assemble unified blocks
     editorWrapper.appendChild(header);
     editorWrapper.appendChild(body);
+    editorWrapper.appendChild(consoleDiv);
 
-    // Replace original pre element
+    // Replace original layout injection
     const parent = pre.parentNode;
     if (parent) {
       parent.replaceChild(editorWrapper, pre);
-
-      // Apply syntax highlighting only if not already highlighted
-      if (!hasExistingHighlighting) {
-        highlightSyntax(newCode, language);
-      }
     }
   });
 }
 
 /**
- * Add copy buttons functionality to code blocks
+ * Consolidated Event Delegation for Editor Buttons (Copy, Run, Clear)
  */
-function initCodeCopyButtons() {
-  // Use event delegation on document, but check if already initialized
-  if (document._codeCopyInitialized) return;
-  document._codeCopyInitialized = true;
+function initEditorEvents() {
+  if (document._editorEventsInitialized) return;
+  document._editorEventsInitialized = true;
 
-  document.addEventListener('click', function(e) {
-    // Check if clicked element or parent is copy button
-    const btn = e.target.closest('.code-copy-btn');
-    if (!btn) return;
+  document.addEventListener("click", function (e) {
+    // 1. Copy Button
+    const copyBtn = e.target.closest(".code-copy-btn");
+    if (copyBtn) {
+      const editor = copyBtn.closest(".code-editor");
+      if (!editor) return;
+      const codeElement = editor.querySelector("code");
+      if (!codeElement) return;
+      
+      const code = codeElement.textContent; // Fetch raw plain text string directly
+      navigator.clipboard.writeText(code).then(() => {
+        copyBtn.innerHTML = "✓ Copied!";
+        copyBtn.classList.add("copied");
+        setTimeout(() => {
+          copyBtn.innerHTML = "📋 Copy";
+          copyBtn.classList.remove("copied");
+        }, 2000);
+      });
+      return;
+    }
 
-    // Get code from the code block
-    const editor = btn.closest('.code-editor');
-    if (!editor) return;
+    // 2. Run Button
+    const runBtn = e.target.closest(".run-code-btn");
+    if (runBtn) {
+      const wrapper = runBtn.closest(".code-editor");
+      if (!wrapper) return;
+      
+      const codeElement = wrapper.querySelector("code");
+      const targetConsoleBody = wrapper.querySelector(".inline-console-body");
+      const previewBody = wrapper.querySelector(".inline-preview-body");
+      const consoleWrapper = wrapper.querySelector(".inline-console");
+      const language = wrapper.dataset.language;
 
-    const codeElement = editor.querySelector('code');
-    if (!codeElement) return;
+      if (consoleWrapper) consoleWrapper.style.display = "block";
+      
+      // Update output label dynamically based on language when running
+      const outputLabelEl = consoleWrapper.querySelector(".console-output-label");
 
-    const code = codeElement.textContent;
+      // The 'Gold' Rule: Exclusively use innerText preventing metadata structural pollution natively
+      const rawCode = codeElement.innerText; 
 
-    // Copy to clipboard
-    navigator.clipboard.writeText(code).then(() => {
-      // Show success feedback
-      const originalContent = btn.innerHTML;
-      btn.innerHTML = '✓ Copied!';
-      btn.classList.add('copied');
+      if (language === "html" || language === "markup") {
+        if (outputLabelEl) outputLabelEl.textContent = "🖥️ HTML Preview";
+        targetConsoleBody.style.display = "none"; // Hide console for pure HTML preview
+        previewBody.style.display = "block";
+        executeCode("", targetConsoleBody, rawCode, previewBody, true);
+      } else {
+        if (outputLabelEl) outputLabelEl.textContent = "🖥️ Console Output";
+        targetConsoleBody.style.display = "block";
+        
+        // Double-Sanitization: Aggressive cleanup ensuring pure code execution exactly as requested
+        // (Added [a-z] after < to prevent destroying authentic JS math operators like `i < 10`)
+        const cleanCode = rawCode.replace(/<\/?[a-z][^>]+(>|$)/gi, "");
+        
+        // Scan for DOM interactivity indicators to conditionally render visual iframe preview dynamically
+        const needsDOM = /document\.|getElementById|querySelector|addEventListener|window\./i.test(cleanCode);
+        
+        let htmlContent = "";
+        if (needsDOM) {
+          // Locate the closest preceding HTML block dynamically without forcing strict filename bounds
+          const allEditors = Array.from(document.querySelectorAll(".code-editor"));
+          const currentIndex = allEditors.indexOf(wrapper);
+          
+          for (let i = currentIndex - 1; i >= 0; i--) {
+            const checkLang = allEditors[i].dataset.language;
+            if (checkLang === "html" || checkLang === "markup") {
+              htmlContent = allEditors[i].querySelector("code").innerText;
+              break;
+            }
+          }
+          if (outputLabelEl) outputLabelEl.textContent = "🖥️ DOM Preview";
+          previewBody.style.display = "block";
+        }
+        
+        executeCode(cleanCode, targetConsoleBody, htmlContent, previewBody, needsDOM);
+      }
+      return;
+    }
 
-      // Reset after 2 seconds
-      setTimeout(() => {
-        btn.innerHTML = '📋 Copy';
-        btn.classList.remove('copied');
-      }, 2000);
-    }).catch(err => {
-      console.error('Failed to copy code:', err);
-      btn.innerHTML = '✗ Error';
-      setTimeout(() => {
-        btn.innerHTML = '📋 Copy';
-      }, 2000);
-    });
+    // 3. Clear Console Button
+    const clearBtn = e.target.closest(".clear-console-btn");
+    if (clearBtn) {
+      const wrapper = clearBtn.closest(".code-editor");
+      if (!wrapper) return;
+      const consoleBody = wrapper.querySelector(".inline-console-body");
+      const previewBody = wrapper.querySelector(".inline-preview-body");
+      const consoleWrapper = wrapper.querySelector(".inline-console");
+      
+      if (consoleBody) consoleBody.innerHTML = '';
+      if (previewBody) {
+        previewBody.innerHTML = '';
+        previewBody.style.display = 'none';
+      }
+      if (consoleWrapper) consoleWrapper.style.display = 'none';
+      return;
+    }
   });
+}
+
+/**
+ * Execute code in an isolated scope and output to a specific inline console
+ * @param {string} codeText - The raw JavaScript code to execute
+ * @param {HTMLElement} targetConsole - The target container for console output logs
+ * @param {string} htmlContent - Optional HTML content to mount inside the iframe preview
+ * @param {HTMLElement} previewBody - The target container for HTML preview rendering
+ * @param {boolean} showPreview - Dictates whether the iframe sandbox should be visible in the UI
+ */
+function executeCode(codeText, targetConsole, htmlContent = "", previewBody = null, showPreview = false) {
+  if (!targetConsole) return;
+  
+  // Clear the target console body before running
+  targetConsole.innerHTML = "";
+  if (previewBody) previewBody.innerHTML = "";
+
+  const addToConsole = (data, type = "log") => {
+    const line = document.createElement("div");
+    line.className = `log-entry log-${type}`;
+
+    if (typeof data === "object" && data !== null) {
+      try {
+        line.textContent = "❯ " + JSON.stringify(data, null, 2);
+      } catch (e) {
+        line.textContent = "❯ [Circular/Unserializable Object]";
+      }
+    } else {
+      line.textContent = "❯ " + String(data);
+    }
+    targetConsole.appendChild(line);
+    
+    // Auto-scroll to the latest log
+    targetConsole.scrollTop = targetConsole.scrollHeight;
+  };
+
+  try {
+    // Custom Console Object intercepting standard methods
+    const customConsole = {
+      log: (...args) => addToConsole(args.length > 1 ? args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ') : args[0], "log"),
+      error: (...args) => addToConsole(args.length > 1 ? args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ') : args[0], "error"),
+      warn: (...args) => addToConsole(args.length > 1 ? args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ') : args[0], "warn"),
+    };
+
+    // Always use the robust iframe execution sandbox to prevent 'Identifier already declared' via fresh environments
+    if (previewBody) {
+      previewBody.style.display = showPreview ? "block" : "none";
+    }
+
+    const iframe = document.createElement("iframe");
+    iframe.style.width = "100%";
+    iframe.style.border = "none";
+    iframe.style.background = "#ffffff";
+    iframe.style.minHeight = showPreview ? "200px" : "0px";
+    iframe.style.display = showPreview ? "block" : "none";
+    iframe.sandbox = "allow-scripts allow-same-origin allow-modals allow-forms";
+
+    if (previewBody) {
+      previewBody.appendChild(iframe);
+    } else {
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+    }
+
+    const doc = iframe.contentWindow.document;
+    doc.open();
+    // Mount optional HTML component into authentic rendering pipeline
+    doc.write(`<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        padding: 20px;
+        margin: 0;
+        color: #222;
+        line-height: 1.6;
+        background: #fff;
+      }
+      button {
+        padding: 8px 16px;
+        background: #4a90e2;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background 0.2s;
+      }
+      button:hover { background: #357abd; }
+      input, select, textarea {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: inherit;
+      }
+      h1,h2,h3,h4 { margin-top: 0; }
+    </style>
+  </head>
+  <body>${htmlContent || ""}</body>
+</html>`);
+    doc.close();
+
+    // Funnel console logs dynamically to parent unified tracker
+    iframe.contentWindow._parentConsole = customConsole;
+    const interceptor = doc.createElement("script");
+    interceptor.textContent = `
+      var console = {
+        log: function() {
+          var args = Array.prototype.slice.call(arguments);
+          window._parentConsole.log.apply(null, args);
+        },
+        error: function() {
+          var args = Array.prototype.slice.call(arguments);
+          window._parentConsole.error.apply(null, args);
+        },
+        warn: function() {
+          var args = Array.prototype.slice.call(arguments);
+          window._parentConsole.warn.apply(null, args);
+        }
+      };
+      window.onerror = function(msg, url, line) {
+        window._parentConsole.error('❌ ' + msg + ' (line ' + line + ')');
+        return true;
+      };
+    `;
+    doc.head.appendChild(interceptor);
+
+    // Spin up the executable string wrapped firmly in native block scope
+    if (codeText && codeText.trim().length > 0) {
+      const userScript = doc.createElement("script");
+      userScript.textContent = `{\n${codeText}\n}`;
+      doc.body.appendChild(userScript);
+    }
+
+    // Auto-resize iframe to fit content after render
+    const resizeIframe = () => {
+      if (doc && doc.body && showPreview) {
+        const height = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
+        iframe.style.height = (height + 40) + "px";
+      }
+    };
+    setTimeout(resizeIframe, 100);
+    setTimeout(resizeIframe, 500); // second pass for dynamic content
+  } catch (err) {
+    addToConsole(err.message, "error");
+  }
 }
 
 /**
@@ -357,21 +667,21 @@ function initCodeCopyButtons() {
 function detectLanguage(code) {
   // HTML: Look for HTML tags
   if (/<[a-z][\s\S]*>/i.test(code) && /<\/[a-z]+>/i.test(code)) {
-    return 'html';
+    return "html";
   }
 
   // CSS: Look for CSS selectors and properties
   if (/[.#]?[\w-]+\s*\{[\s\S]*:[^;]+;/.test(code)) {
-    return 'css';
+    return "css";
   }
 
   // JSON: Starts with { or [ and looks like JSON
   if (/^\s*[\[{]/.test(code) && /"[\w-]+":\s*/.test(code)) {
-    return 'json';
+    return "json";
   }
 
   // Default to JavaScript for code-like content
-  return 'javascript';
+  return "javascript";
 }
 
 /**
@@ -381,196 +691,28 @@ function detectLanguage(code) {
  */
 function getFileName(language) {
   const fileNames = {
-    'javascript': 'script.js',
-    'html': 'index.html',
-    'css': 'style.css',
-    'python': 'main.py',
-    'java': 'Main.java',
-    'cpp': 'main.cpp',
-    'c': 'main.c',
-    'php': 'index.php',
-    'ruby': 'script.rb',
-    'go': 'main.go',
-    'rust': 'main.rs',
-    'typescript': 'script.ts',
-    'jsx': 'Component.jsx',
-    'tsx': 'Component.tsx',
-    'json': 'data.json',
-    'xml': 'data.xml',
-    'sql': 'query.sql',
-    'bash': 'script.sh',
-    'shell': 'script.sh'
+    javascript: "script.js",
+    html: "index.html",
+    css: "style.css",
+    python: "main.py",
+    java: "Main.java",
+    cpp: "main.cpp",
+    c: "main.c",
+    php: "index.php",
+    ruby: "script.rb",
+    go: "main.go",
+    rust: "main.rs",
+    typescript: "script.ts",
+    jsx: "Component.jsx",
+    tsx: "Component.tsx",
+    json: "data.json",
+    xml: "data.xml",
+    sql: "query.sql",
+    bash: "script.sh",
+    shell: "script.sh",
   };
 
-  return fileNames[language] || 'code.txt';
-}
-
-/**
- * Apply basic syntax highlighting to code
- * @param {HTMLElement} codeElement - The code element to highlight
- * @param {string} language - Programming language
- */
-function highlightSyntax(codeElement, language) {
-  const code = codeElement.textContent;
-  let highlighted = '';
-
-  // JavaScript/TypeScript highlighting
-  if (language === 'javascript' || language === 'typescript' || language === 'jsx' || language === 'tsx') {
-    highlighted = highlightJavaScript(code);
-  }
-  // HTML highlighting
-  else if (language === 'html' || language === 'xml') {
-    highlighted = highlightHTML(code);
-  }
-  // CSS highlighting
-  else if (language === 'css') {
-    highlighted = highlightCSS(code);
-  }
-  // JSON highlighting
-  else if (language === 'json') {
-    highlighted = highlightJSON(code);
-  }
-  // No highlighting for unknown languages
-  else {
-    highlighted = escapeHtml(code);
-  }
-
-  codeElement.innerHTML = highlighted;
-}
-
-/**
- * Escape HTML special characters
- * @param {string} text - Text to escape
- * @returns {string} Escaped text
- */
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
-
-/**
- * Highlight JavaScript code
- * @param {string} code - Code to highlight
- * @returns {string} Highlighted HTML
- */
-function highlightJavaScript(code) {
-  // Escape HTML first
-  code = escapeHtml(code);
-
-  // Comments (must come first to protect content)
-  code = code.replace(/\/\*[\s\S]*?\*\//g, '<span class="token comment">$&</span>');
-  code = code.replace(/\/\/.*$/gm, '<span class="token comment">$&</span>');
-
-  // Strings (must come before keywords to protect content)
-  code = code.replace(/(["'`])(?:(?=(\\?))\2.)*?\1/g, '<span class="token string">$&</span>');
-
-  // Keywords (avoid matching inside spans)
-  const keywords = 'const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|try|catch|finally|throw|new|class|extends|import|export|from|default|async|await|yield|typeof|instanceof|delete|void|in|of';
-  code = code.replace(new RegExp(`\\b(${keywords})\\b(?![^<]*>|[^<>]*<\\/)`, 'g'), '<span class="token keyword">$1</span>');
-
-  // Numbers (avoid inside spans)
-  code = code.replace(/\b(\d+\.?\d*)\b(?![^<]*>|[^<>]*<\/)/g, '<span class="token number">$1</span>');
-
-  // Functions (avoid inside spans)
-  code = code.replace(/\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=\()(?![^<]*>|[^<>]*<\/)/g, '<span class="token function">$1</span>');
-
-  return code;
-}
-
-/**
- * Highlight HTML code
- * @param {string} code - Code to highlight
- * @returns {string} Highlighted HTML
- */
-function highlightHTML(code) {
-  // Escape HTML first (textContent gives us actual < and >)
-  code = escapeHtml(code);
-
-  // Use placeholder tokens to avoid regex conflicts
-  const COMMENT_PLACEHOLDER = '\x00COMMENT\x00';
-  const TAG_PLACEHOLDER = '\x00TAG\x00';
-
-  const placeholders = [];
-  let placeholderIndex = 0;
-
-  // Step 1: Extract and placeholder comments
-  code = code.replace(/&lt;!--[\s\S]*?--&gt;/g, (match) => {
-    placeholders[placeholderIndex] = '<span class="token comment">' + match + '</span>';
-    return COMMENT_PLACEHOLDER + (placeholderIndex++) + COMMENT_PLACEHOLDER;
-  });
-
-  // Step 2: Highlight tags
-  code = code.replace(/(&lt;\/?[a-zA-Z][a-zA-Z0-9-]*)/g, (match) => {
-    placeholders[placeholderIndex] = '<span class="token tag">' + match + '</span>';
-    return TAG_PLACEHOLDER + (placeholderIndex++) + TAG_PLACEHOLDER;
-  });
-
-  code = code.replace(/(\/?&gt;)/g, (match) => {
-    placeholders[placeholderIndex] = '<span class="token tag">' + match + '</span>';
-    return TAG_PLACEHOLDER + (placeholderIndex++) + TAG_PLACEHOLDER;
-  });
-
-  // Step 3: Highlight attributes (use placeholders to prevent nesting)
-  code = code.replace(/\s([a-zA-Z-]+)=/g, (match, attrName) => {
-    placeholders[placeholderIndex] = '<span class="token attr-name">' + attrName + '</span>';
-    return ' ' + TAG_PLACEHOLDER + (placeholderIndex++) + TAG_PLACEHOLDER + '=';
-  });
-
-  // Step 4: Highlight attribute values (use placeholders to prevent nesting)
-  code = code.replace(/=(&quot;|")([^"&]*?)(\1)/g, (match, quote, value, closingQuote) => {
-    placeholders[placeholderIndex] = '<span class="token string">' + quote + value + closingQuote + '</span>';
-    return '=' + TAG_PLACEHOLDER + (placeholderIndex++) + TAG_PLACEHOLDER;
-  });
-
-  // Step 5: Restore placeholders
-  code = code.replace(/\x00COMMENT\x00(\d+)\x00COMMENT\x00/g, (_, index) => placeholders[index]);
-  code = code.replace(/\x00TAG\x00(\d+)\x00TAG\x00/g, (_, index) => placeholders[index]);
-
-  return code;  
-}
-
-/**
- * Highlight CSS code
- * @param {string} code - Code to highlight
- * @returns {string} Highlighted HTML
- */
-function highlightCSS(code) {
-  code = escapeHtml(code);
-
-  // Comments first
-  code = code.replace(/\/\*[\s\S]*?\*\//g, '<span class="token comment">$&</span>');
-
-  // Selectors (at start of line or after })
-  code = code.replace(/(^|\})\s*([.#]?[a-zA-Z0-9-_:, >+~[\]="'.]+)\s*(?=\{)(?![^<]*<\/)/gm, '$1 <span class="token tag">$2</span> ');
-
-  // Properties (word followed by colon)
-  code = code.replace(/([a-zA-Z-]+)\s*:(?![^<]*<\/)(?!\/\/|\/\*)/g, '<span class="token property">$1</span>:');
-
-  // Values (after colon, before semicolon)
-  code = code.replace(/:\s*([^;{]+);(?![^<]*<\/)/g, ': <span class="token string">$1</span>;');
-
-  return code;
-}
-
-/**
- * Highlight JSON code
- * @param {string} code - Code to highlight
- * @returns {string} Highlighted HTML
- */
-function highlightJSON(code) {
-  code = escapeHtml(code);
-
-  // Strings (keys and values)
-  code = code.replace(/"([^"\\]*(\\.[^"\\]*)*)"/g, '<span class="token string">"$1"</span>');
-
-  // Numbers
-  code = code.replace(/\b(-?\d+\.?\d*)\b(?![^<]*>)/g, '<span class="token number">$1</span>');
-
-  // Booleans and null
-  code = code.replace(/\b(true|false|null)\b(?![^<]*>)/g, '<span class="token keyword">$1</span>');
-
-  return code;
+  return fileNames[language] || "code.txt";
 }
 
 /**
