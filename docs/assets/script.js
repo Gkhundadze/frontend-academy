@@ -639,7 +639,17 @@ function executeCode(codeText, targetConsole, htmlContent = "", previewBody = nu
       h1,h2,h3,h4 { margin-top: 0; }
     </style>
   </head>
-  <body>${htmlContent || ""}</body>
+  <body>${htmlContent || `
+    <div id="loading" style="display:none; color: #4a90e2; font-weight: bold;">Loading...</div>
+    <div id="error" style="display:none; color: #ff5f56; font-weight: bold;"></div>
+    <div id="content" style="display:none;">Content loaded successfully!</div>
+    <div id="users"></div>
+    <div id="todoList"></div>
+    <div id="results"></div>
+    <input id="searchInput" placeholder="Search..." />
+    <div id="userList"></div>
+    <div id="pagination"></div>
+  `}</body>
 </html>`);
     doc.close();
 
@@ -665,13 +675,41 @@ function executeCode(codeText, targetConsole, htmlContent = "", previewBody = nu
         window._parentConsole.error('❌ ' + msg + ' (line ' + (line > 1 ? line - 1 : line) + ')');
         return true;
       };
+
+      // Global Mocks for Educational Async/Fetch Snippets
+      window.fetchUser = (id, cb) => { const p = new Promise(r => setTimeout(() => r({ id: id || 1, name: 'John Doe', email: 'john@example.com' }), 500)); if(typeof cb === 'function') p.then(cb); return p; };
+      window.fetchPosts = (id, cb) => { const p = new Promise(r => setTimeout(() => r([{ id: 101, title: 'Async JS is fun!', content: '...' }, { id: 102, title: 'Learn Fetch', content: '...' }]), 500)); if(typeof cb === 'function') p.then(cb); return p; };
+      window.fetchComments = (id, cb) => { const p = new Promise(r => setTimeout(() => r([{ id: 201, text: 'Great post!' }]), 500)); if(typeof cb === 'function') p.then(cb); return p; };
+      window.fetchReplies = (id, cb) => { const p = new Promise(r => setTimeout(() => r([{ id: 301, text: 'Thanks!' }]), 500)); if(typeof cb === 'function') p.then(cb); return p; };
+      window.fetchUserData = window.fetchUser;
+      window.fetchData = () => new Promise((resolve) => setTimeout(() => resolve({ data: 'Successfully fetched!' }), 500));
+      window.promise = new Promise(r => setTimeout(() => r('Data fetched successfully!'), 1000));
+      window.getUserId = () => Promise.resolve(1);
+      window.userId = 1; // Explicit global for snippets relying on it
+      window.fetchOrders = () => Promise.resolve(['Order 1', 'Order 2']);
+      window.processOrders = (o) => Promise.resolve('Processed ' + o.length + ' orders');
+      window.someAsyncOperation = () => new Promise(r => setTimeout(() => r('Operation Success'), 500));
+      window.showLoadingSpinner = () => console.log('UI: Loading Spinner SHOW');
+      window.hideLoadingSpinner = () => console.log('UI: Loading Spinner HIDE');
+      window.showErrorMessage = (msg) => console.error('UI Error Message:', msg);
+      window.processData = (d) => d;
+      window.processItem = (i) => Promise.resolve(i);
+      window.fetchUserStats = () => Promise.resolve({ views: 100, likes: 20 });
+      window.fetchNotifications = () => Promise.resolve(['New login']);
+      window.fetchMessages = () => Promise.resolve(['Hello']);
+      window.fetchFriends = () => Promise.resolve(['Jane', 'Bob']);
+      window.fetchSettings = () => Promise.resolve({ theme: 'dark' });
+      window.displayUserProfile = (p) => console.log('UI: Displayed User Profile');
+      window.renderDashboard = (d) => console.log('UI: Rendered Dashboard');
+      window.updateUI = (s) => console.log('UI State Updated:', JSON.stringify(s));
     `;
     doc.head.appendChild(interceptor);
 
     // Spin up the executable string wrapped firmly in native block scope
+    // We use an async IIFE instead of a simple block {} so top-level await works magically!
     if (codeText && codeText.trim().length > 0) {
       const userScript = doc.createElement("script");
-      userScript.textContent = `{\n${codeText}\n}`;
+      userScript.textContent = `(async () => {\n${codeText}\n})();`;
       doc.body.appendChild(userScript);
     }
 
@@ -713,7 +751,8 @@ function detectLanguage(code) {
   }
 
   // CSS: Look for CSS selectors and properties
-  if (/[.#]?[\w-]+\s*\{[\s\S]*:[^;]+;/.test(code)) {
+  // Ensure it doesn't have 'function', 'const', 'let', '=>' which are JS signatures
+  if (!/(?:function|const|let|=>)/.test(code) && /^[ \t]*[a-zA-Z0-9.#:*,> \t-]+\s*\{[^}]*:[^}]+;/m.test(code)) {
     return "css";
   }
 

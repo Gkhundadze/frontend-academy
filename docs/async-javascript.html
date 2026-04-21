@@ -359,17 +359,17 @@ getUserId()
         <div class="code-example">
           <div class="example-label">async/await Syntax</div>
           <pre><code>// async function always returns a Promise
-async function myFunction() {
+async function myFunctionAsync() {
   return 'Hello';
 }
 
 // Equivalent to:
-function myFunction() {
+function myFunctionPromise() {
   return Promise.resolve('Hello');
 }
 
 // Using the async function
-myFunction().then((result) => {
+myFunctionAsync().then((result) => {
   console.log(result);  // "Hello"
 });
 
@@ -394,7 +394,7 @@ getUserData();</code></pre>
         <div class="code-example">
           <div class="example-label">Using await</div>
           <pre><code>// Without async/await (Promise chain)
-function getUserInfo() {
+function getUserInfoOld() {
   fetchUser(1)
     .then((user) => {
       console.log('User:', user);
@@ -409,7 +409,7 @@ function getUserInfo() {
 }
 
 // ✅ With async/await (much cleaner!)
-async function getUserInfo() {
+async function getUserInfoModern() {
   try {
     const user = await fetchUser(1);
     console.log('User:', user);
@@ -508,7 +508,11 @@ async function smartFetch() {
     }
     throw error;
   }
-}</code></pre>
+}
+
+// Let's run one of them to see it in action!
+console.log('--- Running fetchWithCleanup ---');
+fetchWithCleanup().then(data => console.log('Result:', data));</code></pre>
         </div>
 
         <!-- Promise Methods -->
@@ -729,7 +733,14 @@ async function fetchParallel() {
 
 // When to use each:
 // - Sequential: When next operation depends on previous result
-// - Parallel: When operations are independent</code></pre>
+// - Parallel: When operations are independent
+
+// Let's run them to compare!
+console.log('--- Running Sequential ---');
+await fetchSequential();
+
+console.log('--- Running Parallel ---');
+await fetchParallel();</code></pre>
         </div>
 
         <h3>Example 2: Retry Logic</h3>
@@ -888,7 +899,11 @@ async function loadData() {
   }
 
   updateUI(state);
-}</code></pre>
+}
+
+// Let's test the UI state transitions!
+console.log('--- Testing Dashboard Load ---');
+await loadUserDashboard(1);</code></pre>
         </div>
 
         <!-- Best Practices -->
@@ -916,26 +931,26 @@ async function loadData() {
         <div class="code-example">
           <div class="example-label">Async Pitfalls to Avoid</div>
           <pre><code>// ❌ Mistake 1: Forgetting await
-async function fetchData() {
+async function fetchDataBad() {
   const data = fetch('/api/data');  // Missing await!
   console.log(data);  // This is a Promise, not the data!
 }
 
 // ✅ Correct
-async function fetchData() {
+async function fetchDataGood() {
   const response = await fetch('/api/data');
   const data = await response.json();
   console.log(data);  // Now this is the actual data
 }
 
 // ❌ Mistake 2: Not handling errors
-async function getData() {
+async function getDataBad() {
   const data = await fetch('/api/data');  // No try/catch!
   return data;
 }
 
 // ✅ Correct
-async function getData() {
+async function getDataGood() {
   try {
     const response = await fetch('/api/data');
     return await response.json();
@@ -946,14 +961,14 @@ async function getData() {
 }
 
 // ❌ Mistake 3: Sequential when could be parallel
-async function loadPage() {
+async function loadPageBad() {
   const user = await fetchUser();      // Waits
   const posts = await fetchPosts();    // Then waits
   const comments = await fetchComments(); // Then waits
 }
 
 // ✅ Correct (if operations are independent)
-async function loadPage() {
+async function loadPageGood() {
   const [user, posts, comments] = await Promise.all([
     fetchUser(),
     fetchPosts(),
@@ -962,14 +977,14 @@ async function loadPage() {
 }
 
 // ❌ Mistake 4: Using await in loops inefficiently
-async function processItems(items) {
+async function processItemsBad(items) {
   for (const item of items) {
     await processItem(item);  // Processes one at a time
   }
 }
 
 // ✅ Correct (if order doesn't matter)
-async function processItems(items) {
+async function processItemsGood(items) {
   await Promise.all(items.map((item) => processItem(item)));
 }
 
