@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,53 +12,7 @@
   <div class="docs-container">
 
     <!-- Sidebar Navigation -->
-    <nav class="sidebar">
-      <div class="sidebar-header">
-        <h1>Frontend Course</h1>
-        <p>Canvas & Animation</p>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Part 2: JavaScript</div>
-        <ul class="nav-list">
-          <li><a href="javascript-basics.html">JavaScript Fundamentals</a></li>
-          <li><a href="javascript-objects-arrays.html">Objects & Arrays</a></li>
-          <li><a href="array-methods.html">Array Methods</a></li>
-          <li><a href="dom-manipulation.html">DOM Manipulation</a></li>
-          <li><a href="event-handling.html">Event Handling</a></li>
-          <li><a href="canvas-basics.html">Canvas & Animation</a></li>
-          <li><a href="async-javascript.html">Async JavaScript</a></li>
-          <li><a href="fetch-api.html">Working with APIs</a></li>
-        </ul>
-      </div>
-      <div class="nav-section">
-        <div class="nav-section-title">Part 3: Design Thinking</div>
-        <ul class="nav-list">
-          <li><a href="design-thinking-intro.html">Introduction to Design Thinking</a></li>
-          <li><a href="user-research.html">User Research & Personas</a></li>
-          <li><a href="wireframing.html">Wireframing & Prototyping</a></li>
-          <li><a href="ui-ux-principles.html">UI/UX Principles</a></li>
-          <li><a href="design-systems.html">Design Systems</a></li>
-          <li><a href="accessibility-design.html">Accessibility & Inclusive Design</a></li>
-        </ul>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Projects</div>
-        <ul class="nav-list">
-          <li><a href="../projects/quiz-app/index.html" target="_blank">Quiz App Project</a></li>
-        </ul>
-      </div>
-
-
-      <div class="nav-section">
-        <div class="nav-section-title">Quick Links</div>
-        <ul class="nav-list">
-          <li><a href="../index.html">← Back to Home</a></li>
-          <li><a href="../projects/snake-game/index.html">Snake Game Project</a></li>
-        </ul>
-      </div>
-    </nav>
+    <nav class="sidebar" data-current-title="Canvas & Animation"></nav>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -82,11 +36,8 @@
 
         <div class="code-example">
           <div class="example-label">HTML Canvas Element</div>
-          <pre><code class="language-html">&lt;!-- HTML --&gt;
-&lt;canvas id="myCanvas" width="800" height="600"&gt;&lt;/canvas&gt;
-
-&lt;!-- Canvas dimensions should be set in HTML or JavaScript, not CSS --&gt;
-&lt;canvas id="myCanvas" width="800" height="600" style="border: 1px solid black;"&gt;
+          <pre><code class="language-html">&lt;!-- HTML Canvas Element with Fallback Content --&gt;
+&lt;canvas id="myCanvas" width="800" height="600" style="border: 1px solid black; max-width: 100%; height: auto;"&gt;
   Your browser does not support canvas.
 &lt;/canvas&gt;
 
@@ -99,9 +50,9 @@ const ctx = canvas.getContext('2d');  // 2D rendering context
 canvas.width = 800;
 canvas.height = 600;
 
-// Make canvas responsive
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// Make canvas responsive (Example for fullscreen apps)
+// canvas.width = window.innerWidth;
+// canvas.height = window.innerHeight;
 &lt;/script&gt;</code></pre>
         </div>
 
@@ -345,7 +296,8 @@ ctx.shadowColor = 'transparent';</code></pre>
           <div class="example-label">Working with Images</div>
           <pre><code>// Load and draw image
 const img = new Image();
-img.src = 'path/to/image.png';
+img.crossOrigin = 'Anonymous'; // Prevent canvas tainting
+img.src = 'https://via.placeholder.com/150';
 
 img.onload = function() {
   // drawImage(image, x, y)
@@ -360,16 +312,19 @@ img.onload = function() {
     0, 0, 50, 50,      // Source: crop from (0,0) 50x50
     350, 50, 100, 100  // Destination: draw at (350,50) 100x100
   );
+
+  // Canvas to image (Must be done AFTER drawing!)
+  const dataURL = canvas.toDataURL('image/png');
+  const imgElement = document.createElement('img');
+  imgElement.src = dataURL;
+  imgElement.style.border = "2px solid red"; // Just to show it's the exported img
+  imgElement.title = "Exported Image Element";
+  document.body.appendChild(imgElement);
 };
 
-// Canvas to image
-const dataURL = canvas.toDataURL('image/png');
-const imgElement = document.createElement('img');
-imgElement.src = dataURL;
-document.body.appendChild(imgElement);
-
 // Image from another canvas
-const canvas2 = document.getElementById('canvas2');
+const canvas2 = document.createElement('canvas');
+canvas2.width = 50; canvas2.height = 50;
 ctx.drawImage(canvas2, 0, 0);</code></pre>
         </div>
 
@@ -456,12 +411,12 @@ animate();
 
 // Stop animation
 let animationId;
-function animate() {
+function startAnim() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillRect(x, y, 50, 50);
   x += speed;
 
-  animationId = requestAnimationFrame(animate);
+  animationId = requestAnimationFrame(startAnim);
 }
 
 // Stop
@@ -760,7 +715,11 @@ canvas.addEventListener('mouseleave', () => {
 });
 
 // Clear button
-document.getElementById('clearBtn').addEventListener('click', () => {
+const clearBtn = document.createElement('button');
+clearBtn.textContent = 'Clear Canvas';
+document.body.appendChild(clearBtn);
+
+clearBtn.addEventListener('click', () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 });</code></pre>
         </div>
@@ -785,8 +744,29 @@ document.getElementById('clearBtn').addEventListener('click', () => {
 
         <div class="code-example">
           <div class="example-label">Performance Optimizations</div>
-          <pre><code>// ❌ Bad: Drawing everything every frame
-function animate() {
+          <pre><code>// Implementation of dummy functions so you can see it working!
+let ballX = 0;
+function drawBackground() {} // used in badAnimate
+function drawStaticElements() {} // used in badAnimate
+function drawBackgroundOnce(c) {
+  c.fillStyle = '#001f3f';
+  c.fillRect(0, 0, canvas.width, canvas.height);
+}
+function drawStaticElementsOnce(c) {
+  c.fillStyle = 'white';
+  for(let i = 0; i < 100; i++) {
+    c.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 2, 2);
+  }
+}
+function drawMovingElements() {
+  ctx.fillStyle = 'red';
+  ctx.beginPath();
+  ctx.arc((ballX += 5) % canvas.width, canvas.height / 2, 20, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+// ❌ Bad: Drawing everything every frame
+function badAnimate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw static background every frame
@@ -794,7 +774,7 @@ function animate() {
   drawStaticElements();
   drawMovingElements();
 
-  requestAnimationFrame(animate);
+  requestAnimationFrame(badAnimate);
 }
 
 // ✅ Good: Off-screen canvas for static elements
@@ -807,15 +787,18 @@ offscreenCanvas.height = canvas.height;
 drawBackgroundOnce(offscreenCtx);
 drawStaticElementsOnce(offscreenCtx);
 
-function animate() {
+function goodAnimate() {
   // Draw pre-rendered static elements
   ctx.drawImage(offscreenCanvas, 0, 0);
 
   // Only draw moving elements
   drawMovingElements();
 
-  requestAnimationFrame(animate);
+  requestAnimationFrame(goodAnimate);
 }
+
+// Start the optimized animation
+goodAnimate();
 
 // Efficient clearing for small objects
 function clearArea(x, y, width, height) {
@@ -830,7 +813,7 @@ function clearArea(x, y, width, height) {
 
         <div class="code-example">
           <div class="example-label">Animated Analog Clock</div>
-          <pre><code>const canvas = document.getElementById('clockCanvas');
+          <pre><code>const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 const centerX = canvas.width / 2;
 const centerY = canvas.height / 2;
@@ -911,7 +894,7 @@ animate();</code></pre>
 
         <div class="code-example">
           <div class="example-label">Moving Starfield</div>
-          <pre><code>const canvas = document.getElementById('starCanvas');
+          <pre><code>const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 
 class Star {
@@ -1009,6 +992,7 @@ animate();</code></pre>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
 
+  <script src="assets/sidebar.js"></script>
   <script src="assets/script.js"></script>
 </body>
 </html>

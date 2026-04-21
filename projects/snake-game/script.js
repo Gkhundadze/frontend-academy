@@ -56,6 +56,7 @@ let highScore = localStorage.getItem('snakeHighScore') || 0;
 let gameLoop = null; // Will store setInterval ID
 let isPaused = false;
 let gameStarted = false;
+let changingDirection = false;
 
 // Speed (milliseconds between moves)
 const GAME_SPEED = 100; // Snake moves every 100ms (10 times per second)
@@ -280,6 +281,8 @@ function update() {
   // Skip if paused
   if (isPaused) return;
 
+  changingDirection = false;
+
   // Move snake
   moveSnake();
 
@@ -319,6 +322,7 @@ function startGame() {
   scoreElement.textContent = score;
   isPaused = false;
   gameStarted = true;
+  changingDirection = false;
 
   // Generate initial food
   generateFood();
@@ -367,6 +371,7 @@ function resetGame() {
   scoreElement.textContent = score;
   isPaused = false;
   gameStarted = false;
+  changingDirection = false;
 
   // Reset buttons
   startBtn.disabled = false;
@@ -406,7 +411,9 @@ document.addEventListener('keydown', (event) => {
   }
 
   // Only change direction if game is running
-  if (!gameStarted || isPaused) return;
+  if (!gameStarted || isPaused || changingDirection) return;
+
+  changingDirection = true;
 
   switch (event.code) {
     case 'ArrowUp':

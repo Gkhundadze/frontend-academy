@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced JavaScript - Frontend Course</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="docs-container">
+    <nav class="sidebar" data-current-title="Advanced JavaScript"></nav>
+    <main class="main-content">
+      <div class="content-wrapper">
+        <h1>🧠 Advanced JavaScript Concepts</h1>
+        <p>Understanding these core mechanisms of JavaScript will save you from countless bugs, especially when you move on to frameworks like React.</p>
+
+        <h2>1. Scope and Hoisting</h2>
+        <p><strong>Scope</strong> determines the accessibility (visibility) of variables.</p>
+        <div class="code-example">
+          <div class="example-label">Block Scope vs Function Scope</div>
+          <pre><code>function scopeTest() {
+  if (true) {
+    var functionScoped = "I am visible throughout the function";
+    let blockScoped = "I am only visible inside this if block";
+  }
+  
+  console.log(functionScoped); // Works!
+  // console.log(blockScoped); // ReferenceError: blockScoped is not defined
+}
+scopeTest();</code></pre>
+        </div>
+
+        <h2>2. Closures</h2>
+        <p>A closure is a function that remembers its outer variables and can access them even after the outer function has finished executing.</p>
+        <div class="code-example">
+          <div class="example-label">Closure Example</div>
+          <pre><code>function createCounter() {
+  let count = 0; // This variable is protected by the closure
+  
+  return function() {
+    count++;
+    console.log(count);
+  }
+}
+
+const counterA = createCounter();
+counterA(); // 1
+counterA(); // 2
+
+const counterB = createCounter(); // Creates a completely separate scope
+counterB(); // 1</code></pre>
+        </div>
+
+        <h2>3. The 'this' Keyword</h2>
+        <p>In JavaScript, `this` refers to the object that is executing the current function.</p>
+        <div class="code-example">
+          <div class="example-label">Understanding Context</div>
+          <pre><code>const user = {
+  name: 'Alice',
+  greet: function() {
+    console.log(`Hello, my name is ${this.name}`);
+  },
+  // Arrow functions do NOT bind their own 'this'
+  greetArrow: () => {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+};
+
+user.greet(); // "Hello, my name is Alice"
+user.greetArrow(); // "Hello, my name is undefined" (this points to window)</code></pre>
+        </div>
+
+        <div class="page-navigation">
+          <a href="fetch-api.html" class="nav-button">← Fetch API & AJAX</a>
+          <a href="modern-javascript.html" class="nav-button">Modern JS (ES6+) →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <script src="assets/sidebar.js"></script>
+  <script src="assets/script.js"></script>
+</body>
+</html>

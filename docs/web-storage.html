@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Storage API - Frontend Course</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="docs-container">
+    <nav class="sidebar" data-current-title="Web Storage API"></nav>
+    <main class="main-content">
+      <div class="content-wrapper">
+        <h1>💾 Web Storage API</h1>
+        <p>The Web Storage API provides mechanisms by which browsers can store key/value pairs, in a much more intuitive fashion than using cookies.</p>
+
+        <h2>localStorage vs sessionStorage</h2>
+        <div class="info-box note">
+          <div class="info-box-title">Key Difference</div>
+          <p><strong>localStorage:</strong> Persists even when the browser is closed and reopened.<br>
+          <strong>sessionStorage:</strong> Is cleared when the page session ends (when the tab is closed).</p>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">Basic Storage Usage</div>
+          <pre><code>// 1. Save data to localStorage
+localStorage.setItem('username', 'JohnDoe');
+
+// 2. Read data from localStorage
+const name = localStorage.getItem('username');
+console.log('Saved name:', name);
+
+// 3. Remove specific item
+localStorage.removeItem('username');
+
+// 4. Clear ALL items in localStorage
+localStorage.clear();</code></pre>
+        </div>
+
+        <h2>Storing Objects and Arrays</h2>
+        <p>Web Storage can only store <strong>Strings</strong>. If you want to store objects or arrays, you must convert them using JSON!</p>
+        <div class="code-example">
+          <div class="example-label">Using JSON.stringify and JSON.parse</div>
+          <pre><code>const userPrefs = {
+  theme: 'dark',
+  fontSize: 16,
+  notifications: true
+};
+
+// ❌ BAD: This will just store the string "[object Object]"
+// localStorage.setItem('prefs', userPrefs);
+
+// ✅ GOOD: Convert to string first
+localStorage.setItem('prefs', JSON.stringify(userPrefs));
+
+// Read it back and convert it back to an Object
+const savedPrefsString = localStorage.getItem('prefs');
+
+if (savedPrefsString) {
+  const prefsObj = JSON.parse(savedPrefsString);
+  console.log('Restored theme:', prefsObj.theme);
+}</code></pre>
+        </div>
+
+        <div class="page-navigation">
+          <a href="dom-manipulation.html" class="nav-button">← DOM Manipulation</a>
+          <a href="event-handling.html" class="nav-button">Event Handling →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <script src="assets/sidebar.js"></script>
+  <script src="assets/script.js"></script>
+</body>
+</html>

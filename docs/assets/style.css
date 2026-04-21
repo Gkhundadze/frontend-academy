@@ -145,6 +145,22 @@ body {
   font-size: 16px;
 }
 
+/* Global Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
 /* Layout structure */
 .docs-container {
   display: flex;
@@ -161,6 +177,18 @@ body {
   overflow-y: auto;
   padding: var(--spacing-md);
   z-index: 100;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: var(--sidebar-bg);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .sidebar-header {
@@ -481,10 +509,13 @@ pre code {
   display: block;
 }
 
-/* Fallback for legacy inline code (not in code editor) */
-body > pre,
-.content > pre:not(.code-editor pre),
-pre.standalone {
+/* Fallback for legacy inline code (not in code editor).
+   The `.code-editor pre` inside :not() is an invalid simple selector in
+   older browsers, so we exclude by class on the pre itself. The code-editor
+   builder can add `data-editor-pre` to opt-out, but since all code-editor
+   <pre> elements live inside a `.code-editor` wrapper, we scope by that. */
+pre.standalone,
+body > pre {
   border-radius: 6px;
   margin-bottom: var(--spacing-md);
   border-left: 4px solid var(--primary-color);
@@ -853,7 +884,6 @@ tr:hover {
   border-radius: 8px;
   padding: var(--spacing-lg);
   transition: all 0.3s ease;
-  cursor: pointer;
 }
 
 .course-card:hover {

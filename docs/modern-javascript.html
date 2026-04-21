@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern JS (ES6+) - Frontend Course</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="../favicon.ico">
+</head>
+<body>
+  <div class="docs-container">
+    <nav class="sidebar" data-current-title="Modern JS (ES6+)"></nav>
+    <main class="main-content">
+      <div class="content-wrapper">
+        <h1>🚀 Modern JavaScript (ES6+)</h1>
+        <p>Modern JavaScript introduced powerful new syntax that makes code cleaner and more readable. These features are highly utilized in React.</p>
+
+        <h2>1. Destructuring</h2>
+        <p>Destructuring allows you to unpack values from arrays or properties from objects into distinct variables.</p>
+        <div class="code-example">
+          <div class="example-label">Object and Array Destructuring</div>
+          <pre><code>// Object Destructuring
+const user = { name: 'Bob', age: 25, role: 'Admin' };
+const { name, role } = user;
+console.log(name, role); // "Bob" "Admin"
+
+// Array Destructuring
+const rgb = [255, 128, 0];
+const [red, green, blue] = rgb;
+console.log(green); // 128</code></pre>
+        </div>
+
+        <h2>2. Spread and Rest Operators (...)</h2>
+        <div class="info-box tip">
+          <div class="info-box-title">💡 React Prerequisite</div>
+          <p>The Spread operator is used constantly in React for copying and updating State without mutating the original object.</p>
+        </div>
+        <div class="code-example">
+          <div class="example-label">Spread Operator</div>
+          <pre><code>// Copying Arrays
+const arr1 = [1, 2];
+const arr2 = [...arr1, 3, 4]; // [1, 2, 3, 4]
+
+// Copying and Updating Objects
+const person = { name: 'Sarah', age: 28 };
+const updatedPerson = { ...person, age: 29, location: 'NY' };
+// { name: 'Sarah', age: 29, location: 'NY' }</code></pre>
+        </div>
+
+        <h2>3. ES Modules (Import/Export)</h2>
+        <p>Modules allow you to split your code into multiple files.</p>
+        <div class="code-example">
+          <div class="example-label">math.js (Exporting)</div>
+          <pre><code>// Named export
+export const PI = 3.14159;
+
+// Default export (only one per file)
+export default function add(a, b) {
+  return a + b;
+}</code></pre>
+        </div>
+
+        <div class="code-example">
+          <div class="example-label">app.js (Importing)</div>
+          <pre><code>// Import default and named exports
+import add, { PI } from './math.js';
+
+console.log(PI); // 3.14159
+console.log(add(2, 3)); // 5</code></pre>
+        </div>
+
+        <div class="page-navigation">
+          <a href="advanced-javascript.html" class="nav-button">← Advanced JavaScript</a>
+          <a href="canvas-basics.html" class="nav-button">Canvas & Animation →</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <script src="assets/sidebar.js"></script>
+  <script src="assets/script.js"></script>
+</body>
+</html>

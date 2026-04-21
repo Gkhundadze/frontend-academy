@@ -29,44 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * Safely saves and restores the caret position inside a contentEditable node natively over DOM re-renders.
- */
-function saveCaretPosition(context) {
-  const selection = window.getSelection();
-  if (selection.rangeCount === 0) return null;
-  const range = selection.getRangeAt(0);
-  const preCaretRange = range.cloneRange();
-  preCaretRange.selectNodeContents(context);
-  preCaretRange.setEnd(range.endContainer, range.endOffset);
-  const caretOffset = preCaretRange.toString().length;
-
-  return function restore() {
-    let charIndex = 0;
-    const range = document.createRange();
-    range.setStart(context, 0);
-    range.collapse(true);
-    let nodeStack = [context], node, foundStart = false, stop = false;
-
-    while (!stop && (node = nodeStack.pop())) {
-      if (node.nodeType === 3) {
-        let nextCharIndex = charIndex + node.length;
-        if (!foundStart && caretOffset >= charIndex && caretOffset <= nextCharIndex) {
-          range.setStart(node, caretOffset - charIndex);
-          range.setEnd(node, caretOffset - charIndex);
-          stop = true;
-        }
-        charIndex = nextCharIndex;
-      } else {
-        let i = node.childNodes.length;
-        while (i--) { nodeStack.push(node.childNodes[i]); }
-      }
-    }
-    selection.removeAllRanges();
-    selection.addRange(range);
-  };
-}
-
-/**
  * Initialize dark mode toggle
  * Checks localStorage for saved theme preference and creates toggle button
  */
@@ -156,13 +118,25 @@ function initMobileMenu() {
     this.innerHTML = sidebar.classList.contains('active') ? '✕' : '☰';
   });
 
-  // Close sidebar when clicking outside on mobile
+  // Close sidebar when a nav link inside it is clicked (mobile UX)
+  sidebar.addEventListener('click', function(event) {
+    const link = event.target.closest('a');
+    if (link && sidebar.classList.contains('active')) {
+      sidebar.classList.remove('active');
+      menuToggle.innerHTML = '☰';
+    }
+  });
+
+  // Close sidebar when clicking outside on mobile — but only when the
+  // sidebar is actually open, so we don't run this handler on every
+  // desktop click for no reason.
   document.addEventListener('click', function(event) {
+    if (!sidebar.classList.contains('active')) return;
+
     const isClickInsideSidebar = sidebar.contains(event.target);
     const isClickOnToggle = menuToggle.contains(event.target);
 
-    // If click is outside sidebar and not on toggle button, close sidebar
-    if (!isClickInsideSidebar && !isClickOnToggle && sidebar.classList.contains('active')) {
+    if (!isClickInsideSidebar && !isClickOnToggle) {
       sidebar.classList.remove('active');
       menuToggle.innerHTML = '☰';
     }
@@ -321,38 +295,71 @@ function initCodeEditor() {
     };
     updateLineNumbers(codeText);
 
-    // Visual Engine: Direct plain environment
+    // Visual Engine: Textarea Overlay
+    const editorContainer = document.createElement("div");
+    editorContainer.style.position = "relative";
+    editorContainer.style.flexGrow = "1";
+    editorContainer.style.display = "flex";
+
+    const textarea = document.createElement("textarea");
+    textarea.className = "code-editor-textarea";
+    textarea.value = codeText;
+    textarea.spellcheck = false;
+    textarea.style.position = "absolute";
+    textarea.style.top = "0";
+    textarea.style.left = "0";
+    textarea.style.width = "100%";
+    textarea.style.height = "100%";
+    textarea.style.background = "transparent";
+    textarea.style.color = "transparent";
+    textarea.style.caretColor = "#f8f8f2"; // Default Okaidia text color
+    textarea.style.border = "none";
+    textarea.style.outline = "none";
+    textarea.style.resize = "none";
+    textarea.style.margin = "0";
+    textarea.style.padding = "1em"; // Match Prism padding
+    textarea.style.fontFamily = "Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace";
+    textarea.style.fontSize = "1em";
+    textarea.style.lineHeight = "1.5";
+    textarea.style.overflow = "auto";
+    textarea.style.whiteSpace = "pre";
+    textarea.style.zIndex = "1";
+    textarea.style.tabSize = "4"; // Match Prism default
+
     const newPre = document.createElement("pre");
-    newPre.className = `language-${language}`; // Explicit binding guaranteeing Prism DOM overlays
+    newPre.className = `language-${language}`;
+    newPre.style.margin = "0";
+    newPre.style.width = "100%";
+    newPre.style.height = "100%";
+    newPre.style.pointerEvents = "none"; // Let clicks pass to textarea
+    newPre.style.overflow = "hidden"; // Scroll is handled by textarea if needed
+
     const newCode = document.createElement("code");
     newCode.className = `language-${language}`;
-    newCode.contentEditable = "true";
-    newCode.spellcheck = false;
 
-    // Apply keydown/paste overrides to ensure only pure text enters the environment
-    newCode.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
+    // Apply keydown override for Tab
+    textarea.addEventListener('keydown', function(e) {
+      if (e.key === 'Tab') {
         e.preventDefault();
-        document.execCommand('insertText', false, '\n');
-      } else if (e.key === 'Tab') {
-        e.preventDefault();
-        document.execCommand('insertText', false, '  ');
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+        this.value = this.value.substring(0, start) + "  " + this.value.substring(end);
+        this.selectionStart = this.selectionEnd = start + 2;
+        this.dispatchEvent(new Event('input'));
       }
     });
 
-    newCode.addEventListener('paste', function(e) {
-      e.preventDefault();
-      const text = (e.originalEvent || e).clipboardData.getData('text/plain');
-      document.execCommand('insertText', false, text);
+    // Sync input to code block
+    textarea.addEventListener('input', function() {
+      newCode.textContent = this.value;
+      Prism.highlightElement(newCode);
+      updateLineNumbers(this.value);
     });
 
-    // Update line numbers and force real-time Prism rendering natively
-    newCode.addEventListener('input', function() {
-      updateLineNumbers(this.textContent);
-      
-      const restoreCaret = saveCaretPosition(this);
-      Prism.highlightElement(this);
-      if (restoreCaret) restoreCaret();
+    // Sync scroll
+    textarea.addEventListener('scroll', function() {
+      newPre.scrollTop = this.scrollTop;
+      newPre.scrollLeft = this.scrollLeft;
     });
 
     // Initial highlight deployment
@@ -360,9 +367,11 @@ function initCodeEditor() {
     Prism.highlightElement(newCode);
 
     newPre.appendChild(newCode);
+    editorContainer.appendChild(newPre);
+    editorContainer.appendChild(textarea);
 
     codeWithLines.appendChild(lineNumbers);
-    codeWithLines.appendChild(newPre);
+    codeWithLines.appendChild(editorContainer);
 
     body.appendChild(codeWithLines);
 
@@ -418,16 +427,33 @@ function initEditorEvents() {
       if (!editor) return;
       const codeElement = editor.querySelector("code");
       if (!codeElement) return;
-      
+
       const code = codeElement.textContent; // Fetch raw plain text string directly
-      navigator.clipboard.writeText(code).then(() => {
+
+      const showCopied = () => {
         copyBtn.innerHTML = "✓ Copied!";
         copyBtn.classList.add("copied");
         setTimeout(() => {
           copyBtn.innerHTML = "📋 Copy";
           copyBtn.classList.remove("copied");
         }, 2000);
-      });
+      };
+
+      const showFailed = () => {
+        copyBtn.innerHTML = "⚠ Failed";
+        setTimeout(() => { copyBtn.innerHTML = "📋 Copy"; }, 2000);
+      };
+
+      // Prefer modern Clipboard API, but it requires a secure context
+      // (HTTPS or localhost). On file:// or http://, fall back to a
+      // textarea + execCommand('copy') trick.
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(showCopied).catch(() => {
+          fallbackCopy(code) ? showCopied() : showFailed();
+        });
+      } else {
+        fallbackCopy(code) ? showCopied() : showFailed();
+      }
       return;
     }
 
@@ -448,8 +474,9 @@ function initEditorEvents() {
       // Update output label dynamically based on language when running
       const outputLabelEl = consoleWrapper.querySelector(".console-output-label");
 
-      // The 'Gold' Rule: Exclusively use innerText preventing metadata structural pollution natively
-      const rawCode = codeElement.innerText; 
+      // The 'Gold' Rule: Exclusively use textarea.value or textContent preventing metadata structural pollution natively
+      const textarea = wrapper.querySelector("textarea");
+      const rawCode = textarea ? textarea.value : codeElement.textContent; 
 
       if (language === "html" || language === "markup") {
         if (outputLabelEl) outputLabelEl.textContent = "🖥️ HTML Preview";
@@ -459,13 +486,15 @@ function initEditorEvents() {
       } else {
         if (outputLabelEl) outputLabelEl.textContent = "🖥️ Console Output";
         targetConsoleBody.style.display = "block";
-        
-        // Double-Sanitization: Aggressive cleanup ensuring pure code execution exactly as requested
-        // (Added [a-z] after < to prevent destroying authentic JS math operators like `i < 10`)
-        const cleanCode = rawCode.replace(/<\/?[a-z][^>]+(>|$)/gi, "");
-        
+
+        // Run the user's JS as-is. The iframe sandbox is isolation enough —
+        // we must NOT strip "HTML-like" substrings because they are valid JS:
+        // JSX, template literals ( `<div>${x}</div>` ), and strings like
+        // str.split("<div>") all legitimately contain '<tag>' patterns.
+        const cleanCode = rawCode;
+
         // Scan for DOM interactivity indicators to conditionally render visual iframe preview dynamically
-        const needsDOM = /document\.|getElementById|querySelector|addEventListener|window\./i.test(cleanCode);
+        const needsDOM = /document\.|getElementById|querySelector|addEventListener|window\.|canvas|ctx/i.test(cleanCode);
         
         let htmlContent = "";
         if (needsDOM) {
@@ -476,7 +505,8 @@ function initEditorEvents() {
           for (let i = currentIndex - 1; i >= 0; i--) {
             const checkLang = allEditors[i].dataset.language;
             if (checkLang === "html" || checkLang === "markup") {
-              htmlContent = allEditors[i].querySelector("code").innerText;
+              const htmlTextarea = allEditors[i].querySelector("textarea");
+              htmlContent = htmlTextarea ? htmlTextarea.value : allEditors[i].querySelector("code").textContent;
               break;
             }
           }
@@ -632,7 +662,7 @@ function executeCode(codeText, targetConsole, htmlContent = "", previewBody = nu
         }
       };
       window.onerror = function(msg, url, line) {
-        window._parentConsole.error('❌ ' + msg + ' (line ' + line + ')');
+        window._parentConsole.error('❌ ' + msg + ' (line ' + (line > 1 ? line - 1 : line) + ')');
         return true;
       };
     `;
@@ -644,6 +674,18 @@ function executeCode(codeText, targetConsole, htmlContent = "", previewBody = nu
       userScript.textContent = `{\n${codeText}\n}`;
       doc.body.appendChild(userScript);
     }
+
+    // Safety net: if the user's code runs longer than 4 seconds (likely an
+    // infinite loop), nuke the iframe and log a timeout error. Without this,
+    // `while(true){}` hangs the whole browser tab until force-refresh.
+    const timeoutMs = 4000;
+    const timeoutId = setTimeout(() => {
+      addToConsole(`⏱ Execution timeout (${timeoutMs}ms) — likely infinite loop. Iframe terminated.`, "error");
+      if (iframe && iframe.parentNode) iframe.parentNode.removeChild(iframe);
+    }, timeoutMs);
+
+    // If the iframe finishes cleanly (load event), clear the timeout.
+    iframe.addEventListener('load', () => clearTimeout(timeoutId), { once: true });
 
     // Auto-resize iframe to fit content after render
     const resizeIframe = () => {
@@ -732,6 +774,31 @@ function initDemoInteractions() {
       demo.classList.add('interactive-demo');
     }
   });
+}
+
+/**
+ * Fallback clipboard copy using a temporary textarea + execCommand('copy').
+ * Needed for file:// pages and insecure (http://) contexts where
+ * navigator.clipboard is unavailable.
+ * @param {string} text - Text to copy
+ * @returns {boolean} true if copy succeeded
+ */
+function fallbackCopy(text) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  } catch (e) {
+    return false;
+  }
 }
 
 /**
